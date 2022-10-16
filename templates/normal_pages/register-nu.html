@@ -623,8 +623,8 @@
                                         url: '/api/user-password-format/' + userProfileResp.data.user + '/',
                                         success: function (passwordFormatresp) {
                                             $('#loadingModel').modal('hide')
-                                            location.href='/send-activation-email-link/'+userRes.data.id+'/'
-                                            // $('#userRegForm').unbind('submit').submit();
+                                            // location.href='/send-activation-email-link/'+userRes.data.id+'/'
+                                            $('#userRegForm').unbind('submit').submit();
                                             
                                             // $.ajax({
                                             //     type: "POST",
