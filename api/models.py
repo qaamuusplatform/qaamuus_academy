@@ -1,4 +1,5 @@
 from datetime import timedelta,datetime
+from email.policy import default
 from django.db import models
 from django.utils.safestring import mark_safe
 from django.contrib.auth.models import User
@@ -215,7 +216,7 @@ class VoteModel(models.Model):
     phoneNumber =models.CharField(max_length=255)
     qaabkaWaxbarashada=models.CharField(max_length=255)
     maadadaAadDaneeneeso =models.CharField(max_length=255)
-    waqtiga =models.CharField(max_length=255)
+    waqtiga =models.CharField(max_length=255,default='')
     macalimiinta =models.CharField(max_length=255)
 
     def __str__(self) -> str:

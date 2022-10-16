@@ -26,7 +26,7 @@
                 <div class="ml-lg-16pt">
 
                     <button type="submit" style="border: none;">
-                        <a href="#" data-target="#library-drawer" data-toggle="sidebar" class="btn btn-light">
+                        <a  data-target="#library-drawer" data-toggle="sidebar" class="btn btn-light">
                             <i class="material-icons icon--left">tune</i> SAVE
                             <span class="badge badge-notifications badge-accent icon--right">2</span>
 
@@ -96,7 +96,7 @@
                     </div>
                     <div class="form-group" style="margin-top: -5px;">
                         <label class="form-label">Macalimiinta </label>
-                        <select style="font-size: larger;" name="waqtiga" class="form-control custom-select">
+                        <select style="font-size: larger;" name="macalimiinta" class="form-control custom-select">
                             <option>Soomali </option>
                             <option>Ajnabi </option>
                             <option>Somali & Ajnabi </option>
@@ -106,7 +106,7 @@
 
 
                     <button style="border: none;" type="submit">
-                        <a href="#" class="btn btn-outline-secondary mb-24pt mb-sm-0">SAVE</a>
+                        <a  class="btn btn-outline-secondary mb-24pt mb-sm-0">SAVE</a>
                     </button>
 
 
@@ -184,6 +184,7 @@
     document.getElementById('voitForm').addEventListener('submit', function (e) {
         e.preventDefault()
         formData = new FormData(this)
+        console.log('resss')
         $.ajax({
             type: "POST",
             data: formData,
@@ -193,10 +194,20 @@
             contentType: false,
             processData: false,
             success: async function (respData) {
+                console.log(respData)
                 // console.log(userProfileResp)
-                    swal("Waad Ku mahadsantahy Codeentaada", {
-                        icon: "success"
+                swal({
+                    icon: "success",
+                    text: "Waad Ku mahadsantahy Codeentaada",
+                    closeOnClickOutside: false,
+                    buttons: {
+                        confirm: true,
+                    },
+                    }).then((willDelete) => {
+                        console.log('sda')
+                        location.href='/'
                     });
+                    
             }
         })
 
