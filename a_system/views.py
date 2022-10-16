@@ -33,7 +33,7 @@ def indexWeb(request):
         maxInrolledCourse=QaCourses.objects.filter(inrolledUsers=maxInrolled['inrolledUsers__max'])[0]
     except:
         maxInrolledCourse=''
-    instroctors=UserProfile.objects.filter(userType=2)
+    instructors=UserProfile.objects.filter(userType=2)
     # upComingEvents=EventView.objects.filter(dateTimeStarting____lte=datetime.now() + timedelta(days=1))
     upComingEvents=EventView.objects.filter(isPublic=True).filter(dateTimeStarting__gt =datetime.now())
     categorys=CourseCategory.objects.all()
@@ -46,9 +46,9 @@ def indexWeb(request):
     activedFeedBacks=FeedBacks.objects.filter(isActive=True)
     ourInterFriends=OurInterFriends.objects.all()
     if request.user.is_authenticated:
-        return render(request,'normal_pages/authHome.html',{'maxInrolledCourse':maxInrolledCourse,'aboutQaamuusInfo':aboutQaamuusInfo,'soonEvent':soonEvent,'upComingEvents':upComingEvents,'ourInterFriends':ourInterFriends,'qaCourses':qaCourses,'instroctors':instroctors,'categorys':categorys,'activedFeedBacks':activedFeedBacks})
+        return render(request,'normal_pages/authHome.html',{'maxInrolledCourse':maxInrolledCourse,'aboutQaamuusInfo':aboutQaamuusInfo,'soonEvent':soonEvent,'upComingEvents':upComingEvents,'ourInterFriends':ourInterFriends,'qaCourses':qaCourses,'instructors':instructors,'categorys':categorys,'activedFeedBacks':activedFeedBacks})
     else:
-        return render(request,'normal_pages/unAuthHome.html',{'maxInrolledCourse':maxInrolledCourse,'aboutQaamuusInfo':aboutQaamuusInfo,'soonEvent':soonEvent,'upComingEvents':upComingEvents,'ourInterFriends':ourInterFriends,'qaCourses':qaCourses,'instroctors':instroctors,'categorys':categorys,'activedFeedBacks':activedFeedBacks})
+        return render(request,'normal_pages/unAuthHome.html',{'maxInrolledCourse':maxInrolledCourse,'aboutQaamuusInfo':aboutQaamuusInfo,'soonEvent':soonEvent,'upComingEvents':upComingEvents,'ourInterFriends':ourInterFriends,'qaCourses':qaCourses,'instructors':instructors,'categorys':categorys,'activedFeedBacks':activedFeedBacks})
 
 
 
@@ -320,13 +320,13 @@ def getUserByEmail(email):
 def registerNu(request):
     return render(request,'normal_pages/register-nu.html')
 
-def instroctorInfo(request,usrId,enc1):
-    instroctorInfo=UserProfile.objects.get(pk=usrId)
-    if instroctorInfo.userType == UserTypes.objects.get(pk=2):
-        instructorCertification=InstructorCertification.objects.filter(theUser=instroctorInfo)
-        instroctorCourses=QaCourses.objects.filter(instructor=instroctorInfo)
+def instructorInfo(request,usrId,enc1):
+    instructorInfo=UserProfile.objects.get(pk=usrId)
+    if instructorInfo.userType == UserTypes.objects.get(pk=2):
+        instructorCertification=InstructorCertification.objects.filter(theUser=instructorInfo)
+        instructorCourses=QaCourses.objects.filter(instructor=instructorInfo)
         
-        return render(request,'detail/instroctor-detail.html',{'instructorCertification':instructorCertification,'instroctorInfo':instroctorInfo,'instroctorCourses':instroctorCourses})
+        return render(request,'detail/instructor-detail.html',{'instructorCertification':instructorCertification,'instructorInfo':instructorInfo,'instructorCourses':instructorCourses})
     else:
         return redirect('/instructors/')
 @login_required(login_url='/sing-in/')
@@ -411,8 +411,8 @@ def createNewPassword(request,usrId):
         return render(request,'normal_pages/create-password.html',{'usrId':usrId})
 
 def instructor(request):
-    instroctors=UserProfile.objects.filter(userType=2)
-    return render(request,'manage/instructor.html',{'instroctors':instroctors})
+    instructors=UserProfile.objects.filter(userType=2)
+    return render(request,'manage/instructor.html',{'instructors':instructors})
 
 
 

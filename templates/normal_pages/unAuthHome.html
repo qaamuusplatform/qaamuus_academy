@@ -585,21 +585,21 @@
         </div>
     </div>
     <div class="container page__container page-section">
-        <h2  class="h2" style="font-size: x-large;">Our instroctors</h2>
+        <h2  class="h2" style="font-size: x-large;">Our instructors</h2>
 
         <div class="row card-group-row" data-toggle="dragula">
-            {% for instroctor in instroctors %}
+            {% for instructor in instructors %}
             <div class="col-sm-6 col-md-3 card-group-row__col">
                 <div class="card card-sm card-group-row__card">
                     <div class="position-relative">
                         <div class="card-img-top">
-                            <a href="/instroctor-info/{{instroctor.pk}}/{{instroctor.fullName}}/">
-                                <img src="{{instroctor.profileImage.url}}" class="card-img-top card-img-cover" alt="">
+                            <a href="/instructor-info/{{instructor.pk}}/{{instructor.fullName}}/">
+                                <img src="{{instructor.profileImage.url}}" class="card-img-top card-img-cover" alt="">
                             </a>
                         </div>
                         <div class="card-body avatar-group position-absolute-top">
                             <div class="avatar avatar-xs">
-                                <a href="/instroctor-info/{{instroctor.pk}}/{{instroctor.fullName}}/"><img
+                                <a href="/instructor-info/{{instructor.pk}}/{{instructor.fullName}}/"><img
                                         src="/static/images/logo/logo-4.png" alt="Avatar"
                                         class="avatar-img rounded-circle"></a>
                             </div>
@@ -608,11 +608,11 @@
                     <div class="card-body d-flex">
                         <div class="flex">
                             <h6 class="card-title m-0"><a
-                                    href="/instroctor-info/{{instroctor.pk}}/{{instroctor.fullName}}/">{{instroctor.fullName}}</a>
+                                    href="/instructor-info/{{instructor.pk}}/{{instructor.fullName}}/">{{instructor.fullName}}</a>
                             </h6>
-                            <small class="text-muted">{{instroctor.userTitle}}</small>
+                            <small class="text-muted">{{instructor.userTitle}}</small>
                         </div>
-                        <a href="/instroctor-info/{{instroctor.pk}}/{{instroctor.fullName}}/" class="text-muted"><i
+                        <a href="/instructor-info/{{instructor.pk}}/{{instructor.fullName}}/" class="text-muted"><i
                                 class="material-icons">more_vert</i></a>
                     </div>
                 </div>
