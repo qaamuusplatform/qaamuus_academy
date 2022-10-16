@@ -7,124 +7,120 @@
 <br><br><br>
 {% endif %}
 
-<form method="POST" action="/register-your-vote/">
+<form method="POST" id="voitForm">
     {% csrf_token %}
-<div class="page-section bg-alt border-bottom-2">
-    <div class="container page__container">
+    <div class="page-section bg-alt border-bottom-2">
+        <div class="container page__container">
 
-        <div class="d-flex flex-column flex-lg-row align-items-left">
-            <div class="d-flex flex-column align-items-left align-items-lg-start flex mb-16pt mb-lg-0 text-left text-lg-left">
-                <h1 class="h2 mb-4pt">Mudane / marwo </h1>
-                <div class="lead text-70" style="font-size: medium;">Waxaa farxad inoo ah inaan kula wadaagno <strong>KOORSOOYIN</strong>,  <strong>SIMINARO</strong> iyo  <strong style="text-transform: uppercase;">professional diplomas</strong>  oo aad sifudud uga faa ideesankarto meelkasta iyo waqtikasta aad joogto .
-                    Fadlan nalawadaag hadba qeybta aad daneeneeso :-
+            <div class="d-flex flex-column flex-lg-row align-items-left">
+                <div
+                    class="d-flex flex-column align-items-left align-items-lg-start flex mb-16pt mb-lg-0 text-left text-lg-left">
+                    <h1 class="h2 mb-4pt">Mudane / marwo </h1>
+                    <div class="lead text-70" style="font-size: medium;">Waxaa farxad inoo ah inaan kula wadaagno
+                        <strong>KOORSOOYIN</strong>, <strong>SIMINARO</strong> iyo <strong
+                            style="text-transform: uppercase;">professional diplomas</strong> oo aad sifudud uga faa
+                        ideesankarto meelkasta iyo waqtikasta aad joogto .
+                        Fadlan nalawadaag hadba qeybta aad daneeneeso :-
                     </div>
+                </div>
+                <div class="ml-lg-16pt">
+
+                    <button type="submit" style="border: none;">
+                        <a href="#" data-target="#library-drawer" data-toggle="sidebar" class="btn btn-light">
+                            <i class="material-icons icon--left">tune</i> SAVE
+                            <span class="badge badge-notifications badge-accent icon--right">2</span>
+
+                        </a>
+                    </button>
+                </div>
             </div>
-            <div class="ml-lg-16pt">
-                
-                <button type="submit" style="border: none;">
-                <a href="#"
-                   data-target="#library-drawer"
-                   data-toggle="sidebar"
-                   class="btn btn-light">
-                    <i class="material-icons icon--left">tune</i> SAVE
-                    <span class="badge badge-notifications badge-accent icon--right">2</span>
-                   
-                </a>
-            </button>
-            </div>
+
         </div>
-
     </div>
-</div>
-<div class="page-section border-bottom-2">
-    <div class="container page__container">
-        <div class="row">
-            <div class="col-md-8">
+    <div class="page-section border-bottom-2">
+        <div class="container page__container">
+            <div class="row">
+                <div class="col-md-8">
 
-                <label class="form-label">Magaca </label>
-                <div class="form-group mb-24pt">
-                    
-                    <input type="text" required
-                           class="form-control form-control-lg" name="magaca"
-                           placeholder="Magaca oo saddexan" value="{{userInfo.fullName}}">
-                    <!-- <small class="form-text text-muted">Please see our <a href="">course title guideline</a></small> -->
-                </div>
-                <label class="form-label">Email </label>
-                <div class="form-group mb-24pt">
-                    
-                    <input type="text" required
-                           class="form-control form-control-lg"
-                           placeholder="Email" value="{{userInfo.email}}">
-                    <!-- <small class="form-text text-muted">Please see our <a href="">course title guideline</a></small> -->
-                </div>
-                <label class="form-label">Phone Number </label>
-                <div class="form-group mb-24pt">
-                    
-                    <input type="text" required
-                           class="form-control form-control-lg" name="phoneNumber"
-                           placeholder="Telephone Number" value="{{userInfo.number}}">
-                    <!-- <small class="form-text text-muted">Please see our <a href="">course title guideline</a></small> -->
-                </div>
-                <div class="form-group" style="margin-top: -5px;">
-                    <label class="form-label">Qaabka Waxbarashada </label>   
-                    <select style="font-size: larger;" name="qaabkaWaxbarashada"
+                    <label class="form-label">Magaca </label>
+                    <div class="form-group mb-24pt">
+
+                        <input type="text" required class="form-control form-control-lg" name="magaca"
+                            placeholder="Magaca oo saddexan" value="{{userInfo.fullName}}">
+                        <!-- <small class="form-text text-muted">Please see our <a href="">course title guideline</a></small> -->
+                    </div>
+                    <label class="form-label">Email </label>
+                    <div class="form-group mb-24pt">
+
+                        <input type="text" name="email" required class="form-control form-control-lg" placeholder="Email"
+                            value="{{userInfo.email}}">
+                        <!-- <small class="form-text text-muted">Please see our <a href="">course title guideline</a></small> -->
+                    </div>
+                    <label class="form-label">Phone Number </label>
+                    <div class="form-group mb-24pt">
+
+                        <input type="text" required class="form-control form-control-lg" name="phoneNumber"
+                            placeholder="Telephone Number" value="{{userInfo.number}}">
+                        <!-- <small class="form-text text-muted">Please see our <a href="">course title guideline</a></small> -->
+                    </div>
+                    <div class="form-group" style="margin-top: -5px;">
+                        <label class="form-label">Qaabka Waxbarashada </label>
+                        <select style="font-size: larger;" name="qaabkaWaxbarashada" class="form-control custom-select">
+                            <option>Habka fogaandhigad - Online </option>
+                            <option>Fasal ahaan – Offline </option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="margin-top: -5px;">
+                        <label class="form-label">Maadada aad daneeneeso </label>
+                        <select style="font-size: larger;" name="maadadaAadDaneeneeso"
                             class="form-control custom-select">
-                        <option>Habka  fogaandhigad - Online </option>
-                        <option>Fasal ahaan – Offline </option>
-                    </select>
+                            <option>Diplomas of business Administration and Marketing</option>
+                            <option>Diplomas of sales Management, Banking and Finance </option>
+                            <option>Diplomas of Leadership, Banking and Finance </option>
+                            <option>Medical professional diplomas </option>
+                            <option>Short courses (3-70 SAAC ) </option>
+                            <option>Webinars (<strong>30</strong> DAQIIQI – <strong>2</strong> SAAC )
+                                <li>
+                                    <ul>- Medical field </ul>
+                                    <ul>- Engineering </ul>
+                                    <ul>- Leadership </ul>
+                                    <ul>- Engineering </ul>
+                                </li>
+
+                            </option>
+
+                            <option>Luuqadaha Carabiga /English / Turkish </option>
+                            <option>Hormarinta mashaariicda </option>
+                            <option>Maadooyin kale </option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="margin-top: -5px;">
+                        <label class="form-label">Macalimiinta </label>
+                        <select style="font-size: larger;" name="waqtiga" class="form-control custom-select">
+                            <option>Soomali </option>
+                            <option>Ajnabi </option>
+                            <option>Somali & Ajnabi </option>
+                        </select>
+                    </div>
+
+
+
+                    <button style="border: none;" type="submit">
+                        <a href="#" class="btn btn-outline-secondary mb-24pt mb-sm-0">SAVE</a>
+                    </button>
+
+
                 </div>
-                <div class="form-group" style="margin-top: -5px;">
-                    <label class="form-label">Maadada aad daneeneeso </label>   
-                    <select style="font-size: larger;" name="maadadaAadDaneeneeso"
-                            class="form-control custom-select">
-                        <option>Diplomas of business Administration and Marketing</option>
-                        <option>Diplomas of sales Management, Banking and Finance  </option>
-                        <option>Diplomas of Leadership, Banking and Finance  </option>
-                        <option>Medical professional diplomas  </option>
-                        <option>Short courses   (3-70 SAAC ) </option>
-                        <option>Webinars  (<strong>30</strong>  DAQIIQI – <strong>2</strong> SAAC )
-                            <li>
-                                <ul>-	Medical field </ul>
-                                <ul>-   Engineering  </ul>
-                                <ul>-	Leadership  </ul>
-                                <ul>-	Engineering </ul>
-                            </li>
-                        
-                        </option>
-
-                        <option>Luuqadaha Carabiga /English / Turkish  </option>
-                        <option>Hormarinta mashaariicda </option>
-                        <option>Maadooyin kale  </option>
-                    </select>
-                </div>
-                <div class="form-group" style="margin-top: -5px;">
-                    <label class="form-label">Macalimiinta </label>   
-                    <select style="font-size: larger;" name="waqtiga"
-                            class="form-control custom-select">
-                        <option>Soomali          </option>
-                        <option>Ajnabi     </option>
-                        <option>Somali & Ajnabi      </option>
-                    </select>
-                </div>
+                <div class="col-md-4">
 
 
-       
-                <button style="border: none;" type="submit">
-                    <a href="#" class="btn btn-outline-secondary mb-24pt mb-sm-0">SAVE</a>
-                </button>
-               
-
-            </div>
-            <div class="col-md-4">
-
-
-                <div class="card">
-                    <div class="embed-responsive embed-responsive-16by9">
-                        <iframe class="embed-responsive-item"
+                    <div class="card">
+                        <div class="embed-responsive embed-responsive-16by9">
+                            <iframe class="embed-responsive-item"
                                 src="https://qcdn.qaamuus.academy/media/video/videoUploaded/Akaadeemiyadda_Qaamuus.mp4"
                                 allowfullscreen=""></iframe>
-                    </div>
-                    <!-- <div class="card-body">
+                        </div>
+                        <!-- <div class="card-body">
                         <label class="form-label">URL</label>
                         <input type="text"
                                class="form-control"
@@ -132,11 +128,11 @@
                                placeholder="Enter Video URL">
                         <small class="form-text text-muted">Enter a valid video URL.</small>
                     </div> -->
-                </div>
+                    </div>
 
-                <div class="card">
-                    <div class="card-body">
-                        <!-- <div class="form-group">
+                    <div class="card">
+                        <div class="card-body">
+                            <!-- <div class="form-group">
                             <label class="form-label">Category</label>
                             <select name="category"
                                     class="form-control custom-select">
@@ -146,7 +142,7 @@
                             </select>
                             <small class="form-text text-muted">Select a category.</small>
                         </div> -->
-                        <!-- <div class="form-group">
+                            <!-- <div class="form-group">
                             <label class="form-label">Price</label>
                             <div class="row">
                                 <div class="col-md-6">
@@ -160,7 +156,7 @@
                             </div>
                             <small class="form-text text-muted">The recommended price is between &dollar;17 and &dollar;24</small>
                         </div> -->
-                        <!-- <div class="form-group mb-0">
+                            <!-- <div class="form-group mb-0">
                             <label class="form-label"
                                    for="select03">Tags</label>
                             <select id="select03"
@@ -175,13 +171,36 @@
                             </select>
                             <small class="form-text text-muted">Select one or more tags.</small>
                         </div> -->
+                        </div>
                     </div>
+
                 </div>
-
             </div>
-        </div>
 
+        </div>
     </div>
-</div>
 </form>
+<script>
+    document.getElementById('voitForm').addEventListener('submit', function (e) {
+        e.preventDefault()
+        formData = new FormData(this)
+        $.ajax({
+            type: "POST",
+            data: formData,
+            headers: { 'X-CSRFToken': getCookie('csrftoken') },
+            url: '/api/voiteModel-create/',
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: async function (respData) {
+                // console.log(userProfileResp)
+                    swal("Waad Ku mahadsantahy Codeentaada", {
+                        icon: "success"
+                    });
+            }
+        })
+
+
+    })
+</script>
 {% endblock %}

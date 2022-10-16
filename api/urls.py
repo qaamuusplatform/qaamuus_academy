@@ -73,6 +73,11 @@ urlpatterns = [
     path('userNotifications-update/<str:pk>/',views.userNotificationsUpdate),
     path('userNotifications-detail/<str:pk>/',views.userNotificationsDetail),
 
+    path('voiteModel-list/',views.voiteModelList),
+    path('voiteModel-create/',views.voiteModelCreate),
+    path('voiteModel-update/<str:pk>/',views.voiteModelUpdate),
+    path('voiteModel-detail/<str:pk>/',views.voiteModelDetail),
+
      # liveAnswer
     path('lessonAnswers-list/',views.lessonAnswersList),
     path('lessonAnswers-create/',views.lessonAnswersCreate),

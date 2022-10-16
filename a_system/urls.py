@@ -27,7 +27,7 @@ urlpatterns = [
 
     # aboutuser
     path('sing-in/',views.singIn),
-    path("instroctor-info/<str:usrId>/<str:enc1>/",views.instroctorInfo),
+    path("instructor-info/<str:usrId>/<str:enc1>/",views.instroctorInfo),
     path('user-dash/<str:enc1>/<str:usrId>/<str:enc2>/',views.usrDashboard),
     path('user-edit/<str:enc1>/<str:usrId>/<str:enc2>/',views.usrEdit),
     path('register-nu/',views.registerNu),

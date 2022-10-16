@@ -23,15 +23,3 @@ class AboutQaamuusInfo(models.Model):
     aboutQaamuusImage=models.CharField(max_length=255)
     # singUpImage=models.ImageField(default='')
     
-
-class VoteModel(models.Model):
-    magaca=models.CharField(max_length=255)
-    email=models.CharField(max_length=255)
-    phoneNumber =models.CharField(max_length=255)
-    qaabkaWaxbarashada=models.CharField(max_length=255)
-    maadadaAadDaneeneeso =models.CharField(max_length=255)
-    waqtiga =models.CharField(max_length=255)
-    macalimiinta =models.CharField(max_length=255)
-
-    def __str__(self) -> str:
-        return str(self.magaca) +' -- '+str(self.phoneNumber)

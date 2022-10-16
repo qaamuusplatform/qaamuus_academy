@@ -105,6 +105,11 @@ class LessonAnswersCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model=LessonAnswers
         fields='__all__'
+
+class VoiteModelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=VoteModel
+        fields='__all__'
 # class QaCoursesSerializer(serializers.ModelSerializer):
 #     class Meta:
 #         model=QaCourses

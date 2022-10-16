@@ -430,18 +430,8 @@ def livePreparing(request,theEventPk):
 
 
 def voteScreen(request):
-    if request.POST:
-        VoteModel.objects.create(
-            magaca=request.POST.get(''),
-            email='',
-            qaabkaWaxbarashada='',
-            maadadaAadDaneeneeso='',
-            waqtiga='',
-            macalimiinta='',
-        )
-        return render(request,'normal_pages/voit-page.html',{'registred':True})
-    else:
-        return render(request,'normal_pages/voit-page.html')
+    return render(request,'normal_pages/voit-page.html',{'registred':True})
+    
 
 def handled_not_found(request,exception):
     return render(request,'not-found.html')

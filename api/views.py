@@ -426,6 +426,39 @@ def userNotificationsDetail(request,pk):
 
 
 
+# notification reivew
+@api_view(['GET'])
+def voiteModelList(request):
+    objects=VoteModel.objects.all()
+    serializer=VoiteModelSerializer(objects,many=True)
+    return Response(serializer.data)
+
+@api_view(['POST','GET'])
+def voiteModelCreate(request):
+    serializer=VoiteModelSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response({"status": "success", "data": serializer.data})
+    else:
+        return Response({"status": "error", "data": serializer.errors})
+
+@api_view(['POST'])
+def voiteModelUpdate(request,pk):
+    theObject=VoteModel.objects.get(pk=pk)
+    serializer=VoiteModelSerializer(instance=theObject,data=request.data,partial=True)
+    if serializer.is_valid():
+        serializer.save()
+        return Response({"status": "success", "data": serializer.data})
+    else:
+        return Response({"status": "error", "data": serializer.errors})
+
+
+@api_view(['GET'])
+def voiteModelDetail(request,pk):
+    theObject=VoteModel.objects.get(pk=pk)
+    serializer=VoiteModelSerializer(theObject,many=False)
+    return Response(serializer.data)
+
 
 
 
