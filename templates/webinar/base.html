@@ -1,0 +1,421 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- ========== Meta Tags ========== -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Examin - Education and LMS Template">
+
+    <!-- ========== Page Title ========== -->
+    <title>QAAMUUS - Education </title>
+
+    <!-- ========== Favicon Icon ========== -->
+    <link rel="shortcut icon" href="{% static "webinar-static/img/favicon.png" %}" type="image/x-icon">
+
+    <!-- ========== Start Stylesheet ========== -->
+    <link href="{% static "webinar-static/css/bootstrap.min.css" %}" rel="stylesheet" />
+    <link href="{% static "webinar-static/css/font-awesome.min.css" %}" rel="stylesheet" />
+    <link href="{% static "webinar-static/css/flaticon-set.css" %}" rel="stylesheet" />
+    <link href="{% static "webinar-static/css/elegant-icons.css" %}" rel="stylesheet" />
+    <link href="{% static "webinar-static/css/magnific-popup.css" %}" rel="stylesheet" />
+    <link href="{% static "webinar-static/css/owl.carousel.min.css" %}" rel="stylesheet" />
+    <link href="{% static "webinar-static/css/owl.theme.default.min.css" %}" rel="stylesheet" />
+    <link href="{% static "webinar-static/css/animate.css" %}" rel="stylesheet" />
+    <link href="{% static "webinar-static/css/bootsnav.css" %}" rel="stylesheet" />
+    <link href="{% static "webinar-static/style.css" %}" rel="stylesheet">
+    <link href="{% static "webinar-static/css/responsive.css" %}" rel="stylesheet" />
+    <!-- ========== End Stylesheet ========== -->
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="{% static "webinar-static/js/html5/html5shiv.min.js"></script>
+      <script src="{% static "webinar-static/js/html5/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ========== Google Fonts ========== -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,700,800" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <!-- Preloader Start -->
+    <div class="se-pre-con"></div>
+    <!-- Preloader Ends -->
+
+    <!-- Start Header Top 
+    ============================================= -->
+    <div class="top-bar-area address-two-lines bg-dark text-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 address-info">
+                    <div class="info box">
+                        <ul>
+                            <li>
+                                <span><i class="fas fa-map"></i> Address</span>California, TX 70240
+                            </li>
+                            <li>
+                                <span><i class="fas fa-envelope-open"></i> Email</span>Info@gmail.com
+                            </li>
+                            <li>
+                                <span><i class="fas fa-phone"></i> Contact</span>+123 456 7890
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                {% if user.is_authenticated %}
+                <div class="user-login text-right col-md-4">
+                    <a class="popup-with-form" href="/register-nu/">
+                        <i class="fas fa-edit"></i> Register
+                    </a>
+                    <a  class="popup-with-form" href="#login-form">
+                        <i class="fas fa-user"></i> Login
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <!-- End Header Top -->
+
+    <!-- Header 
+    ============================================= -->
+    <header id="home">
+
+        <!-- Start Navigation -->
+        <nav class="navbar navbar-default navbar-sticky bootsnav">
+
+            <!-- Start Top Search -->
+            <div class="container">
+                <div class="row">
+                    <div class="top-search">
+                        <div class="input-group">
+                            <form action="#">
+                                <input type="text" name="text" class="form-control" placeholder="Search">
+                                <button type="submit">
+                                    <i class="fas fa-search"></i>
+                                </button>  
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Top Search -->
+
+            <div class="container">
+
+                <!-- Start Atribute Navigation -->
+                <div class="attr-nav">
+                    <ul>
+                        <li class="search"><a href="#"><i class="fa fa-search"></i></a></li>
+                    </ul>
+                </div>        
+                <!-- End Atribute Navigation -->
+
+                <!-- Start Header Navigation -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                    <a class="navbar-brand" href="index.html">
+                        <img src="{% static "images/logo-4.png" %}" class="logo" alt="Logo">
+                    </a>
+                </div>
+                <!-- End Header Navigation -->
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="navbar-menu">
+                    <ul class="nav navbar-nav navbar-right" data-in="#" data-out="#">
+                        <li>
+                            <a href="/webinar/">Home</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/qa-courses/">Courses</a>
+                        </li>
+                        
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle active" data-toggle="dropdown" >Event</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/">UP-Coming events</a></li>
+                                <li><a href="">Popular Events</a></li>
+                                <li><a href="/">All Events</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" >Blog</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/">Blog Standard</a></li>
+                              
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="contact.html">contact</a>
+                        </li>
+                    </ul>
+                </div><!-- /.navbar-collapse -->
+            </div>
+
+        </nav>
+        <!-- End Navigation -->
+
+    </header>
+    <!-- End Header -->
+
+    <!-- Start Login Form 
+    ============================================= -->
+    <form action="#" id="login-form" class="mfp-hide white-popup-block">
+        <div class="col-md-4 login-social">
+            <h4>Login with social</h4>
+            <ul>
+                <li class="facebook">
+                    <a href="#">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                </li>
+                <li class="twitter">
+                    <a href="#">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                </li>
+                <li class="linkedin">
+                    <a href="#">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-8 login-custom">
+            <h4>login to your registered account!</h4>
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="form-group">
+                        <input class="form-control" placeholder="Email*" type="email">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="form-group">
+                        <input class="form-control" placeholder="Password*" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="row">
+                    <label for="login-remember"><input type="checkbox" id="login-remember">Remember Me</label>
+                    <a title="Lost Password" href="#" class="lost-pass-link">Lost your password?</a>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="row">
+                    <button type="submit">
+                        Login
+                    </button>
+                </div>
+            </div>
+            <p class="link-bottom">Not a member yet? <a href="/register-nu/">Register now</a></p>
+        </div>
+    </form>
+    <!-- End Login Form -->
+
+    <!-- Start Register Form 
+    ============================================= -->
+    <form action="#" id="register-form" class="mfp-hide white-popup-block">
+        <div class="col-md-4 login-social">
+            <h4>Register with social</h4>
+            <ul>
+                <li class="facebook">
+                    <a href="#">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                </li>
+                <li class="twitter">
+                    <a href="#">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                </li>
+                <li class="linkedin">
+                    <a href="#">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-8 login-custom">
+            <h4>Register a new account</h4>
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="form-group">
+                        <input class="form-control" placeholder="Email*" type="email">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="form-group">
+                        <input class="form-control" placeholder="Username*" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="form-group">
+                        <input class="form-control" placeholder="Password*" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="form-group">
+                        <input class="form-control" placeholder="Repeat Password*" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="row">
+                    <button type="submit">
+                        Sign up
+                    </button>
+                </div>
+            </div>
+            <p class="link-bottom">Are you a member? <a href="#">Login now</a></p>
+        </div>
+    </form>
+    <!-- End Register Form -->
+
+    <!-- Start Banner 
+    ============================================= -->
+    {% block content %}
+
+    {% endblock %}
+
+
+
+    <!-- Start Footer 
+    ============================================= -->
+    <footer class="bg-dark default-padding-top text-light">
+        <div class="container">
+            <div class="row">
+                <div class="f-items">
+                    <div class="col-md-4 item">
+                        <div class="f-item">
+                            <img src="{% static "webinar-static/img/logo-light.png" %}" alt="Logo">
+                            
+                            <p class="text-italic">
+                                Please write your email and get our amazing updates, news and support
+                            </p>
+                            <div class="subscribe">
+                                <form action="#">
+                                    <div class="input-group stylish-input-group">
+                                        <input type="email" placeholder="Enter your e-mail here" class="form-control" name="email">
+                                        <button type="submit">
+                                            <i class="fa fa-paper-plane"></i>
+                                        </button>  
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-sm-6 item">
+                        <div class="f-item link">
+                            <h4>Links</h4>
+                            <ul>
+                                <li>
+                                    <a href="#">Courses</a>
+                                </li>
+                                <li>
+                                    <a href="#">Event</a>
+                                </li>
+                              
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-sm-6 item">
+                        <div class="f-item link">
+                            <h4>Support</h4>
+                            <ul>
+                                <li>
+                                    <a href="#">Documentation</a>
+                                </li>
+                                <li>
+                                    <a href="#">Forums</a>
+                                </li>
+                               
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-4 item">
+                        <div class="f-item address">
+                            <h4>Address</h4>
+                            <ul>
+                                <li>
+                                    <i class="fas fa-envelope"></i> 
+                                    <p>Email <span><a href="mailto:support@validtheme.com">support@validtheme.com</a></span></p>
+                                </li>
+                                <li>
+                                    <i class="fas fa-map"></i> 
+                                    <p>Office <span>123 6th St. Melbourne, FL 32904</span></p>
+                                </li>
+                            </ul>
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Start Footer Bottom -->
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-6">
+                            <p>&copy; Copyright 2019. All Rights Reserved by <a href="#">validthemes</a></p>
+                        </div>
+                        <div class="col-md-6 text-right link">
+                            <ul>
+                                <li>
+                                    <a href="#">Terms of user</a>
+                                </li>
+                                <li>
+                                    <a href="#">License</a>
+                                </li>
+                                <li>
+                                    <a href="#">Support</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Footer Bottom -->
+    </footer>
+    <!-- End Footer -->
+
+    <!-- jQuery Frameworks
+    ============================================= -->
+    <script src="{% static "webinar-static/js/jquery-1.12.4.min.js" %}"></script>
+    <script src="{% static "webinar-static/js/bootstrap.min.js" %}"></script>
+    <script src="{% static "webinar-static/js/equal-height.min.js" %}"></script>
+    <script src="{% static "webinar-static/js/jquery.appear.js" %}"></script>
+    <script src="{% static "webinar-static/js/jquery.easing.min.js" %}"></script>
+    <script src="{% static "webinar-static/js/jquery.magnific-popup.min.js" %}"></script>
+    <script src="{% static "webinar-static/js/modernizr.custom.13711.js" %}"></script>
+    <script src="{% static "webinar-static/js/owl.carousel.min.js" %}"></script>
+    <script src="{% static "webinar-static/js/wow.min.js" %}"></script>
+    <script src="{% static "webinar-static/js/isotope.pkgd.min.js" %}"></script>
+    <script src="{% static "webinar-static/js/imagesloaded.pkgd.min.js" %}"></script>
+    <script src="{% static "webinar-static/js/count-to.js" %}"></script>
+    <script src="{% static "webinar-static/js/loopcounter.js" %}"></script>
+    <script src="{% static "webinar-static/js/jquery.nice-select.min.js" %}"></script>
+    <script src="{% static "webinar-static/js/bootsnav.js" %}"></script>
+    <script src="{% static "webinar-static/js/main.js" %}"></script>
+
+</body>
+</html>

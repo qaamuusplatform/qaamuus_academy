@@ -1,0 +1,249 @@
+{% extends 'authBase.html' %}
+
+{% block content %}
+
+<style>
+    #timeReminder .spanTime {
+        border: 1px solid white;
+        border-radius: 5px;
+        padding: 5px;
+        color: white;
+        background-color: #34495E;
+
+    }
+
+    .box {
+        /* width: 28vmin;
+        height: 28vmin; */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-evenly;
+        position: relative;
+        box-shadow: 15px 15px 30px rgba(0, 0, 0, 0.5);
+        font-size: 12px;
+    }
+
+    span.num {
+        background-color: #ffffff;
+        height: 100%;
+        color: #032d4d;
+        width: 100%;
+        display: grid;
+        place-items: center;
+        font-weight: 600;
+        font-size: 5em;
+    }
+
+    span.text {
+        font-size: 1.4em;
+        background-color: #008abf;
+        display: block;
+        width: 100%;
+        color: white;
+        text-align: center;
+        padding: 0.1em 0;
+        font-weight: 400;
+    }
+    #inrollNow:hover {
+        transform: scale(1.06);
+    }
+
+    #inrollNow {
+        transition: all .4s ease-in-out;
+    }
+</style>
+
+<div class="page__container">
+    <br>
+    {% if theEvent.isEnded %}
+    <div class="alert alert-soft-warning mb-24pt">
+        <div class="d-flex flex-wrap align-items-start">
+            <div class="mr-8pt">
+                <i class="material-icons">access_time</i>
+            </div>
+            <div class="flex"
+                 style="min-width: 180px">
+                <small class="text-black-100">
+                    <strong>Webinar are now Offline.</strong><br>
+                    <span>If you want to stay up to date follow our status.</span>
+                </small>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    {% if userEventInrolment%}
+        <div class="alert alert-soft-primary alert-dismissible fade show" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <div class="d-flex flex-wrap align-items-start">
+                <div class="mr-8pt">
+                    <i class="material-icons">access_time</i>
+                </div>
+                <div class="flex" style="min-width: 180px">
+                    <small class="text-black-100">
+                        <strong>Waa Ku mahadsantahay - </strong> iska diiwaangalinta Webinarkan
+                    </small>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div id="inrollNow" class="alert alert-soft-warning mb-24pt">
+            <div class="d-flex flex-wrap align-items-start">
+                <div class="mr-8pt">
+                    <i class="material-icons">access_time</i>
+                </div>
+                <div class="flex"
+                    style="min-width: 180px">
+                    <small class="text-black-100">
+                        <strong>Kama Diiwaangashanid Webinarkaan.</strong><br>
+                        <span>Fadlan iska diiwaangali si aad uga faa'idaysato.</span>
+                    </small>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    {% endif %}
+    
+</div>
+<div class="row page__container">
+    
+    <div style="margin-bottom: 20px;" class="col-lg-6 col-md-12 col-sm-12">
+        <div class="card posts-card posts-card--wrap-xl">
+            <div class="posts-card__content">
+                <div class="row">
+                    <div class="col-3">
+                        <div class="box">
+                            <span class="num" id="day">00</span>
+                            <span class="text">Day</span>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="box">
+                            <span class="num" id="hour">00</span>
+                            <span class="text">Hour</span>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="box">
+                            <span class="num" id="minute">00</span>
+                            <span class="text">Minute</span>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="box">
+                            <span class="num" id="second">00</span>
+                            <span class="text">Second</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+
+        </div>
+        
+        <div class="card posts-card posts-card--wrap-xl">
+            <div class="posts-card__content">
+                <div class="bg-white d-flex align-items-center">
+                    <div class="avatar avatar-lg avatar-online">
+                        <img src="{{theEvent.profileImage.url}}"
+                             alt="Avatar"
+                             class="avatar-img rounded-circle">
+                    </div>
+                    &nbsp;&nbsp;&nbsp;
+                    <div class="mr-16pt">
+                        <a href="teacher-profile.html" class="card-title" style="font-weight: bold;">{{theEvent.persenter.fullName}}</a>
+                        <div class="d-flex align-items-center">
+                            <small class="text-50 mr-2">{{theEvent.persenter.userTitle}}</small>
+                            <!-- <a href="" class="text-50"><small>Liked</small></a> -->
+                        </div>
+                    </div>
+                    <div>
+                        <!-- <a href="" class="text-50 text-right d-flex align-items-center text-decoration-0"><i
+                                class="material-icons icon--left">favorite_border</i> 3</a> -->
+                    </div>
+                </div>
+            </div>
+           
+        </div>
+
+    </div>
+    <br>
+    <div class="col-lg-6 col-md-12 col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{theEvent.title}}</h5>
+                <hr>
+                <p class="card-text">{{theEvent.simDesc}}.</p>
+
+            </div>
+            <div class="card-footer">
+                <div class="js-player card bg-primary text-center embed-responsive embed-responsive-16by9 mb-24pt">
+                    <div class="player embed-responsive-item">
+
+                        <iframe class="embed-responsive-item" src="{{theEvent.prevVideo}}" allowfullscreen=""></iframe>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var isRealLiveSdk='{{theEvent.isRealLiveSdk}}'
+    var isEnded = '{{theEvent.isEnded}}'
+    getTimeCountDown('{{theEvent.dateTimeStarting|date:"Y-m-d H:i"}}')
+    async function getServerCurrentTime() {
+        var currentDateTime
+        await fetch('/api/get-current-time/').then((resp) => resp.json()).then(function (respoTime) {
+            currentDateTime=respoTime.dateTimeNow
+        })
+        return currentDateTime
+    }
+    function getTimeCountDown(theDateTime) {
+        var endDate = theDateTime;
+        /* ***** Do not change this code below. ***** */
+        var deadline = new Date(endDate).getTime();
+
+        var x = setInterval(async function () {
+            var now = new Date(await getServerCurrentTime()).getTime();
+            var t = deadline - now;
+            var days = Math.floor(t / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((t % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((t % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((t % (1000 * 60)) / 1000);
+            document.getElementById("day").innerHTML = days;
+            document.getElementById("hour").innerHTML = hours;
+            document.getElementById("minute").innerHTML = minutes;
+            document.getElementById("second").innerHTML = seconds ;
+
+            /* Output the End date. (Only for Demo) */
+
+            if (t < 0) {
+                if (isEnded=='True') {
+                    
+                }else{
+                    if (isRealLiveSdk == 'True'){
+                        location.href='/webinar/live/{{theEvent.pk}}/preparing/'
+                    }else{
+                        location.href='/webinar/v-live/{{theEvent.pk}}/{{theEvent.title}}/'
+
+                    }
+                }
+                
+                console.log(isRealLiveSdk)
+                // location.href='/webinar/live/{{theEvent.pk}}/preparing/'
+                clearInterval(x);
+                document.getElementById("day").innerHTML = "0";
+                document.getElementById("hour").innerHTML = "0";
+                document.getElementById("minute").innerHTML = "0";
+                document.getElementById("second").innerHTML = "0";
+            }
+        }, 1000);
+    }
+</script>
+
+{% endblock %}

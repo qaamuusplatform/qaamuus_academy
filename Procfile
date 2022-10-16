@@ -1,0 +1,1 @@
+web: gunicorn qaamuus_acd.wsgi

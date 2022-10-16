@@ -1,0 +1,1183 @@
+{% extends 'unAuthBase.html' %}
+{% block content %}
+<style>
+    :root {
+        --clr-1: #000;
+        --clr-2: #fff;
+        --body-bgclr: #fff;
+        --bgclr-1: #90cad4;
+        --bgclr-2: #19a9c3;
+    }
+
+    p #deadline {
+        color: var(--clr-1);
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    #clockdiv {
+
+        color: var(--clr-2);
+        display: inline-block;
+        font-size: 2em;
+        font-weight: 600;
+        text-align: center;
+    }
+
+    #clockdiv>div {
+        background-color: var(--bgclr-1);
+        border-radius: 4px;
+        display: inline-block;
+        padding: 10px;
+    }
+
+    #clockdiv div>span {
+        background-color: var(--bgclr-2);
+        border-radius: 4px;
+        display: inline-block;
+        padding: 15px;
+    }
+
+    .smalltext {
+        font-size: 1rem;
+        padding-top: 5px;
+    }
+</style>
+<div class="mdk-header-layout__content page-content ">
+
+    <div class="mdk-box mdk-box--bg-white-35 bg-white js-mdk-box mb-0"
+        data-effects="parallax-background blend-background">
+        <div class="mdk-box__bg">
+            <div class="mdk-box__bg-front" style="background-image: url({{aboutQaamuusInfo.heroImage.url}});">
+            </div>
+        </div>
+        <div class="mdk-box__content d-flex align-items-center justify-content-center container page__container text-center py-112pt"
+            style="min-height: 656px;">
+            <div class="card card--transparent mb-0">
+                <div class="card-body px-32pt py-24pt">
+                    <h1>{{aboutQaamuusInfo.heroTitle}}</h1>
+                    <p class="lead measure-lead mx-auto mb-32pt">{{aboutQaamuusInfo.heroDesc}}</p>
+
+                    <!-- <a href="signup.html" class="btn btn-lg btn-accent btn--raised mb-16pt">Sign Up - Only
+                        $19.00/mo</a> -->
+
+                    <!-- <p class="mb-0"><a href=""><strong>Are you a teacher?</strong></a></p> -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="page-section border-bottom-2">
+        <div class="container page__container">
+            <div class="page-headline text-center">
+                <h2>Qamuus E-learning academy </h2>
+                <p class="lead measure-lead mx-auto text-70">is an all encompassing program for training and enriching students with a full knowledge and information package, and facilitating access to all modalities by students, trainees or the wide globe beneficiaries.</p>
+            </div>
+            <div class="row card-group-row">
+                <div class="col-md-8 card-group-row__col">
+
+                    <div class="card card--elevated card-group-row__card">
+                        <video controls src="{{aboutQaamuusInfo.aboutQaamuusVideo.url}}"></video>
+
+                        <div class="card-body d-flex">
+
+
+                        </div>
+                        <div class="card-footer d-flex lh-1 px-16pt py-8pt">
+                            <!-- <div class="flex text-muted"><small>7 people found this useful</small></div>
+                            <a href="#" class="text-20"><i class="material-icons icon-16pt">thumb_up</i></a> -->
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-4 card-group-row__col">
+
+                    <div class="card card--elevated card-group-row__card">
+                        <div class="card-body d-flex">
+                            <span class="icon-holder icon-holder--outline-muted rounded-circle d-inline-flex mr-16pt">
+                                <i class="material-icons">question_answer</i>
+                            </span>
+                            <div class="flex">
+                                <a class="card-title mb-4pt" href="">Knowedge dissemination</a>
+                                <p class="text-70 mb-0">Qamuus  E-learning academy contains a valuable set of training courses and distinctive approaches to ensure delivery of a prolific package to the recipients; students or trainees.</p>
+                            </div>
+                        </div>
+                        <div class="card-body d-flex">
+                            <span class="icon-holder icon-holder--outline-muted rounded-circle d-inline-flex mr-16pt">
+                                <i class="material-icons">question_answer</i>
+                            </span>
+                            <div class="flex">
+                                <a class="card-title mb-4pt" href="">Guidance and mentoring</a>
+                                <p class="text-70 mb-0">The platform contains interactive spaces in which students share knowledge, lessons and debate in open dialogue spaces.</p>
+                            </div>
+                        </div>
+                        <div class="card-footer d-flex lh-1 px-16pt py-8pt">
+                            <div class="flex text-muted"><small>7 people found this useful</small></div>
+                            <a href="#" class="text-20"><i class="material-icons icon-16pt">thumb_up</i></a>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+    </div>
+    <div class="page-section border-bottom-2">
+        <div class="container page__container">
+            <div class="page-separator">
+                <div class="page-separator__text">UPCOMING EVNET</div>
+            </div>
+            {% if soonEvent == '' %}
+            <div class="alert alert-soft-warning mb-0 p-8pt">
+                <div class="d-flex align-items-start">
+                    <div class="mr-8pt">
+                        <i class="material-icons">card_giftcard</i>
+                    </div>
+                    <div class="flex">
+                        <small class="text-100">At this time there is no Upcoming events!</small>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="col-12">
+
+                <div data-toggle="popover" data-trigger="click" class="card">
+                    <img src="{{soonEvent.coverImage.url}}" alt="TypeScript" class="card-img"
+                        style="max-height: 100%; width: initial;">
+                    <div class="fullbleed bg-primary" style="opacity: .5;"></div>
+                    <img src="{{soonEvent.persenter.profileImage.url}}" width="64" alt="Instruduction to TypeScript"
+                        class="rounded position-absolute" style="right: 1rem; top: 1rem;">
+                    <div class="card-body d-flex align-items-center justify-content-center fullbleed">
+                        <div>
+                            <div class="text-white mb-16pt" id="duration">
+                                <div id="clockdiv">
+                                    <div>
+                                        <span class="days" id="day"></span>
+                                        <div class="smalltext">Days</div>
+                                    </div>
+                                    <div>
+                                        <span class="hours" id="hour"></span>
+                                        <div class="smalltext">Hours</div>
+                                    </div>
+                                    <div>
+                                        <span class="minutes" id="minute"></span>
+                                        <div class="smalltext">Minutes</div>
+                                    </div>
+                                    <div>
+                                        <span class="seconds" id="second"></span>
+                                        <div class="smalltext">Seconds</div>
+                                    </div>
+                                </div>
+                                <!-- <div class="d-flex align-items-center justify-content-center">
+                                <a id="days" class="btn btn-white mr-8pt">dsadas 
+                                    <br>
+                                    DAY</a>
+                                <a id="hours" class="btn btn-white mr-8pt">HOURSE</a>
+                                <a id="minutes" class="btn btn-white mr-8pt">MINUTES</a>
+                                <a id="seconds" class="btn btn-outline-white ml-0">SECONDS</a>
+                            </div> -->
+                                <!-- <div class="row">
+                                <div class="col-3"><span id="days">12 :</span><br>
+                                    <span id="countType">DAY</span>
+                                </div>
+                                <div class="col-lg-3"><span id="hours">4</span><br>
+                                    <span id="countType" class="d-inline-block d-md-block">HOUR</span>
+                                    
+                                </div>
+                                <div class="col-3"><span id="minutes">44</span><br>
+                                    <span id="countType">MIN</span>
+                                </div>
+                                <div class="col-3"><span id="seconds">04</span><br>
+                                    <span id="countType">SEC</span>
+                                </div>
+                           </div> -->
+                            </div>
+                            <div class="d-flex align-items-center mb-16pt justify-content-center">
+                                <div class="d-flex align-items-center mr-16pt">
+                                    <span class="material-icons icon-16pt text-white-50 mr-4pt">access_time</span>
+                                    <p class="flex text-white-50 lh-1 mb-0">{{soonEvent.duration}}</p>
+                                </div>
+                                <!-- <div class="d-flex align-items-center">
+                                <span
+                                    class="material-icons icon-16pt text-white-50 mr-4pt">play_circle_outline</span>
+                                <p class="flex text-white-50 lh-1 mb-0">12 lessons</p>
+                            </div> -->
+                            </div>
+                            <div class="d-flex align-items-center justify-content-center">
+                                <a href="/event-detail/{{soonEvent.pk}}/{{soonEvent.title}}/" class="btn btn-white mr-8pt">INROLL-NOW</a>
+                                <a href="/event-detail/{{soonEvent.pk}}/{{soonEvent.title}}/" class="btn btn-outline-white ml-0">SEE DETAIL</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="popoverContainer d-none">
+                    <div class="media">
+                        <div class="media-left mr-12pt">
+                            <img src="{{soonEvent.persenter.profileImage.url}}" width="40" height="40" alt="Angular"
+                                class="rounded">
+                        </div>
+                        <div class="media-body">
+                            <div class="card-title mb-0">{{soonEvent.title}}</div>
+                            <p class="lh-1 mb-0">
+                                <span class="text-50 small">with</span>
+                                <span class="text-50 small font-weight-bold">{{soonEvent.persenter.fullName}}</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <p class="my-16pt text-70">{{soonEvent.simDesc}}.</p>
+                    {{soonEvent.simDesc|safe}}
+                    <!-- <div class="mb-16pt">
+                    <div class="d-flex align-items-center">
+                        <span class="material-icons icon-16pt text-50 mr-8pt">check</span>
+                        <p class="flex text-50 lh-1 mb-0"><small>Fundamentals of working with
+                                Angular</small></p>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <span class="material-icons icon-16pt text-50 mr-8pt">check</span>
+                        <p class="flex text-50 lh-1 mb-0"><small>Create complete Angular
+                                applications</small></p>
+                    </div>
+                    
+                </div> -->
+
+                    <div class="row align-items-center">
+                        <div class="col-auto">
+                            <div class="d-flex align-items-center mb-4pt">
+                                <span class="material-icons icon-16pt text-50 mr-4pt">access_time</span>
+                                <p class="flex text-50 lh-1 mb-0"><small>{{soonEvent.duration}} </small></p>
+                            </div>
+                            <!-- <div class="d-flex align-items-center mb-4pt">
+                                <span class="material-icons icon-16pt text-50 mr-4pt">play_circle_outline</span>
+                                <p class="flex text-50 lh-1 mb-0"><small>{{theCourse.lessonCounts}} lessons</small>
+                                </p>
+                            </div> -->
+                       
+                        </div>
+                        <div class="col text-right">
+                            <a href="/event-detail/{{soonEvent.pk}}/{{soonEvent.title}}/" class="btn btn-primary">SEE DETAIL</a>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="d-flex flex-wrap align-items-start">
+                <div class="d-flex align-items-center mr-24pt">
+                    <a href="student-take-course.html" class="mr-12pt">
+                        <img src="{{soonEvent.image.url}}" width="40" alt="Angular" class="rounded">
+                    </a>
+                    <div class="flex">
+                        <a class="card-title" href="student-take-course.html">{{soonEvent.title}}</a>
+                        <p class="lh-1 mb-0">
+                            <span class="text-50 small">with</span>
+                            <span class="text-50 small">{{soonEvent.persenter.fullName}}</span>
+                        </p>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center py-4pt" style="white-space: nowrap;">
+                    <small class="text-50 mr-8pt">{{soonEvent.eventType}}</small>
+                    <!-- <div class="rating mr-8pt">
+                        <span class="rating__item"><span class="material-icons text-primary">star</span></span>
+                        <span class="rating__item"><span class="material-icons text-primary">star</span></span>
+                        <span class="rating__item"><span class="material-icons text-primary">star</span></span>
+                        <span class="rating__item"><span class="material-icons text-primary">star</span></span>
+                        <span class="rating__item"><span
+                                class="material-icons text-primary">star_border</span></span>
+                    </div>
+                    <small class="text-50">4/5</small> -->
+                </div>
+            </div>
+            {% endif %}
+          
+        </div>
+    </div>
+    <div class="page-section border-bottom-2 bg-white">
+        <div class="container page__container">
+            <div class="page-headline text-center">
+                <h2>Qaamuus Academy Services</h2>
+                <p class="lead measure-lead mx-auto text-70">Close follow-up and ensuring beneficiaries satisfaction through a transparent feedback mechanism.</p>
+            </div>
+
+            <div class="row align-items-center">
+                <div class="d-flex col-md align-items-center border-bottom border-md-0 mb-16pt pb-16pt pb-md-0">
+                    <div
+                        class="rounded-circle bg-dark w-64 h-64 d-inline-flex align-items-center justify-content-center mr-16pt">
+                        <i class="material-icons text-white">subscriptions</i>
+                    </div>
+                    <div class="flex">
+                        <div class="card-title mb-4pt">Providing short courses</div>
+                        <p class="card-subtitle text-70">In the form of distance learning (E-learning).</p>
+                    </div>
+                </div>
+                <div class="d-flex col-md align-items-center border-bottom border-md-0 mb-16pt pb-16pt pb-md-0">
+                    <div
+                        class="rounded-circle bg-dark w-64 h-64 d-inline-flex align-items-center justify-content-center mr-16pt">
+                        <i class="material-icons text-white">verified_user</i>
+                    </div>
+                    <div class="flex">
+                        <div class="card-title mb-4pt">Comprehensive courses</div>
+                        <p class="card-subtitle text-70">That have their own curriculum, exams and qualifications.</p>
+                    </div>
+                </div>
+                <div class="d-flex col-md align-items-center border-bottom border-md-0 mb-16pt pb-16pt pb-md-0">
+                    <div
+                        class="rounded-circle bg-dark w-64 h-64 d-inline-flex align-items-center justify-content-center mr-16pt">
+                        <i class="material-icons text-white">update</i>
+                    </div>
+                    <div class="flex">
+                        <div class="card-title mb-4pt">Providing diploma courses</div>
+                        <p class="card-subtitle text-70">Fo the different branches.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row align-items-center">
+                <div class="d-flex col-md align-items-center border-bottom border-md-0 mb-16pt mb-md-0 pb-16pt pb-md-0">
+                    <div
+                        class="rounded-circle bg-dark w-64 h-64 d-inline-flex align-items-center justify-content-center mr-16pt">
+                        <i class="material-icons text-white">code</i>
+                    </div>
+                    <div class="flex">
+                        <div class="card-title mb-4pt">Conducting training</div>
+                        <p class="card-subtitle text-70"> (training / seminars).</p>
+                    </div>
+                </div>
+                <div class="d-flex col-md align-items-center border-bottom border-md-0 mb-16pt mb-md-0 pb-16pt pb-md-0">
+                    <div
+                        class="rounded-circle bg-dark w-64 h-64 d-inline-flex align-items-center justify-content-center mr-16pt">
+                        <i class="material-icons text-white">layers</i>
+                    </div>
+                    <div class="flex">
+                        <div class="card-title mb-4pt">Encouraging development</div>
+                        <p class="card-subtitle text-70">Encouraging development and innovation.</p>
+                    </div>
+                </div>
+                <div class="d-flex col-md align-items-center">
+                    <div
+                        class="rounded-circle bg-dark w-64 h-64 d-inline-flex align-items-center justify-content-center mr-16pt">
+                        <i class="material-icons text-white">accessibility</i>
+                    </div>
+                    <div class="flex">
+                        <div class="card-title mb-4pt">Preparation of international</div>
+                        <p class="card-subtitle text-70">exams and their qualifications.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="page-section border-bottom-2">
+        <div class="container page__container">
+            <div class="page-separator">
+                <div class="page-separator__text">Available Category</div>
+            </div>
+
+            <div class="row card-group-row">
+
+                {% for categ in categorys %}
+                <div class="col-sm-4 card-group-row__col">
+
+                    <div class="card js-overlay card-sm overlay--primary-dodger-blue stack stack--1 card-group-row__card"
+                        data-toggle="popover" data-trigger="click">
+
+                        <div class="card-body d-flex flex-column">
+                            <div class="d-flex align-items-center">
+                                <div class="flex">
+                                    <div class="d-flex align-items-center">
+                                        <div class="rounded mr-12pt z-0 o-hidden">
+                                            <div class="overlay">
+                                                <img src="{{categ.categoryImage.url}}" width="40" height="40"
+                                                    alt="Angular" class="rounded">
+                                                <span class="overlay__content overlay__content-transparent">
+                                                    <span class="overlay__action d-flex flex-column text-center lh-1">
+                                                        <small class="h6 small text-white mb-0"
+                                                            style="font-weight: 500;">80%</small>
+                                                    </span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="flex">
+                                            <div class="card-title">{{categ.categoryName}}</div>
+                                            <p class="flex text-50 lh-1 mb-0"><small>{{categ.courses}} course</small>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <a href="#" data-toggle="tooltip" data-title="Add Favorite" data-placement="top"
+                                    data-boundary="window"
+                                    class="ml-4pt material-icons text-20 card-course__icon-favorite">favorite_border</a>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="popoverContainer d-none">
+                        <div class="media">
+                            <div class="media-left mr-12pt">
+                                <img src="{{categ.categoryImage.url}}" width="40" height="40" alt="Angular"
+                                    class="rounded">
+                            </div>
+                            <div class="media-body">
+                                <div class="card-title">React Native</div>
+                                <p class="text-50 d-flex lh-1 mb-0 small">{{categ.courses}} courses</p>
+                            </div>
+                        </div>
+
+                        <p class="mt-16pt text-70">{{categ.categoryDesc}}</p>
+
+                        <div class="my-32pt">
+                            <!-- <div class="d-flex align-items-center mb-8pt justify-content-center">
+                                <div class="d-flex align-items-center mr-8pt">
+                                    <span class="material-icons icon-16pt text-50 mr-4pt">access_time</span>
+                                    <p class="flex text-50 lh-1 mb-0"><small>50 minutes left</small></p>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <span
+                                        class="material-icons icon-16pt text-50 mr-4pt">play_circle_outline</span>
+                                    <p class="flex text-50 lh-1 mb-0"><small>12 lessons</small></p>
+                                </div>
+                            </div> -->
+                            <div class="d-flex align-items-center justify-content-center">
+                                <a href="/qa-courses/{{categ.pk}}/" class="btn btn-primary mr-8pt">See related
+                                    courses</a>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </div>
+                {% endfor %}
+
+            </div>
+
+        </div>
+    </div>
+    <div class="page-section border-bottom-2">
+        <div class="container page__container">
+            <div class="page-separator">
+                <div class="page-separator__text">Our Courses</div>
+            </div>
+            <div class="row card-group-row">
+                {% for theCourse in qaCourses %}
+                <div class="col-sm-6 col-xl-4 col-lg-4 col-md-6 card-group-row__col">
+
+                    <div class="card card-sm card--elevated p-relative o-hidden overlay overlay--primary-dodger-blue js-overlay card-group-row__card"
+                        data-toggle="popover" data-trigger="click">
+
+                        <a href="/crs-dtl-wth/{{theCourse.pk}}/{{theCourse.title}}/" class="card-img-top js-image"
+                            data-position="" data-height="200">
+                            <img src="{{theCourse.prevImage.url}}" alt="course">
+                            <span class="overlay__content">
+                                <span class="overlay__action d-flex flex-column text-center">
+                                    <i class="material-icons icon-32pt">play_circle_outline</i>
+                                    <span class="card-title text-white">Preview</span>
+                                </span>
+                            </span>
+                        </a>
+
+                        <div class="card-body flex">
+                            <div class="d-flex">
+                                <div class="flex">
+                                    <a class="card-title" href="student-course.html">{{theCourse.title}}</a>
+                                    <small
+                                        class="text-50 font-weight-bold mb-4pt">{{theCourse.instructor.fullName}}</small>
+                                </div>
+                                <a href="student-course.html" data-toggle="tooltip" data-title="Add Favorite"
+                                    data-placement="top" data-boundary="window"
+                                    class="ml-4pt material-icons text-20 card-course__icon-favorite">favorite_border</a>
+                            </div>
+                            <div class="d-flex">
+                                <div class="rating flex">
+                                    <span class="rating__item"><span class="material-icons">star</span></span>
+                                    <span class="rating__item"><span class="material-icons">star</span></span>
+                                    <span class="rating__item"><span class="material-icons">star</span></span>
+                                    <span class="rating__item"><span class="material-icons">star</span></span>
+                                    <span class="rating__item"><span class="material-icons">star_border</span></span>
+                                </div>
+                                <!-- <small class="text-50">6 hours</small> -->
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="row justify-content-between">
+                                <div class="col-auto d-flex align-items-center">
+                                    <span class="material-icons icon-16pt text-50 mr-4pt">access_time</span>
+                                    <p class="flex text-50 lh-1 mb-0"><small>{{theCourse.houres}} hours</small></p>
+                                </div>
+                                <div class="col-auto d-flex align-items-center">
+                                    <span class="material-icons icon-16pt text-50 mr-4pt">play_circle_outline</span>
+                                    <p class="flex text-50 lh-1 mb-0"><small>12 lessons</small></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="popoverContainer d-none">
+                        <div class="media">
+                            <div class="media-left mr-12pt">
+                                <img src="{{theCourse.instructor.profileImage.url}}" width="40" height="40"
+                                    alt="Angular" class="rounded">
+                            </div>
+                            <div class="media-body">
+                                <div class="card-title mb-0">{{theCourse.title}}</div>
+                                <p class="lh-1 mb-0">
+                                    <span class="text-50 small">with</span>
+                                    <span
+                                        class="text-50 small font-weight-bold">{{theCourse.instructor.fullName}}</span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <p class="my-16pt text-70">{{theCourse.simDesc}}.</p>
+                        {{theCourse.youLearn|safe}}
+                        <!-- <div class="mb-16pt">
+                            <div class="d-flex align-items-center">
+                                <span class="material-icons icon-16pt text-50 mr-8pt">check</span>
+                                <p class="flex text-50 lh-1 mb-0"><small>Fundamentals of working with
+                                        Angular</small></p>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <span class="material-icons icon-16pt text-50 mr-8pt">check</span>
+                                <p class="flex text-50 lh-1 mb-0"><small>Create complete Angular
+                                        applications</small></p>
+                            </div>
+                            
+                        </div> -->
+
+                        <div class="row align-items-center">
+                            <div class="col-auto">
+                                <div class="d-flex align-items-center mb-4pt">
+                                    <span class="material-icons icon-16pt text-50 mr-4pt">access_time</span>
+                                    <p class="flex text-50 lh-1 mb-0"><small>{{theCourse.houres}} hours</small></p>
+                                </div>
+                                <div class="d-flex align-items-center mb-4pt">
+                                    <span class="material-icons icon-16pt text-50 mr-4pt">play_circle_outline</span>
+                                    <p class="flex text-50 lh-1 mb-0"><small>{{theCourse.lessonCounts}} lessons</small>
+                                    </p>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <span class="material-icons icon-16pt text-50 mr-4pt">assessment</span>
+                                    <p class="flex text-50 lh-1 mb-0"><small>{{theCourse.level}}</small></p>
+                                </div>
+                            </div>
+                            <div class="col text-right">
+                                <a href="/crs-dtl-wth/{{theCourse.pk}}/{{theCourse.title}}/"
+                                    class="btn btn-primary"> GET START</a>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+                {% endfor %}
+
+
+            </div>
+        </div>
+    </div>
+    <div class="container page__container page-section">
+        <h2  class="h2" style="font-size: x-large;">Our instroctors</h2>
+
+        <div class="row card-group-row" data-toggle="dragula">
+            {% for instroctor in instroctors %}
+            <div class="col-sm-6 col-md-3 card-group-row__col">
+                <div class="card card-sm card-group-row__card">
+                    <div class="position-relative">
+                        <div class="card-img-top">
+                            <a href="/instroctor-info/{{instroctor.pk}}/{{instroctor.fullName}}/">
+                                <img src="{{instroctor.profileImage.url}}" class="card-img-top card-img-cover" alt="">
+                            </a>
+                        </div>
+                        <div class="card-body avatar-group position-absolute-top">
+                            <div class="avatar avatar-xs">
+                                <a href="/instroctor-info/{{instroctor.pk}}/{{instroctor.fullName}}/"><img
+                                        src="/static/images/logo/logo-4.png" alt="Avatar"
+                                        class="avatar-img rounded-circle"></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body d-flex">
+                        <div class="flex">
+                            <h6 class="card-title m-0"><a
+                                    href="/instroctor-info/{{instroctor.pk}}/{{instroctor.fullName}}/">{{instroctor.fullName}}</a>
+                            </h6>
+                            <small class="text-muted">{{instroctor.userTitle}}</small>
+                        </div>
+                        <a href="/instroctor-info/{{instroctor.pk}}/{{instroctor.fullName}}/" class="text-muted"><i
+                                class="material-icons">more_vert</i></a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+
+
+
+        </div>
+    </div>
+
+    <!-- <div class="page-section border-bottom-2">
+        <div class="container page__container">
+
+         
+            <div class="page-separator">
+                <div class="page-separator__text">Top Teachers</div>
+            </div>
+
+            <div class="row card-group-row">
+
+                <div class="col-md-4 col-lg-3 card-group-row__col">
+                    <div class="card card-group-row__card">
+                        <div class="card-header d-flex align-items-center">
+                            <a href="teacher-profile.html"
+                               class="card-title flex mr-12pt">Johnathan S.</a>
+                            <a href="teacher-profile.html"
+                               class="btn btn-light btn-sm"
+                               data-toggle="tooltip"
+                               data-title="Unfollow"
+                               data-placement="bottom">Following</a>
+                        </div>
+                        <div class="card-body flex text-center d-flex flex-column align-items-center justify-content-center">
+                            <a href="teacher-profile.html"
+                               class="avatar avatar-xl overlay js-overlay overlay--primary rounded-circle p-relative o-hidden mb-16pt">
+                                <img width="500px" src="/media/images/aboutQaamuus/pexels-julia-m-cameron-4144923.jpg"
+                                     alt="teacher"
+                                     class="avatar-img">
+                                <span class="overlay__content"><i class="overlay__action material-icons icon-40pt">face</i></span>
+                            </a>
+                            <div style="text-align: justify; text-justify: inter-word;" class="flex">
+                                
+                                <p  class="text-70 measure-paragraph">ons in psychology and sociology and stay in tune with the latest digital strategies through continued cours.</p>
+
+                                <a href="javascript:void()"
+                                   data-toggle="tooltip"
+                                   data-title="Browse Topic"
+                                   data-placement="bottom"
+                                   class="chip chip-outline-secondary">UI Designer</a>
+                            </div>
+                        </div>
+                       
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4 card-group-row__col">
+                    <div class="card card-group-row__card">
+                        <div class="card-header d-flex align-items-center">
+                            <a href="teacher-profile.html"
+                               class="card-title flex mr-12pt">Fabrice M.</a>
+                            <a href="teacher-profile.html"
+                               class="btn btn-light btn-sm">Follow</a>
+                        </div>
+                        <div class="card-body flex text-center d-flex flex-column align-items-center justify-content-center">
+                            <a href="teacher-profile.html"
+                               class="avatar avatar-xl overlay overlay--show overlay--primary rounded-circle p-relative o-hidden mb-16pt">
+                                <img src="../../public/images/people/110/guy-2.jpg"
+                                     alt="teacher"
+                                     class="avatar-img">
+                                <span class="overlay__content"><i class="overlay__action material-icons icon-40pt">face</i></span>
+                            </a>
+                            <div class="flex">
+                                <div class="d-inline-flex align-items-center mb-8pt">
+                                    <div class="rating mr-8pt">
+
+                                        <span class="rating__item"><span class="material-icons">star</span></span>
+
+                                        <span class="rating__item"><span class="material-icons">star</span></span>
+
+                                        <span class="rating__item"><span class="material-icons">star</span></span>
+
+                                        <span class="rating__item"><span class="material-icons">star</span></span>
+
+                                        <span class="rating__item"><span class="material-icons">star</span></span>
+
+                                    </div>
+                                    <small class="text-muted">5/5</small>
+                                </div>
+
+                                <p class="text-70 measure-paragraph">Fueled by my passion for understanding the nuances of cross-cultural advertising, I consider myself a forever student, eager to both build on my academic foundations in psychology and sociology and stay in tune with the latest digital marketing strategies through continued coursework.</p>
+
+                                <a href="javascript:void()"
+                                   data-toggle="tooltip"
+                                   data-title="Browse Topic"
+                                   data-placement="bottom"
+                                   class="chip chip-outline-secondary">Web Developer</a>
+                            </div>
+                        </div>
+                        <div class="card-body flex-0">
+                            <div class="d-flex align-items-center">
+                                <a href="student-course.html"
+                                   class="avatar avatar-4by3 overlay overlay--primary mr-12pt">
+                                    <img src="../../public/images/paths/swift_200x168.png"
+                                         alt="Build an iOS Application in Swift"
+                                         class="avatar-img rounded">
+                                    <span class="overlay__content"></span>
+                                </a>
+                                <div class="flex">
+                                    <a href="student-course.html"
+                                       class="card-title">Build an iOS Application in Swift</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4 card-group-row__col">
+                    <div class="card card-group-row__card">
+                        <div class="card-header d-flex align-items-center">
+                            <a href="teacher-profile.html"
+                               class="card-title flex mr-12pt">Diane D.</a>
+                            <a href="teacher-profile.html"
+                               class="btn btn-light btn-sm">Follow</a>
+                        </div>
+                        <div class="card-body flex text-center d-flex flex-column align-items-center justify-content-center">
+                            <a href="teacher-profile.html"
+                               class="avatar avatar-xl overlay js-overlay overlay--primary rounded-circle p-relative o-hidden mb-16pt">
+                                <img src="../../public/images/people/110/woman-1.jpg"
+                                     alt="teacher"
+                                     class="avatar-img">
+                                <span class="overlay__content"><i class="overlay__action material-icons icon-40pt">face</i></span>
+                            </a>
+                            <div class="flex">
+                                <div class="d-inline-flex align-items-center mb-8pt">
+                                    <div class="rating mr-8pt">
+
+                                        <span class="rating__item"><span class="material-icons">star</span></span>
+
+                                        <span class="rating__item"><span class="material-icons">star</span></span>
+
+                                        <span class="rating__item"><span class="material-icons">star</span></span>
+
+                                        <span class="rating__item"><span class="material-icons">star</span></span>
+
+                                        <span class="rating__item"><span class="material-icons">star_border</span></span>
+
+                                    </div>
+                                    <small class="text-muted">4/5</small>
+                                </div>
+
+                                <p class="text-70 measure-paragraph">Fueled by my passion for understanding the nuances of cross-cultural advertising, I consider myself a forever student, eager to both build on my academic foundations in psychology and sociology and stay in tune with the latest digital marketing strategies through continued coursework.</p>
+
+                                <a href="javascript:void()"
+                                   data-toggle="tooltip"
+                                   data-title="Browse Topic"
+                                   data-placement="bottom"
+                                   class="chip chip-outline-secondary">iOS Developer</a>
+                            </div>
+                        </div>
+                        <div class="card-body flex-0">
+                            <div class="d-flex align-items-center">
+                                <a href="student-course.html"
+                                   class="avatar avatar-4by3 overlay overlay--primary mr-12pt">
+                                    <img src="../../public/images/paths/wordpress_200x168.png"
+                                         alt="Build a WordPress Website"
+                                         class="avatar-img rounded">
+                                    <span class="overlay__content"></span>
+                                </a>
+                                <div class="flex">
+                                    <a href="student-course.html"
+                                       class="card-title">Build a WordPress Website</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="mb-32pt">
+
+                <ul class="pagination justify-content-start pagination-xsm m-0">
+                    <li class="page-item disabled">
+                        <a class="page-link"
+                           href="#"
+                           aria-label="Previous">
+                            <span aria-hidden="true"
+                                  class="material-icons">chevron_left</span>
+                            <span>Prev</span>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link"
+                           href="#"
+                           aria-label="Page 1">
+                            <span>1</span>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link"
+                           href="#"
+                           aria-label="Page 2">
+                            <span>2</span>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link"
+                           href="#"
+                           aria-label="Next">
+                            <span>Next</span>
+                            <span aria-hidden="true"
+                                  class="material-icons">chevron_right</span>
+                        </a>
+                    </li>
+                </ul>
+
+            </div>
+
+
+        </div>
+    </div> -->
+    <div class="page-section border-bottom-2">
+        <div class="container page__container">
+
+            <!-- <div class="page-separator">
+                <div class="page-separator__text">From the blog</div>
+            </div> -->
+
+            <!-- <div class="row card-group-row">
+
+                <div class="col-md-6 col-lg-4 card-group-row__col">
+
+                    <div class="card card--elevated posts-card-popular overlay card-group-row__card">
+                        <img src="../../public/images/paths/sketch_430x168.png" alt="" class="card-img">
+                        <div class="fullbleed bg-primary" style="opacity: .5"></div>
+                        <div class="posts-card-popular__content">
+                            <div class="card-body d-flex align-items-center">
+                                <div class="avatar-group flex">
+                                    <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top"
+                                        title="Janell D.">
+                                        <a href=""><img src="../../public/images/256_luke-porter-261779-unsplash.jpg"
+                                                alt="Avatar" class="avatar-img rounded-circle"></a>
+                                    </div>
+                                </div>
+                                <a style="text-decoration: none;" class="d-flex align-items-center" href=""><i
+                                        class="material-icons mr-1" style="font-size: inherit;">remove_red_eye</i>
+                                    <small>327</small></a>
+                            </div>
+                            <div class="posts-card-popular__title card-body">
+                                <small class="text-muted text-uppercase">sketch</small>
+                                <a class="card-title" href="">Merge Duplicates Inconsistent Symbols</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-md-6 col-lg-4 card-group-row__col">
+
+                    <div class="card card--elevated posts-card-popular overlay card-group-row__card">
+                        <img src="../../public/images/paths/invision_430x168.png" alt="" class="card-img">
+                        <div class="fullbleed bg-primary" style="opacity: .5"></div>
+                        <div class="posts-card-popular__content">
+                            <div class="card-body d-flex align-items-center">
+                                <div class="avatar-group flex">
+                                    <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top"
+                                        title="Janell D.">
+                                        <a href=""><img src="../../public/images/256_michael-dam-258165-unsplash.jpg"
+                                                alt="Avatar" class="avatar-img rounded-circle"></a>
+                                    </div>
+                                </div>
+                                <a style="text-decoration: none;" class="d-flex align-items-center" href=""><i
+                                        class="material-icons mr-1" style="font-size: inherit;">remove_red_eye</i>
+                                    <small>327</small></a>
+                            </div>
+                            <div class="posts-card-popular__title card-body">
+                                <small class="text-muted text-uppercase">invision</small>
+                                <a class="card-title" href="">Design Systems Essentials</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-md-6 col-lg-4 card-group-row__col">
+
+                    <div class="card card--elevated posts-card-popular overlay card-group-row__card">
+                        <img src="../../public/images/paths/photoshop_430x168.png" alt="" class="card-img">
+                        <div class="fullbleed bg-primary" style="opacity: .5"></div>
+                        <div class="posts-card-popular__content">
+                            <div class="card-body d-flex align-items-center">
+                                <div class="avatar-group flex">
+                                    <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top"
+                                        title="Janell D.">
+                                        <a href=""><img src="../../public/images/256_rsz_1andy-lee-642320-unsplash.jpg"
+                                                alt="Avatar" class="avatar-img rounded-circle"></a>
+                                    </div>
+                                </div>
+                                <a style="text-decoration: none;" class="d-flex align-items-center" href=""><i
+                                        class="material-icons mr-1" style="font-size: inherit;">remove_red_eye</i>
+                                    <small>327</small></a>
+                            </div>
+                            <div class="posts-card-popular__title card-body">
+                                <small class="text-muted text-uppercase">photoshop</small>
+                                <a class="card-title" href="">Semantic Logo Design</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div> -->
+
+            <div class="posts-cards">
+
+                <div class="card posts-card mb-0">
+                    <div class="posts-card__content d-flex align-items-center flex-wrap">
+                        <div class="avatar avatar-lg mr-3">
+                            <a href="/crs-dtl-wth/{{maxInrolledCourse.pk}}/{{maxInrolledCourse.title}}/"><img src="{{maxInrolledCourse.coverImage.url}}"
+                                    alt="avatar" class="avatar-img rounded"></a>
+                        </div>
+                        <div class="posts-card__title flex d-flex flex-column">
+                            <a href="/crs-dtl-wth/{{maxInrolledCourse.pk}}/{{maxInrolledCourse.title}}/" class="card-title mr-3">{{maxInrolledCourse.title}}</a>
+                            <small class="text-50">35 views last week</small>
+                        </div>
+                        <div class="d-flex align-items-center flex-column flex-sm-row posts-card__meta">
+                            <div class="mr-3 text-50 text-uppercase posts-card__tag d-flex align-items-center">
+                                <i class="material-icons text-muted-light mr-1">folder_open</i> {{maxInrolledCourse.category.categoryName}}
+                            </div>
+                            <div class="mr-3 text-50 posts-card__date">
+                                <small>{{maxInrolledCourse.dateRegistred}}</small>
+                            </div>
+                            <div class="media ml-sm-auto align-items-center">
+                                <div class="media-left mr-2 avatar-group">
+                                    {% for inrolledUser in maxInrolledCourse.inrolledUsers.all %}
+                                    {% if forloop.counter <= 4 %}
+                                    <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top"
+                                        title="{{inrolledUser.fullName}}">
+                                        <img src="{{inrolledUser.profileImage.url}}" alt="Avatar"
+                                            class="avatar-img rounded-circle">
+                                    </div>
+                                    {% else %}
+                                    {% endif %}
+                                    {% endfor %}
+                                </div>
+                                <div class="media-body">
+
+                                    <a href="">+ more</a>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <br>
+            <br>
+
+
+            <div class="row mb-32pt">
+                <div class="col-lg-4">
+                    <div class="page-separator">
+                        <div class="page-separator__text">INTERNATIONAL RELATIONS</div>
+                    </div>
+                    <p class="card-subtitle text-70 mb-16pt mb-lg-0">Exchange of experiences and knowledge skills that are unique to each party</p>
+                </div>
+                <div class="col-lg-8 d-flex align-items-center">
+                    <div class="flex" style="max-width: 100%">
+                        <div class="position-relative carousel-card">
+                            <div class="js-mdk-carousel row d-block" id="carousel-courses1">
+
+                                <a class="carousel-control-next js-mdk-carousel-control mt-n24pt"
+                                    href="#carousel-courses1" role="button" data-slide="next">
+                                    <span class="carousel-control-icon material-icons"
+                                        aria-hidden="true">keyboard_arrow_right</span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+
+                                <div class="mdk-carousel__content">
+                                    {% for friend in ourInterFriends %}
+                                    <div class="col-6 col-sm-4">
+
+                                        <div class="card card-sm card--elevated p-relative o-hidden overlay overlay--primary-dodger-blue js-overlay mdk-reveal js-mdk-reveal "
+                                            data-partial-height="44" data-toggle="popover" data-trigger="click">
+
+                                            <a href="student-take-course.html" class="js-image" data-position="left">
+                                                <img height="180" src="{{friend.image.url}}" alt="course">
+                                                <span class="overlay__content align-items-start justify-content-start">
+                                                    <span class="overlay__action card-body d-flex align-items-center">
+                                                        <i class="material-icons mr-4pt">keyboard_arrow_down</i>
+                                                        <span class="card-title text-white">OUR-FRIEND</span>
+                                                    </span>
+                                                </span>
+                                            </a>
+
+                                            <div class="mdk-reveal__content">
+                                                <div class="card-body">
+                                                    <div class="d-flex">
+                                                        <div class="flex">
+                                                            <a class="card-title" href="#">{{friend.name}}</a>
+                                                            <small class="text-50 font-weight-bold mb-4pt">WT
+                                                                QAAMUUS-TEAM</small>
+                                                        </div>
+                                                        <a href="#" data-toggle="tooltip" data-title="Add Favorite"
+                                                            data-placement="top" data-boundary="window"
+                                                            class="ml-4pt material-icons text-20 card-course__icon-favorite">favorite_border</a>
+                                                    </div>
+                                                    <!-- <div class="d-flex">
+                                                        <div class="rating flex">
+                                                            <span class="rating__item"><span
+                                                                    class="material-icons">star</span></span>
+                                                            <span class="rating__item"><span
+                                                                    class="material-icons">star</span></span>
+                                                            <span class="rating__item"><span
+                                                                    class="material-icons">star</span></span>
+                                                            <span class="rating__item"><span
+                                                                    class="material-icons">star</span></span>
+                                                            <span class="rating__item"><span
+                                                                    class="material-icons">star_border</span></span>
+                                                        </div>
+                                                        <small class="text-50">6 hours</small>
+                                                    </div> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="popoverContainer d-none">
+                                            <p class="card-subtitle text-70 mb-16pt mb-lg-0">{{friend.desc}}</p>
+                                            <!-- <div class="d-flex align-items-center justify-content-center">
+                                                <a href="/crs-dtl-wth/{{theRecentCourse.pk}}/{{theRecentCourse.theCourse.title}}"
+                                                    class="btn btn-primary mr-8pt">SEE DETAIL</a>
+                                            </div> -->
+
+
+                                        </div>
+
+                                    </div>
+                                    {% endfor %}
+
+
+
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-section">
+        <div class="container page__container">
+            <div class="page-headline text-center">
+                <h2>Feedback</h2>
+                <p class="lead measure-lead mx-auto text-70">What other students who have benefited from our program say after learning with us and reaching their goals.</p>
+            </div>
+
+            <div class="position-relative carousel-card p-0 mx-auto">
+                <div class="row d-block js-mdk-carousel" id="carousel-feedback">
+                    <a class="carousel-control-next js-mdk-carousel-control mt-n24pt" href="#carousel-feedback"
+                        role="button" data-slide="next">
+                        <span class="carousel-control-icon material-icons"
+                            aria-hidden="true">keyboard_arrow_right</span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                    <div class="mdk-carousel__content">
+
+                        {% for feed in activedFeedBacks %}
+                        <div class="col-12 col-md-6">
+
+                            <div class="card card-feedback card-body">
+                                <blockquote class="blockquote mb-0">
+                                    <p class="text-70 small mb-0">{{feed.fText}}.
+                                    </p>
+                                </blockquote>
+                            </div>
+                            <div class="media ml-12pt">
+                                <div class="media-left mr-12pt">
+                                    <a href="student-profile.html" class="avatar avatar-sm">
+                                        <img src="{{feed.theUser.profileImage.url}}" width="40" alt="avatar"
+                                            class="rounded-circle">
+                                        <!-- <span class="avatar-title rounded-circle">UK</span> -->
+                                    </a>
+                                </div>
+                                <div class="media-body media-middle">
+                                    <a href="#" class="card-title">{{feed.theUser.fullName}}</a>
+                                    <div class="rating mt-4pt">
+                                        {% for st in "x"|rjust:feed.stars %}
+                                        <span class="rating__item"><span class="material-icons">star</span></span>
+                                        {% endfor %}
+                                        {% if feed.stars == 5 %}
+                                        {% elif feed.stars == 4 %}
+                                        <span class="rating__item"><span
+                                                class="material-icons">star_border</span></span>
+                                        {% elif feed.stars == 3 %}
+                                        <span class="rating__item"><span
+                                                class="material-icons">star_border</span></span>
+                                        <span class="rating__item"><span
+                                                class="material-icons">star_border</span></span>
+                                        {% elif feed.stars == 2 %}
+                                        <span class="rating__item"><span
+                                                class="material-icons">star_border</span></span>
+                                        <span class="rating__item"><span
+                                                class="material-icons">star_border</span></span>
+                                        <span class="rating__item"><span
+                                                class="material-icons">star_border</span></span>
+                                        {% else %}
+                                        <span class="rating__item"><span
+                                                class="material-icons">star_border</span></span>
+                                        <span class="rating__item"><span
+                                                class="material-icons">star_border</span></span>
+                                        <span class="rating__item"><span
+                                                class="material-icons">star_border</span></span>
+                                        <span class="rating__item"><span
+                                                class="material-icons">star_border</span></span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script>
+    getTimeCountDown('{{soonEvent.dateTimeStarting|date:"Y-m-d H:i"}}')
+
+    function getTimeCountDown(theDateTime) {
+        var endDate = theDateTime;
+        /* ***** Do not change this code below. ***** */
+        var deadline = new Date(endDate).getTime();
+
+        var x = setInterval(function () {
+            var now = new Date().getTime();
+            var t = deadline - now;
+            var days = Math.floor(t / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((t % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((t % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((t % (1000 * 60)) / 1000);
+            document.getElementById("day").innerHTML = days;
+            document.getElementById("hour").innerHTML = hours;
+            document.getElementById("minute").innerHTML = minutes;
+            document.getElementById("second").innerHTML = seconds;
+
+            /* Output the End date. (Only for Demo) */
+
+            if (t < 0) {
+                clearInterval(x);
+                // document.getElementById("demo").innerHTML = "COUNTDOWN FINISHED";
+                document.getElementById("day").innerHTML = "0";
+                document.getElementById("hour").innerHTML = "0";
+                document.getElementById("minute").innerHTML = "0";
+                document.getElementById("second").innerHTML = "0";
+            }
+        }, 1000);
+    }
+</script>
+{% endblock %}

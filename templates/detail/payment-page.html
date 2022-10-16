@@ -1,0 +1,560 @@
+{% extends 'authBase.html' %}
+{% load static %}
+{% block content %}
+<!-- 
+<link type="text/css" href="/static/css/dark.css" rel="stylesheet"> -->
+
+<div class="page-section dark-mode">
+
+    <div class="page__container">
+
+        <div class="page-separator">
+            <div class="page-separator__text">Transactions</div>
+        </div>
+        <div class="card mb-0">
+            <div data-toggle="lists" data-lists-values='[
+            "js-lists-values-course", 
+            "js-lists-values-revenue",
+            "js-lists-values-fees"
+            ]' data-lists-sort-by="js-lists-values-revenue" data-lists-sort-desc="true" class="table-responsive">
+                <table class="table table-nowrap table-flush">
+                    <thead>
+                        <tr class="text-uppercase small">
+                            <th>
+                                <a href="javascript:void(0)" class="sort" data-sort="js-lists-values-course">Course</a>
+                            </th>
+                            <th class="text-center" style="width:130px">
+                                <a href="javascript:void(0)" class="sort" data-sort="js-lists-values-fees">Fees</a>
+                            </th>
+                            <th class="text-center" style="width:200px">
+                                <a href="javascript:void(0)" class="sort" data-sort="js-lists-values-fees">Months</a>
+                            </th>
+
+                        </tr>
+                    </thead>
+
+                    <tbody class="list">
+
+                        <tr>
+                            <td>
+                                <div class="media flex-nowrap align-items-center">
+                                    <a href="instructor-edit-course.html"
+                                        class="avatar avatar-4by3 overlay overlay--primary mr-12pt">
+                                        <img src="{{courseDetail.coverImage.url}}" alt="course"
+                                            class="avatar-img rounded">
+                                        <span class="overlay__content"></span>
+                                    </a>
+                                    <div class="media-body">
+                                        <a class="text-body js-lists-values-course"
+                                            href="instructor-edit-course.html"><strong>{{courseDetail.category.categoryName}}</strong></a>
+                                        <div class="text-muted small">With <strong
+                                                style="font-weight: bolder;">{{courseDetail.instructor.fullName}}</strong>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="text-center text-70">
+                                &dollar; <span style="color: black;font-size: medium;font-weight: bolder;"
+                                    class="js-lists-values-fees">{{courseDetail.saledPrice}}</span>
+                                {% if courseDetail.showRegularPrice %}
+                                &dollar;<span
+                                    style="text-decoration: line-through;font-size: medium;">{{courseDetail.regularPrice}}</span>
+                                {% endif %}
+
+                            </td>
+                            <td>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <input type="button" onclick="updateMoneyCharge(0)" class="form-control"
+                                            value="-">
+                                    </div>
+                                    <div class="col-4">
+                                        <input type="button" disabled name="months" id="months" class="form-control"
+                                            value="1">
+                                    </div>
+                                    <div class="col-4">
+                                        <input type="button" class="form-control" onclick="updateMoneyCharge(1)"
+                                            value="+">
+                                    </div>
+
+
+
+                                </div>
+
+                            </td>
+
+
+                        </tr>
+
+                    </tbody>
+                    <tfoot class="text-right">
+                        <tr>
+                            <td>
+
+                            </td>
+
+                            <td colspan="2">Total <i class="material-icons text-muted">remove</i>
+                                <strong>&dollar; <span id="monthMoney"> {{courseDetail.saledPrice}} </span>USD</strong>
+                            </td>
+
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        <br>
+        {% if isInrolledBefore.exists %}
+        <div class="alert alert-soft-warning mb-lg-32pt">
+            <div class="d-flex flex-wrap align-items-center">
+                <div class="mr-8pt">
+                    <i class="material-icons">access_time</i>
+                </div>
+                <div class="flex" style="min-width: 180px">
+                    <small class="text-100">
+                        You are inrolled before Your 
+                        <strong><a href="#"
+                            class="text-underline">COURSE SCOPE ID IS
+                        {{isInrolledBefore.0.pk}}</a>
+                        </strong>
+                    </small>
+                </div>
+                <a href="#" class="btn btn-sm btn-link">Pay Now</a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="row">
+        <div class="col-lg-6 col-sm-12 col-md-12">
+            <div class="page__container">
+                <!-- <div class="container">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                          <button class="nav-link active" id="home-tab" data-toggle="tab" data-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Home</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                          <button class="nav-link" id="profile-tab" data-toggle="tab" data-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Profile</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                          <button class="nav-link" id="contact-tab" data-toggle="tab" data-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Contact</button>
+                        </li>
+                      </ul>
+                      <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="home" role="tab" aria-labelledby="home-tab">dsadasd</div>
+                        <div class="tab-pane fade" id="profile" role="tab" aria-labelledby="profile-tab">.dasdasd</div>
+                        <div class="tab-pane fade" id="contact" role="tab" aria-labelledby="contact-tab">.sadasdas</div>
+                      </div>
+                </div> -->
+
+                <div class="col-lg-12 d-flex align-items-center">
+                    <div class="flex" style="max-width: 100%">
+
+                        <div class="card dashboard-area-tabs p-relative o-hidden mb-0">
+                            <div class="card-header p-0 nav">
+                                <div class="row no-gutters" role="tablist">
+
+                                    <div class="col-auto">
+                                        <a href="" data-toggle="tab" id="waafiPayment"
+                                            class="dashboard-area-tabs__tab card-body d-flex flex-row align-items-center justify-content-start active">
+                                            <span class="h2 mb-0 mr-3">1</span>
+                                            <span class="flex d-flex flex-column">
+                                                <strong class="card-title">Waafi</strong>
+                                                <small class="card-subtitle text-50">EVC-Plus - SAAD - SAHAL
+                                                </small>
+                                            </span>
+                                        </a>
+                                    </div>
+                                    <div class="col-auto border-left border-right">
+                                        <a href="" data-toggle="tab" id="directPayment"
+                                            class="dashboard-area-tabs__tab card-body d-flex flex-row align-items-center justify-content-start">
+                                            <span class="h2 mb-0 mr-3">2</span>
+                                            <span class="flex d-flex flex-column">
+                                                <strong class="card-title">Direct Payment</strong>
+                                                <small class="card-subtitle text-50">Send Message</small>
+                                            </span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="waafiPaymentCont" class="card-body tab-content">
+                                <form id="waafiPaidMoneyForm">
+                                    <div class="tab-pane text-70">
+                                        <!-- <div  class="row">
+                                            <div style="margin:3px;" class="col-3 card">
+                                                <img src="https://www.caasimada.net/wp-content/uploads/2018/11/hormuud.png" class="card-img-top" alt="">
+                                            </div>
+                                            <div style="margin:3px;" class="col-3 card">
+                                                <img src="https://www.caasimada.net/wp-content/uploads/2018/11/hormuud.png" class="card-img-top" alt="">
+                                        
+                                            </div>
+                                            <div style="margin:3px;" class="col-3 card">
+                                                <img src="https://www.caasimada.net/wp-content/uploads/2018/11/hormuud.png" class="card-img-top" alt="">
+                                        
+                                            </div>
+                                        </div> -->
+                                        <div class="list-group-item">
+                                            <div class="form-group row align-items-center mb-0">
+                                                <label class="col-form-label form-label col-sm-3">Phone number</label>
+                                                <div class="col-sm-9">
+
+                                                    <div class="input-group">
+                                                        <div class="input-group-text">
+                                                            <span>+252 </span>
+                                                        </div>
+                                                        <input required type="text" maxlength="9" name="userNumber"
+                                                            class="form-control" placeholder="616 00 00 00" />
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="list-group-item text-center">
+                                        <button type="submit" class="btn btn-primary">Pay Now</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div class="card-body tab-content">
+                                <div id="directPaymentCont" class="tab-pane text-70">
+                                    <form id="directPaymentForm">
+                                        <div class="col-sm-12 card-group-row__col">
+
+                                            <div class="card js-overlay card-sm overlay--primary-dodger-blue stack stack--1 card-group-row__card"
+                                                 data-toggle="popover"
+                                                 data-trigger="click">
+            
+                                                <div class="card-body d-flex flex-column">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="flex">
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="rounded mr-12pt z-0 o-hidden">
+                                                                    <div class="overlay">
+                                                                        <img src="/static/images/hormuud.png"
+                                                                             width="60"
+                                                                             height="60"
+                                                                             alt="Angular"
+                                                                             class="rounded">
+                                                                        <span class="overlay__content overlay__content-transparent">
+                                                                            <!-- <span class="overlay__action d-flex flex-column text-center lh-1">
+                                                                                <small class="h6 small text-white mb-0"
+                                                                                       style="font-weight: 500;">80%</small>
+                                                                            </span> -->
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="flex">
+                                                                    <div class="card-title">* 712 * 618361444 * $ #</div>
+                                                                    <p class="flex text-50 lh-1 mb-0"><small>HORMUUD EVC-Plus</small></p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+            
+                                                        <a href="undefinedstudent-path.html"
+                                                           data-toggle="tooltip"
+                                                           data-title="Add Favorite"
+                                                           data-placement="top"
+                                                           data-boundary="window"
+                                                           class="ml-4pt material-icons text-20 card-course__icon-favorite">favorite_border</a>
+            
+                                                    </div>
+            
+                                                </div>
+                                            </div>
+            
+            
+                                        </div>
+                                        
+                                        <div class="col-sm-12 card-group-row__col">
+
+                                            <div class="card js-overlay card-sm overlay--primary-dodger-blue stack stack--1 card-group-row__card"
+                                                 data-toggle="popover"
+                                                 data-trigger="click">
+            
+                                                <div class="card-body d-flex flex-column">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="flex">
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="rounded mr-12pt z-0 o-hidden">
+                                                                    <div class="overlay">
+                                                                        <img src="/static/images/salaam.png"
+                                                                             width="60"
+                                                                             height="60"
+                                                                             alt="Angular"
+                                                                             class="rounded">
+                                                                        <span class="overlay__content overlay__content-transparent">
+                                                                            <!-- <span class="overlay__action d-flex flex-column text-center lh-1">
+                                                                                <small class="h6 small text-white mb-0"
+                                                                                       style="font-weight: 500;">80%</small>
+                                                                            </span> -->
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="flex">
+                                                                    <div class="card-title">*712*61831123*12#</div>
+                                                                    <p class="flex text-50 lh-1 mb-0"><small>SALAAM SOM-BANK</small></p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+            
+                                                        <a href="undefinedstudent-path.html"
+                                                           data-toggle="tooltip"
+                                                           data-title="Add Favorite"
+                                                           data-placement="top"
+                                                           data-boundary="window"
+                                                           class="ml-4pt material-icons text-20 card-course__icon-favorite">favorite_border</a>
+            
+                                                    </div>
+            
+                                                </div>
+                                            </div>
+            
+            
+                                        </div>
+                                        To comlete the process please contact us.
+                                        <div class="list-group-item text-center">
+                                            <button type="submit" class="btn btn-primary">Pay Now</button>
+                                        </div>
+
+                                    </form>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="col-lg-6 col-sm-12 col-md-12">
+            <div class="page__container">
+                <form action="index.html" class="col-md-12 p-0 mx-auto">
+
+                    <div class="list-group list-group-form mb-0">
+                        <div class="list-group-item">
+                            <fieldset aria-labelledby="label-type" class="m-0 form-group">
+                                <div class="form-row align-items-center">
+
+                                    <div role="group" aria-labelledby="label-type" class="col-md-12">
+                                        <div role="group" class="btn-group btn-group-toggle" data-toggle="buttons">
+                                            <label class="btn btn-outline-secondary">
+                                                <input type="radio" id="payment_cc" name="payment_type" value="cc"
+                                                    checked="" aria-checked="true" />PayPal Or Credit-Card Paid
+                                            </label>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+
+                        <br>
+                        <div class="container" id="paypal-button-container"></div>
+
+                    </div>
+
+                </form>
+            </div>
+            <!-- <div class="page__container">
+            </div> -->
+
+        </div>
+    </div>
+</div>
+
+<!-- Include the PayPal JavaScript SDK -->
+<script src="https://www.paypal.com/sdk/js?client-id=AVWexj-U23pIsFLIfhnQE-5psYQETpZSNjnO09N4qCWMazIfjdrD7tQ4y3PAb22x3VkBmkOnzG0TY92S&currency=USD"></script>
+<script>
+    var totalMoney = parseFloat('{{courseDetail.saledPrice}}')
+    var months = 1
+    // Render the PayPal button into #paypal-button-container
+    paypal.Buttons({
+
+        // Set up the transaction
+        createOrder: function(data, actions) {
+            return actions.order.create({
+                purchase_units: [{
+                    amount: {
+                        value: totalMoney
+                    }
+                }]
+            });
+        },
+
+        // Finalize the transaction
+        onApprove: function(data, actions) {
+            return actions.order.capture().then(function(orderData) {
+                // Successful capture! For demo purposes:
+                console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+                var transaction = orderData.purchase_units[0].payments.captures[0];
+                alert('Transaction '+ transaction.status + ': ' + transaction.id + '\n\nSee console for all available details');
+
+                // Replace the above to show a success message within this page, e.g.
+                // const element = document.getElementById('paypal-button-container');
+                // element.innerHTML = '';
+                // element.innerHTML = '<h3>Thank you for your payment!</h3>';
+                // Or go to another URL:  actions.redirect('thank_you.html');
+            });
+        }
+
+
+    }).render('#paypal-button-container');
+    document.getElementById('directPaymentForm').addEventListener('submit', async function (e) {
+        e.preventDefault()
+        await $.ajax({
+            method: 'GET',
+            url: `/api/inroll-course-toUser/{{userInfo.pk}}/{{courseDetail.pk}}/${months}/false/`,
+            // url: '/api/qa-paid-money/1/'+userNumber+'/'+totalMoney+'/{{courseDetail.pk}}/'+months+'/',
+            success: function (userRespo) {
+                console.log(userRespo)
+                // swal("You Inrollment Was registred Please Contant Support Team ", {
+                //     icon: "success"
+                // });
+                if (userRespo.status == true) {
+                    swal({
+                        icon: "success",
+                        title: `Scope ID :${userRespo.scopeId}\n You Are Succesffuly Inrolled`,
+                        text: "To Complete Please Contact Support Team",
+                        closeOnClickOutside: false,
+                        buttons: {
+                            cancel: true,
+                            confirm: true,
+                        },
+                    }).then((willDelete) => {
+                        if (willDelete) {
+                            location.href='/user-dash/{{userInfo.userType}}/{{userInfo.pk}}/brd-info/'
+                        }
+                    });
+                } else {
+                    swal({
+                        icon: "info",
+                        title: `Scope ID :${userRespo.scopeId}\n You Are Already Inrolled`,
+                        text: "Please Contact Support Team If There Somthing Wrong",
+                        // closeOnClickOutside: false,
+                        buttons: {
+                            cancel: true,
+                            confirm: true,
+                        },
+                    })
+                }
+
+
+            }
+        })
+
+    })
+
+    document.getElementById('waafiPaidMoneyForm').addEventListener('submit', async function (e) {
+        e.preventDefault()
+        userNumber = $('[name=userNumber]').val()
+        swal({
+            icon: "info",
+            title: 'Waafi Payment',
+            buttons: false,
+            text: "Please Accept Payment For Your Number",
+            closeOnClickOutside: false,
+        })
+
+        await waafiPaiding(userNumber, '0.01').then(async(value) => {
+            if (value == false) {
+                swal({
+                    icon: "error",
+                    title: `Waafi Payment Error`,
+                    text: "You Payment Was Not Accepted Please Try Again ",
+                    closeOnClickOutside: false,
+                })
+            } else {
+                await $.ajax({
+                    method: 'GET',
+                    url: `/api/inroll-course-toUser/{{userInfo.pk}}/{{courseDetail.pk}}/${months}/true/`,
+                    // url: '/api/qa-paid-money/1/'+userNumber+'/'+totalMoney+'/{{courseDetail.pk}}/'+months+'/',
+                    success: function (userRespo) {
+                        swal({
+                            icon: "success",
+                            title: `You Are Succesffuly Inrolled`,
+                            text: "To Go To Your Dashboard ",
+                            closeOnClickOutside: false,
+                            buttons: {
+                                cancel: true,
+                                confirm: true,
+                            },
+                        }).then((willDelete) => {
+                            if (willDelete) {
+                                // location.href='/user-dash/{{userInfo.userType}}/{{userInfo.pk}}/brd-info/'
+                            } else {
+                                // swal("Your imaginary file is safe!");
+                            }
+                        });
+
+                }})
+                
+            }
+
+        });
+        // await $.ajax({
+        //     method: 'GET',
+        //     url: `/api/qa-paid-money/2/${userNumber}/${totalMoney}/{{courseDetail.pk}}/${months}/{{userInfo.pk}}/`,
+        //     // url: '/api/qa-paid-money/1/'+userNumber+'/'+totalMoney+'/{{courseDetail.pk}}/'+months+'/',
+        //     success: function (userRespo) {
+
+        //         console.log(userRespo)
+
+        //     }
+        // })
+
+    })
+    function updateMoneyCharge(type) {
+        var courseMoney = parseFloat('{{courseDetail.saledPrice}}')
+        console.log(courseMoney)
+        var total = courseMoney
+        var months = parseInt($('[name=months]').val())
+        document.getElementById('monthMoney').innerHTML = ''
+
+        if (type == 1) {
+            months = months + 1
+            total = courseMoney * months
+            
+            document.getElementById('monthMoney').innerHTML = ` ${total}
+                `
+        } else {
+            if (months <= 1) {
+                document.getElementById('monthMoney').innerHTML = ` ${total} `
+
+            } else {
+                months = months - 1
+
+                total = courseMoney * months
+                document.getElementById('monthMoney').innerHTML = ` ${total}
+                    `
+            }
+
+        }
+        $('[name=months]').val(months)
+
+    }
+
+
+
+    document.getElementById('waafiPayment').addEventListener('click', function () {
+        document.getElementById('directPaymentCont').style.display = 'none'
+        document.getElementById('waafiPaymentCont').style.display = 'initial'
+
+    })
+    document.getElementById('directPayment').addEventListener('click', function () {
+        // console.log('print')
+        document.getElementById('waafiPaymentCont').style.display = 'none'
+        document.getElementById('directPaymentCont').style.display = 'initial'
+        // document.getElementById('waafiPaymentCont').classList.remove('active')
+        // document.getElementById('waafiPayment').classList.remove('active')
+
+        // document.getElementById('directPayment').classList.add('active')
+        // document.getElementById('directPaymentCont').classList.add('active')
+    })
+</script>
+{% endblock %}

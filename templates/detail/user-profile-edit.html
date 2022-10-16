@@ -1,0 +1,282 @@
+{% extends 'authBase.html' %}
+{% load static %}
+{% block content %}
+
+<div class="pt-32pt">
+    <div class="container page__container d-flex flex-column flex-md-row align-items-center text-center text-sm-left">
+        <div class="flex d-flex flex-column flex-sm-row align-items-center">
+
+            <div class="mb-24pt mb-sm-0 mr-sm-24pt">
+                <h2 class="mb-0">{{userInfo.fullName}}</h2>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<!-- BEFORE Page Content -->
+
+<!-- // END BEFORE Page Content -->
+
+<!-- Page Content -->
+
+<div class="page-section container page__container">
+    <div class="page-separator">
+        <div class="page-separator__text">Edit Your &amp; Detail</div>
+    </div>
+    <form id="userInfoForm">
+        <div class="row">
+            <div class="col-md-6 p-0">
+                <div class="form-group">
+                    <label class="form-label">Your photo</label>
+                    <div class="media align-items-center">
+                        <a href="" class="media-left mr-16pt">
+                            <img src="{{userInfo.profileImage.url}}" id="profileImage" title="{{userInfo.title}}"
+                                width="56" class="rounded-circle" />
+                        </a>
+                        <div class="media-body">
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" onchange="preview()" name="profileImage"
+                                    id="inputGroupFile01">
+                                <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" name="fullName" class="form-control" value="{{userInfo.fullName}}"
+                        placeholder="Your profile name ...">
+
+                </div>
+                <div class="form-group">
+                    <label class="text-label" for="email_2">Phone-Number:</label>
+                    <div class="input-group input-group-merge">
+                        <input id="number_2" type="number" required name="number"
+                            class="form-control form-control-prepended" value="{{userInfo.number}}"
+                            placeholder="61- -- -- --">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <span>+252 </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="text" name="email" class="form-control" value="{{userInfo.email}}"
+                        placeholder="Your profile name ...">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Your Password Info</label>
+                    <input type="button" data-toggle="modal" data-target="#updatePasswordModal"
+                        class="form-control btn-warning" value="Change Your Password"
+                        placeholder="Your profile name ...">
+                </div>
+                <!-- <div class="form-group">
+                    <label class="text-label" for="password_2">Password:</label>
+                    <div class="input-group input-group-merge">
+                        <input id="password_2" type="text" required class="form-control form-control-prepended"
+                            name="password" placeholder="Enter your password">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <span class="fa fa-key"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+                <!-- <div class="form-group">
+                    <label class="text-label" for="password_2">Comfirm Password:</label>
+                    <div class="input-group input-group-merge">
+                        <input id="password_2" type="text" required class="form-control form-control-prepended"
+                            name="passwordComfirm" placeholder="Comfirm your password">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <span class="fa fa-key"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+                <div class="form-group">
+                    <label class="form-label">About you</label>
+                    <textarea rows="3" class="form-control" name="aboutMe"
+                        placeholder="About you ...">{{userInfo.aboutMe}}</textarea>
+                </div>
+
+                <!-- <div class="form-group">
+                <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" checked id="customCheck1">
+                        <label class="custom-control-label" for="customCheck1">Display your real name on your
+                            profile</label>
+                        <small class="form-text text-muted">If unchecked, your profile name will be displayed
+                            instead of your full name.</small>
+                    </div>
+                </div> -->
+
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-6">
+                <div class="form-group">
+                    <label class="form-label">Your title</label>
+                    <!-- <label class="form-label" for="validationSample01">Your title</label> -->
+                    <input id="text_2" type="text" required class="form-control form-control-prepended" name="userTitle"
+                        placeholder="User Title" value="{{userInfo.userTitle}}" required="">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Contact Info</label>
+                    <textarea rows="3" class="form-control" name="contactMe"
+                        placeholder="About you ...">{{userInfo.contactMe}}</textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">User Type</label>
+                    <!-- <label class="form-label" for="validationSample01">Your title</label> -->
+                    <input id="password_2" type="text" required class="form-control form-control-prepended"
+                        name="userType" disabled placeholder="User Title" value="{{userInfo.userType}}" required="">
+                </div>
+                {% if userInfo.userType.name == 'Instructor' %}
+                <div class="form-group">
+                    <label class="form-label">Instructor Point</label>
+                    <!-- <label class="form-label" for="validationSample01">Your title</label> -->
+                    <input id="password_2" type="text" required class="form-control form-control-prepended" disabled
+                        placeholder="User Title" value="{{userInfo.teacherPoints}}" required="">
+                </div>
+                {% else %}
+                <div class="form-group">
+                    <label class="form-label">Student Point</label>
+                    <!-- <label class="form-label" for="validationSample01">Your title</label> -->
+                    <input id="password_2" type="text" required class="form-control form-control-prepended" disabled
+                        placeholder="User Title" value="{{userInfo.learnedSeconds}}" required="">
+                </div>
+                {% endif %}
+            </div>
+
+
+            <button type="submit" class="btn btn-primary">Save changes</button>
+        </div>
+    </form>
+
+</div>
+<script>
+    document.getElementById('userInfoForm').addEventListener('submit', async function (e) {
+        e.preventDefault()
+        username = $('[name=number]').val()
+        email = $('[name=email]').val()
+        fullName = $('[name=fullName]').val()
+        var formData = new FormData(this)
+        if ($('[name=profileImage]').val() == '') {
+            formData.delete('profileImage')
+        }
+
+        await $.ajax({
+            type: "POST",
+            data: formData,
+            headers: { 'X-CSRFToken': getCookie('csrftoken') },
+            url: '/api/userProfile-update/' + '{{userInfo.pk}}' + '/',
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: async function (userProfileResp) {
+                console.log(userProfileResp)
+                await $.ajax({
+                    method: 'POST',
+                    url: '/api/user-update/' + userProfileResp.data.user + '/',
+                    headers: { 'X-CSRFToken': getCookie('csrftoken'), 'Content-type': "application/json" },
+                    data: JSON.stringify({
+                        'username': username,
+                        'email': email
+                    }),
+                    success: function (userRespo) {
+                        if (userProfileResp.status == 'success') {
+                            swal("User Was Succesfully Updated ", {
+                                icon: "success"
+                            });
+                            // document.getElementById('userUdateForm').reset()
+                        }
+                        // location.reload()
+
+                    }
+                })
+                // await $.ajax({
+                //     method: 'GET',
+                //     url: '/api/user-password-format/' + userProfileResp.data.user + '/',
+                //     success: function (passwordFormatresp) {
+
+                //         location.reload()
+                //     }
+                // })
+
+
+            },
+            error: function (carRespErr) {
+
+            }
+        })
+    })
+    profileImage = document.getElementById('profileImage')
+    function preview() {
+        profileImage.src = URL.createObjectURL(event.target.files[0]);
+    }
+    document.getElementById('updatePasswordForm').addEventListener('submit',async function (e) {
+        e.preventDefault()
+        oldPassword = $('[name=oldPassword]').val()
+        newPassword = $('[name=newPassword]').val()
+        comfirmPassword = $('[name=comfirmPassword]').val()
+        if (oldPassword == '{{userInfo.password}}') {
+            if (newPassword == comfirmPassword) {
+                await $.ajax({
+                    type: "POST",
+                    headers: { 'X-CSRFToken': getCookie('csrftoken'), 'Content-type': "application/json" },
+                    data: JSON.stringify({
+                        'password': newPassword
+                    }),
+                    url: '/api/userProfile-update/' + '{{userInfo.pk}}' + '/',
+                    success: async function (userProfileResp) {
+                        console.log(userProfileResp)
+                        await $.ajax({
+                            method: 'POST',
+                            url: '/api/user-update/' + userProfileResp.data.user + '/',
+                            headers: { 'X-CSRFToken': getCookie('csrftoken'), 'Content-type': "application/json" },
+                            data: JSON.stringify({
+                                'password': newPassword
+                            }),
+                            success: function (userRespo) {
+                                if (userProfileResp.status == 'success') {
+                                    swal("You Password Was Succesfully Updated ", {
+                                        icon: "success"
+                                    });
+                                    $.ajax({
+                                        method: 'GET',
+                                        url: '/api/user-password-format/' + userProfileResp.data.user + '/',
+                                        success: function (passwordFormatresp) {
+
+                                            location.reload()
+                                        }
+                                    })
+                                    // document.getElementById('userUdateForm').reset()
+                                }
+
+                            }
+                        })
+
+
+                    },
+                    error: function (carRespErr) {
+
+                    }
+                })
+            } else {
+                swal("Your Passwords Are Not matched ", {
+                    icon: "info"
+                });
+            }
+        } else {
+            swal("Your Old Passwords Is Wrong ", {
+                icon: "warning"
+            });
+        }
+
+    })
+</script>
+{% endblock %}

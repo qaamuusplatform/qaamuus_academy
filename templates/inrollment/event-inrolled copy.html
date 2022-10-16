@@ -1,0 +1,520 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="dark-mode">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Webinar Qaamuus</title>
+
+    <!-- Prevent the demo from appearing in search engines -->
+    <meta name="robots" content="noindex">
+    <link rel="icon" type="image/x-icon" href="{% static "images/logo/favicon-tran.png" %}">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700%7CRoboto:400,500%7CExo+2:600&display=swap"
+        rel="stylesheet">
+
+    <!-- Preloader -->
+    <link type="text/css" href="{% static "vendor/spinkit.css" %}" rel="stylesheet">
+
+    <!-- Perfect Scrollbar -->
+    <link type="text/css" href="{% static  "vendor/perfect-scrollbar.css" %}" rel="stylesheet">
+
+    <!-- Material Design Icons -->
+    <link type="text/css" href="{% static "css/material-icons.css" %}" rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link type="text/css" href="{% static "css/fontawesome.css" %}" rel="stylesheet">
+
+    <!-- Preloader -->
+    <link type="text/css" href="{% static "css/preloader.css" %}" rel="stylesheet">
+
+    <!-- App CSS -->
+    <link type="text/css" href="{% static "css/app.css" %}" rel="stylesheet">
+    <link href="https://vjs.zencdn.net/7.20.2/video-js.css" rel="stylesheet" />
+    <link type="text/css" href="{% static "css/dark.css" %}" rel="stylesheet">
+    <style>
+        #endedLiveDiv{
+            margin-right: 10%;
+            margin-left: 10%;
+            margin-top: 15%;
+            border-radius: 10px;
+            background-color: #ff0000;
+            color:white;
+            cursor: pointer;
+            transition: all .2s ease-in-out;
+        }
+        #endedLiveDiv:hover{
+            transform: scale(1.1);
+
+        }
+        #liveIcon{
+            margin-top: 5px;
+            margin-right:5px;
+            z-index: 9;
+            background-color: #ff0000;
+            color:white;
+            border-radius: 2px;
+            padding-top: 2px;
+            padding-bottom: 2px;
+            padding-left: 8px;
+            padding-right: 10px;
+            align-items: top;
+            position:absolute;
+            top:0;
+            right:0;
+            transition: all .2s ease-in-out;
+        }
+        #liveIcon:hover{
+            transform: scale(1.1);
+        }
+        #blinkPoint {
+            animation: blinker 1.5s linear infinite;
+        }
+
+        @keyframes blinker {
+            50% {
+                opacity: 0;
+            }
+        }
+    </style>
+
+</head>
+
+<body class="layout-mini layout-mini">
+    
+
+    <div class="preloader">
+        <div class="sk-chase">
+            <div class="sk-chase-dot"></div>
+            <div class="sk-chase-dot"></div>
+            <div class="sk-chase-dot"></div>
+            <div class="sk-chase-dot"></div>
+            <div class="sk-chase-dot"></div>
+            <div class="sk-chase-dot"></div>
+        </div>
+
+        <!-- <div class="sk-bounce">
+    <div class="sk-bounce-dot"></div>
+    <div class="sk-bounce-dot"></div>
+  </div> -->
+
+        <!-- More spinner examples at https://github.com/tobiasahlin/SpinKit/blob/master/examples.html -->
+    </div>
+
+    <!-- Drawer Layout -->
+
+    <div class="mdk-drawer-layout js-mdk-drawer-layout" data-push data-responsive-width="992px">
+        <div class="mdk-drawer-layout__content page-content">
+
+            <!-- Header -->
+
+            <div style="background-color: #303840;" class="navbar navbar-expand navbar-dark border-bottom-2" id="default-navbar" data-primary>
+
+                <!-- Navbar toggler -->
+                <button class="navbar-toggler w-auto mr-16pt d-block d-lg-none rounded-0" type="button"
+                    data-toggle="sidebar">
+                    <span class="material-icons">short_text</span>
+                </button>
+
+                <!-- Navbar Brand -->
+                <a href="#" class="navbar-brand mr-16pt d-lg-none">
+                    <!-- <img class="navbar-brand-icon" src="../../public/images/logo/white-100@2x.png" width="30" alt="Luma"> -->
+
+                    <span class="avatar avatar-sm navbar-brand-icon mr-0 mr-lg-8pt">
+
+                        <span class="avatar-title rounded bg-primary"><img
+                                src="{% static "images/logo/logo-4.png" %}" alt="logo"
+                                class="img-fluid" /></span>
+
+                    </span>
+
+                    <span class="d-none d-lg-block">Luma</span>
+                </a>
+
+                <ul class="nav navbar-nav d-none d-sm-flex flex justify-content-start ml-8pt">
+                    <li class="nav-item active">
+                        <a href="#" class="nav-link">QAAMUUS-WEBINAR</a>
+                    </li>
+                  
+                 
+                   
+                </ul>
+
+                <!-- <form class="search-form navbar-search d-none d-lg-flex mr-16pt" action="index.html"
+                    style="max-width: 230px">
+                    <button class="btn" type="submit"><i class="material-icons">search</i></button>
+                    <input type="text" class="form-control" placeholder="Search ...">
+                </form> -->
+
+                <ul class="nav navbar-nav ml-auto mr-0">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-toggle="tooltip" data-title="Authrized"
+                            data-placement="bottom" data-boundary="window"><i style="color: #008abf;" class="material-icons">check_circle</i></a>
+                    </li>
+          
+                    <li class="nav-item nav-item dropdown">
+                        <a href="#" class="btn btn-outline-white" data-toggle="dropdown" data-caret="false">{{userInfo.fullName}}</a>
+                        <div class="dropdown-menu">
+                            <a href="/user-dash/{{userInfo.userType.name}}/{{userInfo.pk}}/brd-info/" class="dropdown-item">Dashboard</a>
+                            <a href="/user-edit/{{userInfo.userType.name}}/{{userInfo.pk}}/brd-info/" class="dropdown-item">My-Profile</a>
+                            <a  class="dropdown-item" onclick="logoutUser()">Logout</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- // END Header -->
+
+            <!-- BEFORE Page Content -->
+
+            <!-- // END BEFORE Page Content -->
+
+            <!-- Page Content -->
+            <div style="margin: 7px;" class="row" id="liveVideoPlayer">
+                <div class="col-sm-12 col-md-8 col-lg-8">
+                    <div class="js-player card bg-primary text-center embed-responsive embed-responsive-16by9 mb-24pt">
+                       
+                        <div class="player embed-responsive-item">
+                            {% if theEvent.isLiveIcon %}
+                            <span style="margin-right: 5px;position: absolute;" id="liveIcon"  class="text-right"> <span id="blinkPoint" style="font-weight: bolder;" >&#183;</span>&nbsp; LIVE</span>
+                            {% else %}
+                            {% endif %}
+                            <video class="video-js vjs-big-play-centered vjs-fade-out" controls data-setup='' width="100%" height="100%" id="liveVideoTag"  style="border: none; position: absolute; top: 0; height: 100%; width: 100%;" >
+                                <source src="{{theEvent.videoUrl}}" type="video/mp4">
+                            </video>
+                            <!-- <iframe class="embed-responsive-item" src="{{theEvent.prevVideo}}" allowfullscreen=""></iframe> -->
+    
+                        </div>
+                    </div>
+                    
+                    
+                    <div style="margin-top: -20px;" class="border-bottom-2 py-16pt navbar-light border-bottom-2">
+                        
+                        <div class="page__container row">
+                            <div class="d-flex justify-content-between align-items-center pt-3 border-top gap-5">
+                                <div class="w-100">
+                                    <button class="btn btn-primary p-2 text-white w-100"> End meeting</button>
+                                </div>
+                                &nbsp;
+                                <div class="w-100">
+                                    <button class="btn btn-warning p-2 text-white w-100"> End meeting</button>
+                                </div>
+                                &nbsp;
+                                <div class="w-100">
+                                    <button class="btn btn-danger p-2 text-white w-100"> End meeting</button>
+                                </div>
+                                
+                            </div>
+
+                            
+                            <!-- <div class="card-title" style="font-size: x-large;">
+                                {{theEvent.title}}
+                            </div> -->
+                           
+                            <!-- <div class="d-flex align-items-center">
+                                <div class="avatar-group flex mr-8pt">
+        
+                                    {% for theInrolled in theEvent.enrolledStudents.all %}
+                                    <div class="avatar avatar-sm" data-toggle="tooltip" data-placement="top" title="{{theInrolled.fullName}}">
+                                        <a href=""><img src="{{theInrolled.profileImage.url}}" 
+                                                class="avatar-img rounded-circle"></a>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                               
+                            </div> -->
+
+
+                            <!-- <div class="row align-items-center">
+                                <div
+                                    class="d-flex col-md align-items-center border-bottom border-md-0 mb-16pt mb-md-0 pb-16pt pb-md-0">
+                                    <div
+                                        class="rounded-circle bg-primary w-64 h-64 d-inline-flex align-items-center justify-content-center mr-16pt">
+                                        <i class="material-icons text-white">subscriptions</i>
+                                    </div>
+                                    <div class="flex">
+                                        <div class="card-title mb-4pt">8,000+ Courses</div>
+                                        <p class="card-subtitle text-70">Explore a wide range of skills.</p>
+                                    </div>
+                                </div>
+                                <div
+                                    class="d-flex col-md align-items-center border-bottom border-md-0 mb-16pt mb-md-0 pb-16pt pb-md-0">
+                                    <div
+                                        class="rounded-circle bg-primary w-64 h-64 d-inline-flex align-items-center justify-content-center mr-16pt">
+                                        <i class="material-icons text-white">verified_user</i>
+                                    </div>
+                                    <div class="flex">
+                                        <div class="card-title mb-4pt">By Industry Experts</div>
+                                        <p class="card-subtitle text-70">Professional development from the best people.</p>
+                                    </div>
+                                </div>
+                                <div class="d-flex col-md align-items-center">
+                                    <div
+                                        class="rounded-circle bg-primary w-64 h-64 d-inline-flex align-items-center justify-content-center mr-16pt">
+                                        <i class="material-icons text-white">update</i>
+                                    </div>
+                                    <div class="flex">
+                                        <div class="card-title mb-4pt">Unlimited Access</div>
+                                        <p class="card-subtitle text-70">Unlock Library and learn any topic with one
+                                            subscription.</p>
+                                    </div>
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-4 col-lg-4">
+                    <div class="card">
+                        <!-- <img class="card-img-top" height="80px" style="object-fit: cover;"  src="http://unblast.com/wp-content/uploads/2021/02/Online-Learning-Mobile-App-Template.jpg" alt="Card image cap"> -->
+                        <div class="card-header bg-dark text-white">
+                            <strong>You Comment</strong> 
+                        </div>
+                    
+                        <div style="overflow-y: scroll;height: 70vh;" class="card-body">
+                            <ul class="d-flex flex-column list-unstyled" id="messages">
+                                
+                            </ul>
+                        </div>
+                        <div class="card-footer">
+                            <form id="liveCommentForm" class="search-form search-form--white pl-16pt">
+                                <input type="text" name="commentText" class="form-control pl-0" placeholder="You Comment Here">
+                                <button class="btn" type="submit"><i class="material-icons">send</i></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="endedLiveDiv">
+                <center>
+                    <h3 style="padding-top: 10px;">LIVE SESSION ENDED NOW</h3>
+                    <h5></h5>
+                </center>
+               
+            </div>
+
+
+            
+
+
+     
+
+          
+
+            <!-- // END Page Content -->
+
+            <!-- Footer -->
+
+          
+
+            <!-- // END Footer -->
+
+        </div>
+
+        <!-- // END drawer-layout__content -->
+
+        <!-- drawer -->
+      
+        <!-- // END drawer -->
+
+    </div>
+
+    <!-- // END Drawer Layout -->
+
+    <!-- jQuery -->
+    <script src="{% static "js/acommon_functions.js" %}"></script>
+    <script src="{% static "vendor/jquery.min.js" %}"></script>
+    <script src="{% static "js/sweetalert2.js" %}"></script>
+
+    <!-- Bootstrap -->
+    <script src="{% static "vendor/popper.min.js" %}"></script>
+    <script src="{% static "vendor/bootstrap.min.js" %}"></script>
+
+    <!-- Perfect Scrollbar -->
+    <script src="{% static "vendor/perfect-scrollbar.min.js" %}"></script>
+
+    <!-- DOM Factory -->
+    <script src="{% static "vendor/dom-factory.js" %}"></script>
+
+    <!-- MDK -->
+    <script src="{% static "vendor/material-design-kit.js" %}"></script>
+
+    <!-- App JS -->
+    <script src="{% static "js/app.js" %}"></script>
+
+    <!-- Preloader -->
+    <script src="{% static "js/preloader.js" %}"></script>
+
+    <!-- Sidebar Mini JS -->
+    <script src="{% static "js/sidebar-mini.js" %}"></script>
+    <script src="https://vjs.zencdn.net/7.20.2/video.min.js"></script>
+    <script>
+        
+        var liveCommentDiv = document.getElementById('messages');
+        var videoStartedTime = '{{theEvent.dateTimeStarting|date:"Y-m-d H:i"}}'
+        videoStartedTime = new Date(videoStartedTime)
+        var theCurrentTime = new Date()
+        var liveVideoTag = videojs('#liveVideoTag',{
+            controlBar: {
+                pictureInPictureToggle: false,
+                playToggle: false,
+                captionsButton: false,
+                chaptersButton: false,            
+                subtitlesButton: false,
+                remainingTimeDisplay: false,
+                progressControl: {
+                seekBar: false
+                },
+                fullscreenToggle: true,
+                playbackRateMenuButton: false,
+            }, 
+        });
+        $(function () {
+            getLiveComment()
+            'use strict';
+            // ENABLE sidebar menu tabs
+            $('.js-sidebar-mini-tabs [data-toggle="tab"]').on('click', function (e) {
+                e.preventDefault()
+                $(this).tab('show')
+            })
+            $('.js-sidebar-mini-tabs').on('show.bs.tab', function (e) {
+                $('.js-sidebar-mini-tabs > .active').removeClass('active')
+                $(e.target).parent().addClass('active')
+            })
+        })
+
+        liveVideoTag.on('loadedmetadata', function(){
+            theCurrentTime = new Date()
+            const diffTime = Math.abs(theCurrentTime - videoStartedTime);
+
+            // console.log('duration '+liveVideoTag.duration().toFixed(0))
+            if( parseInt((diffTime /1000).toFixed(0)) < parseInt(liveVideoTag.duration().toFixed(0))){
+                console.log('its inside')
+                // liveVideoTag.currentTime((diffTime /1000).toFixed(0))
+                liveVideoTag.currentTime((diffTime /1000).toFixed(0))
+            }else{
+                console.log('its nott')
+                document.getElementById('liveVideoPlayer').innerHTML=`
+
+                
+                
+                `
+                // liveVideoTag.pause()
+                // liveVideoTag.currentTime((diffTime /1000).toFixed(0))
+            }
+        });
+        document.getElementById('liveIcon').addEventListener('click',function () {
+            theCurrentTime = new Date()
+            const diffTime = Math.abs(theCurrentTime - videoStartedTime);
+            
+            if( parseInt((diffTime /1000).toFixed(0)) < parseInt(liveVideoTag.duration().toFixed(0))){
+                console.log('its inside')
+                // liveVideoTag.currentTime((diffTime /1000).toFixed(0))
+                liveVideoTag.currentTime((diffTime /1000).toFixed(0))
+            }else{
+                console.log('its nott')
+                liveVideoTag.pause()
+                liveVideoTag.currentTime((diffTime /1000).toFixed(0))
+            }
+        })
+        // liveVideoTag.on('play',()=>{
+        //     console.log('played')
+        // })
+      
+        // liveVideoTag.on('play', () => {
+            // theCurrentTime = new Date()
+            // const diffTime = Math.abs(theCurrentTime - videoStartedTime);
+            // // console.log('deffrent '+(diffTime /1000).toFixed(0))
+            
+            // // console.log('duration '+liveVideoTag.duration().toFixed(0))
+            // if( parseInt((diffTime /1000).toFixed(0)) < parseInt(liveVideoTag.duration().toFixed(0))){
+            //     console.log('its inside')
+            //     // liveVideoTag.currentTime((diffTime /1000).toFixed(0))
+            //     liveVideoTag.currentTime((diffTime /1000).toFixed(0))
+            // }else{
+            //     console.log('its nott')
+            //     liveVideoTag.pause()
+            //     liveVideoTag.currentTime((diffTime /1000).toFixed(0))
+            // }
+            // // console.log(diffDays + " days");
+        // });
+
+
+
+        document.getElementById('liveCommentForm').addEventListener('submit',async function (e) {
+            e.preventDefault()
+            var commentText = $('[name=commentText]').val()
+            await $.ajax({
+                type: "POST",
+                data: { 'theUser': '{{userInfo.pk}}', 'theEvent': '{{theEvent.pk}}', 'commentText': commentText },
+                headers: { 'X-CSRFToken': getCookie('csrftoken') },
+                url: '/api/liveEventComment-create/',
+                success: function (liveCommentResp) {
+                    getLiveComment()
+                    document.getElementById('liveCommentForm').reset()
+                },
+            })
+
+        })
+        async function getLiveComment() {
+            liveCommentDiv.innerHTML = ``
+            fetch('/api/this-event-liveEventComment-list/{{theEvent.pk}}/').then((resp) => resp.json()).then(function (liveCommentResp) {
+                
+                for (var liveComment of liveCommentResp) {
+                    liveCommentDiv.innerHTML += `
+                        <li class="message d-inline">
+                            <div style='width:100%;' class="media mt-3 border rounded p-3 card mb-0 d-inline-flex measure-paragraph-max">
+                                <div class="media-left mr-12pt">
+                                    <a href="#" class="avatar avatar-sm">
+                                        <img src="${liveComment.theUser.profileImage}" alt="Guy" class="avatar-img rounded-circle">
+                                    </a>
+                                </div>
+                                <div class="media-body">
+                                    <div class="d-flex align-items-center">
+                                        <a href="profile.html" class="card-title">${liveComment.theUser.fullName}</a>
+                                        <small class="ml-auto text-muted">${timeSince(new Date(liveComment.dateTr))}</small>
+                                    </div>
+                                    <p class="mt-1 mb-0 text-70">${liveComment.commentText}.</p>
+                                </div>
+                            </div>
+                           
+                        </li>
+                    `
+                }
+            })
+            var objDiv = document.getElementById("messages");
+            objDiv.scrollTop = objDiv.scrollHeight;
+        }
+        function timeSince(date) {
+            var seconds = Math.floor((new Date() - date) / 1000);
+
+            var interval = seconds / 31536000;
+
+            if (interval > 1) {
+                return Math.floor(interval) + " years";
+            }
+            interval = seconds / 2592000;
+            if (interval > 1) {
+                return Math.floor(interval) + " months";
+            }
+            interval = seconds / 86400;
+            if (interval > 1) {
+                return Math.floor(interval) + " days";
+            }
+            interval = seconds / 3600;
+            if (interval > 1) {
+                return Math.floor(interval) + " hours";
+            }
+            interval = seconds / 60;
+            if (interval > 1) {
+                return Math.floor(interval) + " minutes";
+            }
+                return Math.floor(seconds) + " seconds";
+            }
+        var aDay = 24*60*60*1000;
+        // console.log(timeSince(new Date()));
+    </script>
+</body>
+
+</html>

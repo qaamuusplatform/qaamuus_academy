@@ -1,0 +1,449 @@
+{% extends user.is_authenticated|yesno:"authBase.html,unAuthBase.html" %}
+
+{% load static %}
+{% block content %}
+<style>
+    #eventCard{
+        transition: transform .6s; /* Animation */
+    }
+    #eventCard:hover{
+        transform: scale(1.1);
+        cursor: pointer;
+    }
+</style>
+<!-- Page Content -->
+{% if user.is_authenticated %}
+{% else %}
+<br><br><br>
+{% endif %}
+<div class="mdk-box mdk-box--bg-primary bg-dark js-mdk-box mb-0" data-effects="parallax-background blend-background">
+    <div class="mdk-box__content justify-content-center">
+        <div class="hero page__container text-center">
+            <h1 style="padding: 5px;" class="text-white text-shadow">All-Events</h1>
+
+        </div>
+    </div>
+</div>
+
+<div class="page-section bg-white border-bottom-2">
+    <div class="container page__container">
+        <div class="page-separator">
+            <div class="page-separator__text">Upcoming Events</div>
+        </div>
+        {% if upComingEvents %}
+        <div id="carouselExampleFade" class="carousel carousel-card slide mb-24pt">
+            <div class="carousel-inner">
+                {% for upComing in upComingEvents %}
+                {% if forloop.counter == 1 %}
+                <div class="carousel-item active">
+
+                    <a class="card border-0 mb-0" href="/event-detail/{{upComing.pk}}/{{upComing.title}}/">
+                        <img height="300px" src="{{upComing.coverImage.url}}" alt="Flinto" class="card-img"
+                            style="max-height: 100%; width: initial;object-fit: cover;">
+                        <div class="fullbleed bg-primary" style="opacity: .5;"></div>
+                        <span class="card-body d-flex flex-column align-items-center justify-content-center fullbleed">
+                            <span style="border: 1px solid #217484;" class="row flex-nowrap">
+                                <span
+                                    class="col-auto text-center d-flex flex-column justify-content-center align-items-center">
+                                    <span
+                                        class="h5 text-white text-uppercase font-weight-normal m-0 d-block">{{upComing.title}}</span>
+                                    <span
+                                        style="background-color: #273746;font-size: small;padding: 5px;border-radius: 5px;"
+                                        class="text-white-60 d-white mb-24pt">{{upComing.dateTimeStarting}}</span>
+                                </span>
+                                <span class="col d-flex flex-column">
+                                    <span class="text-right flex mb-16pt">
+                                        <img src="{{upComing.image.url}}" width="64" alt="Flinto" class="rounded">
+                                    </span>
+                                </span>
+                            </span>
+                            <span class="row flex-nowrap">
+                                <span
+                                    class="col-auto text-center d-flex flex-column justify-content-center align-items-center">
+                                    <img src="{{upComing.persenter.profileImage.url}}" width="64" alt="achievement">
+                                </span>
+                                <span class="col d-flex flex-column">
+                                    <span>
+                                        <span
+                                            class="card-title text-white mb-4pt d-block">{{upComing.persenter.fullName}}</span>
+                                        <span class="text-white-60">{{upComing.persenter.userTitle}}</span>
+                                    </span>
+                                </span>
+                            </span>
+                        </span>
+                    </a>
+
+                </div>
+                {% else %}
+                <div class="carousel-item">
+
+                    <a class="card border-0 mb-0" href="">
+                        <img height="300px" src="{{upComing.coverImage.url}}" alt="Flinto" class="card-img"
+                            style="max-height: 100%; width: initial;object-fit: cover;">
+                        <div class="fullbleed bg-primary" style="opacity: .5;"></div>
+                        <span class="card-body d-flex flex-column align-items-center justify-content-center fullbleed">
+                            <span class="row flex-nowrap">
+                                <span
+                                    class="col-auto text-center d-flex flex-column justify-content-center align-items-center">
+                                    <span
+                                        class="h5 text-white text-uppercase font-weight-normal m-0 d-block">{{upComing.title}}</span>
+                                    <span class="text-white-60 d-block mb-24pt">Jun 5, 2018</span>
+                                </span>
+                                <span class="col d-flex flex-column">
+                                    <span class="text-right flex mb-16pt">
+                                        <img src="{{upComing.image.url}}" width="64" alt="Flinto" class="rounded">
+                                    </span>
+                                </span>
+                            </span>
+                            <span class="row flex-nowrap">
+                                <span
+                                    class="col-auto text-center d-flex flex-column justify-content-center align-items-center">
+                                    <img src="{{upComing.persenter.profileImage.url}}" width="64" alt="achievement">
+                                </span>
+                                <span class="col d-flex flex-column">
+                                    <span>
+                                        <span
+                                            class="card-title text-white mb-4pt d-block">{{upComing.persenter.fullName}}</span>
+                                        <span class="text-white-60">Introduction to The App Design
+                                            Application</span>
+                                    </span>
+                                </span>
+                            </span>
+                        </span>
+                    </a>
+
+                </div>
+                {% endif %}
+                {% endfor %}
+
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleFade" role="button" data-slide="prev">
+                <span class="carousel-control-icon material-icons" aria-hidden="true">keyboard_arrow_left</span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleFade" role="button" data-slide="next">
+                <span class="carousel-control-icon material-icons" aria-hidden="true">keyboard_arrow_right</span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+        {% else %}
+
+            <div class="alert alert-soft-warning mb-0 p-8pt">
+                <div class="d-flex align-items-start">
+                    <div class="mr-8pt">
+                        <i class="material-icons">card_giftcard</i>
+                    </div>
+                    <div class="flex">
+                        <small class="text-100">At this time there is no Upcoming events!</small>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+        {% endif %}
+        <br>
+
+        <div class="text-center d-flex align-items-center flex-wrap mb-32pt" style="white-space: nowrap;">
+            <h5 class="mr-24pt mb-md-0 d-md-inline-block">Popular topics</h5>
+            <a href="" class="chip mb-16pt mb-md-0 chip-secondary">Design</a>
+            <a href="" class="chip mb-16pt mb-md-0 chip-outline-secondary">Development</a>
+            <a href="" class="chip mb-16pt mb-md-0 chip-outline-secondary">Photography</a>
+            <a href="" class="chip mb-16pt mb-md-0 chip-outline-secondary d-md-none d-lg-inline-flex">Business</a>
+        </div>
+
+        <div class="row card-group-row">
+            
+            {% for event in events %}
+            <div onclick="location.href='/event-detail/{{event.pk}}/{{event.title}}/'" id="eventCard" style="height: 300px;" class="col-md-6 col-lg-6 card-group-row__col">
+
+                <div class="card card--elevated posts-card-popular overlay card-group-row__card">
+                    <img style="height: 300px;" src="{{event.coverImage.url}}" alt="" class="card-img">
+                    <div class="fullbleed bg-primary" style="opacity: .5"></div>
+                    <div class="posts-card-popular__content">
+                        <div class="card-body d-flex align-items-center">
+                            <div class="avatar-group flex">
+                                <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top"
+                                title="{{event.persenter.fullName}}.">
+                                <a href="#"><img src="{{event.persenter.profileImage.url}}" alt="Avatar"
+                                        title="{{event.persenter.fullName}}" class="avatar-img rounded-circle"></a>
+                                </div>
+                            </div>
+                            <a style="text-decoration: none;background-color: #fdd22e;color: #303840;padding: 3px;border-radius: 5px;font-weight: bold;" class="d-flex align-items-center" href="">&nbsp;&nbsp;<i
+                                    class="material-icons mr-1"
+                                    style="font-size: inherit;">calendar_today</i> <small>{{event.dateTimeStarting}}</small></a>
+                        </div>
+                        <div class="posts-card-popular__title card-body">
+                            <small class="text-muted text-uppercase">{{event.persenter.fullName}}</small>
+                            <a class="card-title" href="">{{event.title}}</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- <div onclick="location.href='/event-detail/{{event.pk}}/{{event.title}}/' " style="cursor: pointer;"
+                class="col-md-6 col-lg-6 card-group-row__col">
+
+                <div style="height: 300px;" class="card card--elevated posts-card-popular overlay card-group-row__card">
+                    <img src="{{event.coverImage.url}}" alt="">
+                    <div class="fullbleed" style="opacity: .5;background-color:#217484;"></div>
+                    <div class="posts-card-popular__content">
+                        <div class="card-body d-flex align-items-center">
+                            <div class="avatar-group flex">
+                                <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top"
+                                    title="{{event.persenter.fullName}}.">
+                                    <a href="#"><img src="{{event.persenter.profileImage.url}}" alt="Avatar"
+                                            title="{{event.persenter.fullName}}" class="avatar-img rounded-circle"></a>
+                                </div>
+                            </div>
+                            <a style="text-decoration: none;background-color: #2596be;padding: 4px;border-radius:5px ;"
+                                class="d-flex align-items-center" href=""><i class="material-icons mr-1"
+                                    style="font-size: inherit;">calendar_today</i>
+                                <small>{{event.dateTimeStarting}}</small></a>
+                        </div>
+                        <div style="background-color: #34495E;" class="posts-card-popular__title card-body">
+                            <a class="card-title" href="/event-detail/{{event.pk}}/{{event.title}}/">{{event.title}}</a>
+                            <small class="text-muted text-uppercase">With <strong
+                                    style="font-weight: bolder;">{{event.persenter.fullName}}</strong> </small>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div> -->
+            {% endfor %}
+        </div>
+
+                        <!-- <div style="background: linear-gradient(to right, #f79d00, #64f38c);" class="posts-card-popular__title card-body"> -->
+        <ul class="pagination justify-content-start pagination-xsm m-0">
+            <li class="page-item disabled">
+                <a class="page-link" href="#" aria-label="Previous">
+                    <span aria-hidden="true" class="material-icons">chevron_left</span>
+                    <span>Prev</span>
+                </a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="Page 1">
+                    <span>1</span>
+                </a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="Page 2">
+                    <span>2</span>
+                </a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="Next">
+                    <span>Next</span>
+                    <span aria-hidden="true" class="material-icons">chevron_right</span>
+                </a>
+            </li>
+        </ul>
+
+    </div>
+</div>
+<!-- <div class="page-section">
+    <div class="container page__container">
+
+        <div class="row">
+            <div class="col-lg-10">
+
+                <div class="page-separator">
+                    <div class="page-separator__text">Design Resources</div>
+                </div>
+
+                <div class="mb-24pt">
+
+                    <div class="card posts-card posts-card--wrap-xl">
+                        <div class="posts-card__content d-flex align-items-center flex-wrap">
+                            <div class="avatar avatar-lg overlay overlay--primary rounded o-hidden mr-3">
+                                <a href="blog-post.html"><img src="../../public/images/paths/photoshop_200x168.png"
+                                        alt="avatar" class="avatar-img rounded"></a>
+                                <div class="overlay__content"></div>
+                            </div>
+                            <div class="posts-card__title flex d-flex flex-column">
+                                <a href="blog-post.html" class="card-title mr-3">Semantic Logo Design</a>
+                                <small class="text-50">78 views last week</small>
+                            </div>
+                            <div class="d-flex align-items-center flex-column flex-sm-row posts-card__meta">
+                                <div class="mr-3 text-50 text-uppercase posts-card__tag d-flex align-items-center">
+                                    <i class="material-icons text-muted-light mr-1">folder_open</i>
+                                    Photoshop
+                                </div>
+                                <div class="mr-3 text-50 posts-card__date">
+                                    <small>10 Nov, 2018 08:25 AM</small>
+                                </div>
+                                <div class="media ml-sm-auto align-items-center">
+                                    <div class="media-left mr-2 avatar-group">
+
+                                        <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top"
+                                            title="Janell D.">
+                                            <img src="../../public/images/256_joao-silas-636453-unsplash.jpg"
+                                                alt="Avatar" class="avatar-img rounded-circle">
+                                        </div>
+
+                                        <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top"
+                                            title="Janell D.">
+                                            <img src="../../public/images/256_jeremy-banks-798787-unsplash.jpg"
+                                                alt="Avatar" class="avatar-img rounded-circle">
+                                        </div>
+
+                                        <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top"
+                                            title="Janell D.">
+                                            <img src="../../public/images/256_daniel-gaffey-1060698-unsplash.jpg"
+                                                alt="Avatar" class="avatar-img rounded-circle">
+                                        </div>
+
+                                    </div>
+                                    <div class="media-body">
+
+                                        <a href="">+1 more</a>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card posts-card posts-card--wrap-xl">
+                        <div class="posts-card__content d-flex align-items-center flex-wrap">
+                            <div class="avatar avatar-lg overlay overlay--primary rounded o-hidden mr-3">
+                                <a href="blog-post.html"><img src="../../public/images/paths/invision_200x168.png"
+                                        alt="avatar" class="avatar-img rounded"></a>
+                                <div class="overlay__content"></div>
+                            </div>
+                            <div class="posts-card__title flex d-flex flex-column">
+                                <a href="blog-post.html" class="card-title mr-3">Design Systems
+                                    Essentials</a>
+                                <small class="text-50">35 views last week</small>
+                            </div>
+                            <div class="d-flex align-items-center flex-column flex-sm-row posts-card__meta">
+                                <div class="mr-3 text-50 text-uppercase posts-card__tag d-flex align-items-center">
+                                    <i class="material-icons text-muted-light mr-1">folder_open</i> inVision
+                                </div>
+                                <div class="mr-3 text-50 posts-card__date">
+                                    <small>11 Nov, 2018 07:46 AM</small>
+                                </div>
+                                <div class="media ml-sm-auto align-items-center">
+                                    <div class="media-left mr-2 avatar-group">
+
+                                        <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top"
+                                            title="Janell D.">
+                                            <img src="../../public/images/256_rsz_1andy-lee-642320-unsplash.jpg"
+                                                alt="Avatar" class="avatar-img rounded-circle">
+                                        </div>
+
+                                        <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top"
+                                            title="Janell D.">
+                                            <img src="../../public/images/256_michael-dam-258165-unsplash.jpg"
+                                                alt="Avatar" class="avatar-img rounded-circle">
+                                        </div>
+
+                                        <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top"
+                                            title="Janell D.">
+                                            <img src="../../public/images/256_luke-porter-261779-unsplash.jpg"
+                                                alt="Avatar" class="avatar-img rounded-circle">
+                                        </div>
+
+                                    </div>
+                                    <div class="media-body">
+
+                                        <a href="">+2 more</a>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card posts-card posts-card--wrap-xl">
+                        <div class="posts-card__content d-flex align-items-center flex-wrap">
+                            <div class="avatar avatar-lg overlay overlay--primary rounded o-hidden mr-3">
+                                <a href="blog-post.html"><img src="../../public/images/paths/sketch_200x168.png"
+                                        alt="avatar" class="avatar-img rounded"></a>
+                                <div class="overlay__content"></div>
+                            </div>
+                            <div class="posts-card__title flex d-flex flex-column">
+                                <a href="blog-post.html" class="card-title mr-3">Merge Duplicates
+                                    Inconsistent Symbols &amp; Styles</a>
+                                <small class="text-50">78 views last week</small>
+                            </div>
+                            <div class="d-flex align-items-center flex-column flex-sm-row posts-card__meta">
+                                <div class="mr-3 text-50 text-uppercase posts-card__tag d-flex align-items-center">
+                                    <i class="material-icons text-muted-light mr-1">folder_open</i> Sketch
+                                </div>
+                                <div class="mr-3 text-50 posts-card__date">
+                                    <small>09 Nov, 2018 07:13 PM</small>
+                                </div>
+                                <div class="media ml-sm-auto align-items-center">
+                                    <div class="media-left mr-2 avatar-group">
+
+                                        <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top"
+                                            title="Janell D.">
+                                            <img src="../../public/images/256_rsz_1andy-lee-642320-unsplash.jpg"
+                                                alt="Avatar" class="avatar-img rounded-circle">
+                                        </div>
+
+                                        <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top"
+                                            title="Janell D.">
+                                            <img src="../../public/images/256_michael-dam-258165-unsplash.jpg"
+                                                alt="Avatar" class="avatar-img rounded-circle">
+                                        </div>
+
+                                        <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top"
+                                            title="Janell D.">
+                                            <img src="../../public/images/256_luke-porter-261779-unsplash.jpg"
+                                                alt="Avatar" class="avatar-img rounded-circle">
+                                        </div>
+
+                                    </div>
+                                    <div class="media-body">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <ul class="pagination justify-content-start pagination-xsm m-0">
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" aria-label="Previous">
+                            <span aria-hidden="true" class="material-icons">chevron_left</span>
+                            <span>Prev</span>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Page 1">
+                            <span>1</span>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Page 2">
+                            <span>2</span>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Next">
+                            <span>Next</span>
+                            <span aria-hidden="true" class="material-icons">chevron_right</span>
+                        </a>
+                    </li>
+                </ul>
+
+            </div>
+            <div class="col-lg-2">
+
+
+
+
+            </div>
+        </div>
+
+    </div>
+</div> -->
+
+<!-- // END Page Content -->
+{% endblock %}

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
+        integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        * {
+            margin: 0%;
+            padding: 0%;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+
+<body class="bg-dark text-white">
+    <nav class="border-bottom row px-5 py-3">
+        <div class="col-9">
+            <h2 class="h3">Zoom meeting</h2>
+        </div>
+        <div class="col-3 d-flex m-0 gap-2 justify-content-center">
+            <form action="" class="flex-grow-5 flex-fill">
+                <input type="text" placeholder="search  by keywords" class="form-control w-100" />
+            </form>
+            <img class="img-fluid rounded-2" style="width: 2rem; height: 2rem; object-fit: cover"
+                src="./assets/yellow.jpg" alt="" />
+        </div>
+    </nav>
+    <div class="row px-5 py-3 d-flex justify-content-between">
+        <div class="col-9">
+            <div id="liveVideoPlayer">
+                {% if theEvent.isLiveIcon %}
+                <span style="margin-right: 5px;position: absolute;" id="liveIcon"  class="text-right"> <span id="blinkPoint" style="font-weight: bolder;" >&#183;</span>&nbsp; LIVE</span>
+                {% else %}
+                {% endif %}
+                <video class="video-js vjs-big-play-centered vjs-fade-out" controls data-setup='' width="100%" height="100%" id="liveVideoTag"  style="border: none; position: absolute; top: 0; height: 100%; width: 100%;" >
+                    <source src="{{theEvent.videoUrl}}" type="video/mp4">
+                </video>
+                <!-- <iframe class="embed-responsive-item" src="{{theEvent.prevVideo}}" allowfullscreen=""></iframe> -->
+
+            </div>
+            <div class="d-flex gap-4 w-100 py-3">
+                <!-- <img src="./assets/col-3-0.jpg" alt="" class="rounded w-25 flex-fill" />
+                <img src="./assets/col-3-1.jpg" alt="" class="rounded w-25 flex-fill" />
+                <img src="./assets/col-3-3.jpg" alt="" class="rounded w-25 flex-fill" /> -->
+            </div>
+            <div class="d-flex justify-content-between align-items-center pt-3 border-top gap-5">
+                <div class="d-flex justify-content-between align-items-center gap-4 w-100">
+                    <button class="btn btn-secondary opacity-75 w-100">
+                        <i class="fa fa-microphone" aria-hidden="true"></i>
+                    </button>
+                    <button class="btn btn-secondary opacity-75 w-100">
+                        <i class="fa fa-user" aria-hidden="true"></i>
+                    </button>
+                    <button class="btn btn-secondary opacity-75 w-100">
+                        <i class="fa fa-video-camera" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <div class="w-100">
+                    <button class="btn btn-danger p-2 text-white w-100">
+                        End meeting
+                    </button>
+                </div>
+                <div class="d-flex justify-content-between align-items-center gap-4 w-100">
+                    <button class="btn btn-secondary opacity-75 w-100">
+                        <i class="fa fa-microphone" aria-hidden="true"></i>
+                    </button>
+                    <button class="btn btn-secondary opacity-75 w-100">
+                        <i class="fa fa-user" aria-hidden="true"></i>
+                    </button>
+                    <button class="btn btn-secondary opacity-75 w-100">
+                        <i class="fa fa-video-camera" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="col-3 border-start">
+            <div class="bg-secondary rounded mb-2 d-flex gap-2">
+                <button class="btn flex-fill btn-light p-2">Participents</button>
+                <button class="btn btn-light p-2 opacity-50">viewers</button>
+            </div>
+
+            <div class="border-top p-3">
+                <div class="d-flex justify-content-between align-items-center border-bottom p-2">
+                    <div class="d-flex justify-content-between gap-4 align-items-center">
+                        <img src="./assets/yellow.jpg" style="width: 2rem" alt="" class="rounded d-block" />
+                        <p class="mb-2">grey ken</p>
+                    </div>
+                    <div class="d-flex align-items-center gap-4">
+                        <i class="fa fa-volume-up" aria-hidden="true"></i>
+                        <i class="fa fa-video-camera" aria-hidden="true"></i>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between align-items-center border-bottom p-2 bg-secondary rounded">
+                    <div class="d-flex justify-content-between gap-4 align-items-center">
+                        <img src="./assets/yellow.jpg" style="width: 2rem" alt="" class="rounded d-block" />
+                        <p class="mb-2">grey ken</p>
+                    </div>
+                    <div class="d-flex align-items-center gap-4">
+                        <i class="fa fa-volume-up" aria-hidden="true"></i>
+                        <i class="fa fa-video-camera" aria-hidden="true"></i>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between align-items-center border-bottom p-2">
+                    <div class="d-flex justify-content-between gap-4 align-items-center">
+                        <img src="./assets/yellow.jpg" style="width: 2rem" alt="" class="rounded d-block" />
+                        <p class="mb-2">grey ken</p>
+                    </div>
+                    <div class="d-flex align-items-center gap-4">
+                        <i class="fa fa-volume-up" aria-hidden="true"></i>
+                        <i class="fa fa-video-camera" aria-hidden="true"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-secondary opacity-50 p-1 d-flex justify-content-between align-items-center rounded">
+                <div class="d-flex justify-content-between align-items-center gap-3">
+                    <i class="fa fa-comment" aria-hidden="true"></i>
+                    <p class="mb-2">chat</p>
+                </div>
+                <i class="fa fa-angle-down" aria-hidden="true"></i>
+            </div>
+            <!-- <div
+          class="d-flex justify-content-between align-items-center gap-2 w-100"
+        >
+          <div class="w-50 bg-info">
+            <img src="./assets/green.jpg" class="rounded w-75" alt="" />
+          </div>
+          <div class="w-100 btn-danger">
+            <p class="btn btn-secondary p-1 rounded">helo welcome</p>
+          </div>
+          <div class="w-75 bg-primary">
+            <span class="lead">10:00 am</span>
+          </div>
+        </div> -->
+            <!-- <div class="m-5 pt-2 border-top">
+
+        </div> -->
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js"
+        integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

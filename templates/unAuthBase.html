@@ -1,0 +1,293 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Qaamuus Academy</title>
+
+    <!-- Prevent the demo from appearing in search engines -->
+    <meta name="robots" content="noindex">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700%7CRoboto:400,500%7CExo+2:600&display=swap"
+        rel="stylesheet">
+
+    <!-- Preloader -->
+    <link rel="icon" type="image/x-icon" href="{% static "images/logo/favicon-tran.png" %}">
+    <link type="text/css" href="{% static "vendor/spinkit.css" %}" rel="stylesheet">
+
+    <!-- Perfect Scrollbar -->
+    <link type="text/css" href="{% static  "vendor/perfect-scrollbar.css" %}" rel="stylesheet">
+
+    <!-- Material Design Icons -->
+    <link type="text/css" href="{% static "css/material-icons.css" %}" rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link type="text/css" href="{% static "css/fontawesome.css" %}" rel="stylesheet">
+
+    <!-- Preloader -->
+    <link type="text/css" href="{% static "css/preloader.css" %}" rel="stylesheet">
+
+    <!-- App CSS -->
+    <link type="text/css" href="{% static "css/app.css" %}" rel="stylesheet">
+    <link type="text/css" href="{% static "vendor/dragula/dragula.min.css" %}" rel="stylesheet">
+
+</head>
+
+<body class="layout-sticky-subnav layout-learnly ">
+
+    <div class="preloader">
+        <div class="sk-chase">
+            <div class="sk-chase-dot"></div>
+            <div class="sk-chase-dot"></div>
+            <div class="sk-chase-dot"></div>
+            <div class="sk-chase-dot"></div>
+            <div class="sk-chase-dot"></div>
+            <div class="sk-chase-dot"></div>
+        </div>
+
+        <!-- <div class="sk-bounce">
+    <div class="sk-bounce-dot"></div>
+    <div class="sk-bounce-dot"></div>
+  </div> -->
+
+        <!-- More spinner examples at https://github.com/tobiasahlin/SpinKit/blob/master/examples.html -->
+    </div>
+
+    <!-- Header Layout -->
+    <div class="mdk-header-layout js-mdk-header-layout">
+
+        <!-- Header -->
+
+        <div id="header" class="mdk-header js-mdk-header mb-0" data-fixed data-effects="waterfall">
+            <div class="mdk-header__content">
+
+                <div class="navbar navbar-expand navbar-light bg-white navbar-shadow" id="default-navbar" data-primary>
+                    <div class="container page__container">
+
+                        <!-- Navbar Brand -->
+                        <a href="#" class="navbar-brand mr-16pt">
+
+                            <span class="avatar avatar-sm navbar-brand-icon mr-0 mr-lg-8pt">
+
+                                <span style="background-image: url(/static/images/logo/logo-4.png)" class="avatar-title rounded bg-primary">
+                                    <img src="{% static "images/logo/logo-4.png" %}" alt="logo"
+                                        class="img-fluid" /></span>
+
+                            </span>
+
+                            <span style="font-family: 'Dancing Script', cursive;font-weight: bolder;" class="d-none d-lg-block">QAAMUUS</span>
+                        </a>
+
+                        <!-- Navbar toggler -->
+                        <button class="navbar-toggler w-auto mr-16pt d-block rounded-0" type="button"
+                            data-toggle="sidebar">
+                            <span class="material-icons">short_text</span>
+                        </button>
+
+                        <ul class="nav navbar-nav d-none d-sm-flex flex justify-content-start ml-8pt">
+                            <li class="nav-item active">
+                                <a href="/" class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/qa-courses/" class="nav-link">Courses</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/events/" class="nav-link">Events</a>
+                            </li>
+                            <!-- <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"
+                                    data-caret="false">Events</a>
+                                <div class="dropdown-menu">
+                                    <a href="/upc-events/" class="dropdown-item">UP-Coming</a>
+                                    <a href="/p-events/" class="dropdown-item">Popular-Events</a>
+                                    <a href="/webinar/" class="dropdown-item">All-Events</a>
+                                </div>
+                            </li> -->
+                            <!-- <li class="nav-item">
+                                <a href="#" class="nav-link">Pricing</a>
+                            </li> -->
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"
+                                    data-caret="false">Members</a>
+                                <div class="dropdown-menu">
+                                    <a href="/instructors/" class="dropdown-item">Instructors</a>
+                                    <a href="/instructors/#w-team" class="dropdown-item">Work Team</a>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown" data-toggle="tooltip" data-title="Community"
+                                data-placement="bottom" data-boundary="window">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" data-caret="false">
+                                    <i class="material-icons">people_outline</i>
+                                </a>
+                                <!-- <div class="dropdown-menu">
+                                    <a href="teachers.html" class="dropdown-item">Browse Teachers</a>
+                                    <a href="student-profile.html" class="dropdown-item">Student Profile</a>
+                                    <a href="teacher-profile.html" class="dropdown-item">Instructor Profile</a>
+                                    <a href="blog.html" class="dropdown-item">Blog</a>
+                                    <a href="blog-post.html" class="dropdown-item">Blog Post</a>
+                                    <a href="faq.html" class="dropdown-item">FAQ</a>
+                                    <a href="help-center.html" class="dropdown-item">Help Center</a>
+                                    <a href="discussions.html" class="dropdown-item">Discussions</a>
+                                    <a href="discussion.html" class="dropdown-item">Discussion Details</a>
+                                    <a href="discussions-ask.html" class="dropdown-item">Ask Question</a>
+                                </div> -->
+                            </li>
+                        </ul>
+
+                        <form class="search-form form-control-rounded navbar-search d-none d-lg-flex mr-16pt"
+                            action="index.html" style="max-width: 230px">
+                            <button class="btn" type="submit"><i class="material-icons">search</i></button>
+                            <input type="text" class="form-control" placeholder="Search ...">
+                        </form>
+
+                        <ul class="nav navbar-nav ml-auto mr-0">
+                            <li class="nav-item">
+                                <a href="/sing-in/" class="nav-link" data-toggle="tooltip" data-title="Login"
+                                    data-placement="bottom" data-boundary="window"><i
+                                        class="material-icons">lock_open</i></a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/register-nu/" class="btn btn-outline-secondary">Join-US</a>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- // END Header -->
+
+        <!-- Header Layout Content -->
+        {% block content %}
+
+        {% endblock %}
+        <!-- // END Header Layout Content -->
+
+        <!-- Footer -->
+
+        <div class="bg-dark border-top-2 mt-auto">
+            <div class="container page__container page-section d-flex flex-column">
+                <p style="font-size: medium;" class="text-white-70 brand mb-24pt">
+                    <img class="brand-icon" src="{% static "images/logo/white-100@2x.png" %}" width="30" alt="QAAMUUS"> QAAMUUS-ACADEMY
+                </p>
+                <!-- <p class="measure-lead-max text-white-50 small mr-8pt">Luma is a beautifully crafted user interface for
+                    modern Education Platforms, including Courses & Tutorials, Video Lessons, Student and Teacher
+                    Dashboard, Curriculum Management, Earnings and Reporting, ERP, HR, CMS, Tasks, Projects, eCommerce
+                    and more.</p> -->
+                <!-- <p class="mb-8pt d-flex">
+                    <a href="" class="text-white-70 text-underline mr-8pt small">Terms</a>
+                    <a href="" class="text-white-70 text-underline small">Privacy policy</a>
+                </p> -->
+                <p class="text-white-50 small mt-n1 mb-0">Copyright 2021 &copy; All rights reserved.</p>
+            </div>
+        </div>
+
+        <!-- // END Footer -->
+
+    </div>
+    <!-- // END Header Layout -->
+
+    <!-- Drawer -->
+    <div class="mdk-drawer js-mdk-drawer" id="default-drawer">
+        <div class="mdk-drawer__content">
+            <div class="sidebar sidebar-light sidebar-light-dodger-blue sidebar-left" data-perfect-scrollbar>
+
+                <!-- Sidebar Content -->
+
+                <a href="index.html" class="sidebar-brand ">
+                    <!-- <img class="sidebar-brand-icon" src="../../public/images/illustration/student/128/white.svg" alt="Luma"> -->
+
+                    <span class="avatar avatar-xl sidebar-brand-icon h-auto">
+
+                        <span class="avatar-title rounded bg-primary"><img
+                                src="{% static "images/logo/logo-3.png" %}" class="img-fluid"
+                                alt="logo" /></span>
+
+                    </span>
+
+                    <span style="font-size: small;">QAAMUUS-ACADEMY</span>
+                </a>
+
+                <div class="sidebar-heading">Student</div>
+                <ul class="sidebar-menu">
+
+                    <li class="sidebar-menu-item active">
+                        <a class="sidebar-menu-button" href="/">
+                            <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">home</span>
+                            <span class="sidebar-menu-text">Home</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-menu-item">
+                        <a class="sidebar-menu-button" href="/qa-courses/">
+                            <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">local_library</span>
+                            <span class="sidebar-menu-text">Browse Courses</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-menu-item">
+                        <a class="sidebar-menu-button" href="/events/">
+                            <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">dvr</span>
+                            <span class="sidebar-menu-text">Events</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-menu-item">
+                        <a class="sidebar-menu-button" href="/instructors/">
+                            <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">account_box</span>
+                            <span class="sidebar-menu-text">Instructors</span>
+                        </a>
+                    </li>
+                   
+
+                </ul>
+               
+
+              
+
+                <!-- // END Sidebar Content -->
+
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- jQuery -->
+    <!-- <script type="text/javascript">window.$crisp=[];window.CRISP_WEBSITE_ID="41c391c9-4a7a-4b7b-b435-bff3a73ee53d";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();</script> -->
+    <script src="//code.tidio.co/emhjept5oqatrmpmc4kyirtagx2iujl7.js" async></script>
+    <script src="{% static "js/acommon_functions.js" %}"></script>
+    <script src="{% static "vendor/jquery.min.js" %}"></script>
+
+    <!-- Bootstrap -->
+    <script src="{% static "vendor/popper.min.js" %}"></script>
+    <script src="{% static "vendor/bootstrap.min.js" %}"></script>
+
+    <!-- Perfect Scrollbar -->
+    <script src="{% static "vendor/perfect-scrollbar.min.js" %}"></script>
+
+    <!-- DOM Factory -->
+    <script src="{% static "vendor/dom-factory.js" %}"></script>
+
+    <!-- MDK -->
+    <script src="{% static "vendor/material-design-kit.js" %}"></script>
+
+    <!-- App JS -->
+    <script src="{% static "js/app.js" %}"></script>
+
+    <!-- Preloader -->
+    <script src="{% static "js/preloader.js" %}"></script>
+
+    <!-- Sidebar Mini JS -->
+    <script src="{% static "js/sidebar-mini.js" %}"></script>
+      <!-- Dragula -->
+    <script src="{% static "vendor/dragula/dragula.min.js" %}"></script>
+
+    <!-- Drag & Drop Page -->
+    <script src="{% static "js/dragula.js" %}"></script>
+
+</body>
+
+</html>

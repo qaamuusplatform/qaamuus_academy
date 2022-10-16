@@ -1,0 +1,218 @@
+{% extends 'authBase.html' %}
+{% load static %}
+<!-- {% block content %}
+<script src="https://cdn.ckeditor.com/ckeditor5/35.1.0/classic/ckeditor.js"></script> -->
+
+
+<!-- <div class="pt-32pt">
+    <div
+        class="container page__container d-flex flex-column flex-md-row align-items-center text-center text-sm-left">
+        <div class="flex d-flex flex-column flex-sm-row align-items-center">
+
+            <div class="mb-24pt mb-sm-0 mr-sm-24pt">
+                <h2 class="mb-0">Discussion</h2>
+
+                <ol class="breadcrumb p-0 m-0">
+                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+
+                    <li class="breadcrumb-item active">
+
+                        Community
+
+                    </li>
+
+                </ol>
+
+            </div>
+        </div>
+
+    </div>
+</div> -->
+<div class="container page__container">
+    <div class="page-section">
+
+        <div class="row">
+            <div class="col-md-8">
+
+                <h1 class="h2 measure-lead-max mb-2">{{theDiscussion.discText}}</h1>
+                <p class="text-muted d-flex align-items-center mb-lg-32pt">
+                    <a href="discussions.html" class="mr-3">{{theDiscussion.date}}</a>
+                    <a href="#" class="mr-2 text-50">{{theDiscussion.theUser.fullName}}</a>
+                    <a href="#" class="mr-2 text-50">Mute</a>
+                    <!-- <a href="#" class="text-50" style="text-decoration: underline;">Edit</a> -->
+                </p>
+                {% for lsnAnsw in lessonAnswers %}
+                <div class="card card-body">
+                    <div class="d-flex">
+                        <a href="" class="avatar avatar-sm avatar-online mr-12pt">
+                            <img src="{{lsnAnsw.theUser.profileImage.url}}" alt="{{lsnAnsw.theUesr.fullName}}" class="avatar-img rounded-circle">
+                            <!-- <span class="avatar-title rounded-circle">JD</span> -->
+                        </a>
+                        <div class="flex">
+                            <p class="d-flex align-items-center mb-2">
+                                <a href="" class="text-body mr-2"><strong>{{lsnAnsw.theUser.fullName}}</strong></a>
+                                <small class="text-muted">{{lsnAnsw.date|timesince}}</small>
+                            </p>
+                            {{lsnAnsw.discText |safe}}
+                            <div class="d-flex align-items-center">
+                                {% if userInfo in lsnAnsw.likedTheAnswer.all  %} 
+                                <a href="/live-the-answer/{{lsnAnsw.pk}}/{{userInfo.pk}}/{{theDiscussion.pk}}/" class="text-50 d-flex align-items-center text-decoration-0"><i
+                                        class="material-icons mr-1" style="font-size: inherit;color: #6cb5f9;">favorite</i>
+                                        {{lsnAnsw.likedTheAnswer.all.count}}</a>
+                                {% else %}
+                                <a href="/live-the-answer/{{lsnAnsw.pk}}/{{userInfo.pk}}/{{theDiscussion.pk}}/" class="text-50 d-flex align-items-center text-decoration-0"><i
+                                    class="material-icons mr-1" style="font-size: inherit;">favorite_border</i>
+                                    {{lsnAnsw.likedTheAnswer.all.count}}</a>
+                                {% endif %}
+                               
+                                <!-- <i class="fas-solid fa-star"></i> -->
+                                <!-- <a href="" class="text-50 d-flex align-items-center text-decoration-0 ml-3"><i
+                                        class="material-icons mr-1" style="font-size: inherit;">thumb_up</i>
+                                    130</a> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                <div class="d-flex mb-4">
+                    <a href="" class="avatar avatar-sm mr-12pt">
+                        <img src="{{userInfo.profileImage.url}}" title="{{userInfo.fullName}}"
+                            alt="{{userInfo.fullName}}" class="avatar-img rounded-circle">
+                        <!-- <span class="avatar-title rounded-circle">LB</span> -->
+                    </a>
+                    <div class="flex">
+                        <form id="replyForm">
+                            <div class="form-group">
+                                <label for="comment" class="form-label">Your reply</label>
+                                <input type="hidden" name="theDiscussion" value="{{theDiscussion.pk}}">
+                                <input type="hidden" name="theUser" value="{{userInfo.pk}}">
+                                <textarea class="form-control" name="ansText" id="comment" rows="3"
+                                    placeholder="Type here to reply to Matney ..."></textarea>
+                                <!-- <div style="height: 150px;" id="replyData" data-toggle="quill"
+                                        data-quill-placeholder="Answer for This Discussion"
+                                        data-quill-modules-toolbar='[["bold", "italic"], ["link", "blockquote", "code", "image"], [{"list": "ordered"}, {"list": "bullet"}]]'>
+                                        
+                                        <p><br></p>
+                                    </div> -->
+
+                            </div>
+                            <button type="submit" class="btn btn-outline-secondary">Post Answer</button>
+                        </form>
+                    </div>
+
+
+                </div>
+                <!-- <div class="pt-3">
+                    <h4>2 Comments</h4>
+
+
+                </div> -->
+            </div>
+            <div class="col-md-4">
+
+                <div class="page-separator">
+                    <div class="page-separator__text">Top Contributors</div>
+                </div>
+                <p class="text-70 mb-24pt">People who started the most discussions on Luma.</p>
+
+                <div class="mb-4">
+
+                    <div class="d-flex align-items-center mb-2">
+                        <a href="" class="avatar avatar-xs mr-8pt">
+                            <img src="../../public/images/people/50/guy-1.jpg" alt="course"
+                                class="avatar-img rounded-circle">
+                        </a>
+                        <a href="" class="flex mr-2 text-body"><strong>Luci Bryant</strong></a>
+                        <span class="text-70 mr-2">105</span>
+                        <i class="text-muted material-icons font-size-16pt">forum</i>
+                    </div>
+
+                    <div class="d-flex align-items-center mb-2">
+                        <a href="" class="avatar avatar-xs mr-8pt">
+                            <img src="../../public/images/people/50/guy-2.jpg" alt="course"
+                                class="avatar-img rounded-circle">
+                        </a>
+                        <a href="" class="flex mr-2 text-body"><strong>Magnus Goldsmith</strong></a>
+                        <span class="text-70 mr-2">93</span>
+                        <i class="text-muted material-icons font-size-16pt">forum</i>
+                    </div>
+
+                    <div class="d-flex align-items-center mb-2">
+                        <a href="" class="avatar avatar-xs mr-8pt">
+                            <img src="../../public/images/people/50/woman-1.jpg" alt="course"
+                                class="avatar-img rounded-circle">
+                        </a>
+                        <a href="" class="flex mr-2 text-body"><strong>Katelyn Rankin</strong></a>
+                        <span class="text-70 mr-2">55</span>
+                        <i class="text-muted material-icons font-size-16pt">forum</i>
+                    </div>
+
+                    <div class="d-flex align-items-center mb-2">
+                        <a href="" class="avatar avatar-xs mr-8pt">
+                            <img src="../../public/images/people/256/256_rsz_nicolas-horn-689011-unsplash.jpg"
+                                alt="course" class="avatar-img rounded-circle">
+                        </a>
+                        <a href="" class="flex mr-2 text-body"><strong>Jenell D. Matney</strong></a>
+                        <span class="text-70 mr-2">32</span>
+                        <i class="text-muted material-icons font-size-16pt">forum</i>
+                    </div>
+
+                    <div class="d-flex align-items-center mb-2">
+                        <a href="" class="avatar avatar-xs mr-8pt">
+                            <img src="../../public/images/people/256/256_rsz_sharina-mae-agellon-377466-unsplash.jpg"
+                                alt="course" class="avatar-img rounded-circle">
+                        </a>
+                        <a href="" class="flex mr-2 text-body"><strong>Sherri J. Cardenas</strong></a>
+                        <span class="text-70 mr-2">21</span>
+                        <i class="text-muted material-icons font-size-16pt">forum</i>
+                    </div>
+
+                    <div class="d-flex align-items-center mb-2">
+                        <a href="" class="avatar avatar-xs mr-8pt">
+                            <img src="../../public/images/people/256/256_rsz_karl-s-973833-unsplash.jpg" alt="course"
+                                class="avatar-img rounded-circle">
+                        </a>
+                        <a href="" class="flex mr-2 text-body"><strong>Joseph S. Ferland</strong></a>
+                        <span class="text-70 mr-2">16</span>
+                        <i class="text-muted material-icons font-size-16pt">forum</i>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- <script>
+    ClassicEditor
+        .create( document.querySelector( '#editor' ) )
+        .catch( error => {
+            console.error( error );
+        } );
+</script> -->
+<script>
+    // var quill = new Quill ('#replyData')
+    //     var quill = new Quill('#replyData', {
+    //     theme: 'snow'
+    //   });
+    document.getElementById('replyForm').addEventListener("submit", function (e) {
+        e.preventDefault()
+        var formData = new FormData(this)
+        $.ajax({
+            type: "POST",
+            data: formData,
+            headers: { 'X-CSRFToken': getCookie('csrftoken') },
+            url: '/api/lessonAnswers-create/',
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: async function (resp) {
+                location.reload()
+            }
+        })
+        // $("#hiddenArea").val($("#replyData").html());
+        var answer
+    })
+</script>
+{% endblock %}

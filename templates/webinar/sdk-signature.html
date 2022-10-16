@@ -1,0 +1,87 @@
+{% load static %}
+<!DOCTYPE html>
+
+<head>
+    <title>LIVE WEBINAR COMP TEST</title>
+    <meta charset="utf-8" />
+    <link type="text/css" rel="stylesheet" href="https://source.zoom.us/2.7.0/css/bootstrap.css" />
+    <link type="text/css" rel="stylesheet" href="https://source.zoom.us/2.7.0/css/react-select.css" />
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="origin-trial" content="">
+</head>
+
+<body>
+
+    <script src="https://source.zoom.us/2.7.0/lib/vendor/react.min.js"></script>
+    <script src="https://source.zoom.us/2.7.0/lib/vendor/react-dom.min.js"></script>
+    <script src="https://source.zoom.us/2.7.0/lib/vendor/redux.min.js"></script>
+    <script src="https://source.zoom.us/2.7.0/lib/vendor/redux-thunk.min.js"></script>
+    <script src="https://source.zoom.us/2.7.0/lib/vendor/lodash.min.js"></script>
+    <script src="https://source.zoom.us/zoom-meeting-2.7.0.min.js"></script>
+    <script src="{% static "webinar-js/tool.js" %}"></script>
+    <script src="{% static "webinar-js/vconsole.min.js" %}"></script>
+    <script src="{% static "webinar-js/meeting.js" %}"></script>
+    <script>
+        window.addEventListener('DOMContentLoaded', function (event) {
+            console.log('DOM fully loaded and parsed');
+            websdkready();
+            // document.getElementById('join_meeting').click()        
+        });
+    
+        function websdkready() {
+            var testTool = window.testTool;
+            if (testTool.isMobileDevice()) {
+                vConsole = new VConsole();
+            }
+            console.log("checkSystemRequirements");
+            console.log(JSON.stringify(ZoomMtg.checkSystemRequirements()));
+    
+            ZoomMtg.preLoadWasm(); // pre download wasm file to save time.
+    
+            var SDK_KEY = "8iXE7NFtvWdynFDdZ9zzH3t0D9x3hoor4Q4L";
+            var SDK_SECRET = "TruMGs4d263jzFu88OdlWWInt9EeN4v6MjMS";
+            function getMeetingConfig() {
+                return {
+                mn: parseInt('{{theEvent.meetingNumber}}'),
+                name: testTool.b64EncodeUnicode('{{userInfo.fullName}}'),
+                pwd: '{{theEvent.meetingPassword}}',
+                role: parseInt('0', 10),
+                email: testTool.b64EncodeUnicode('{{userInfo.email}}' ),
+                lang: 'en-US',
+                signature: "",
+                china: 0,
+                };
+            }
+    
+            // click join meeting button        
+            var meetingConfig = getMeetingConfig();
+            if (!meetingConfig.mn || !meetingConfig.name) {
+                alert("Meeting number or username is empty");
+                return false;
+            }
+
+
+            testTool.setCookie("meeting_number", meetingConfig.mn);
+            testTool.setCookie("meeting_pwd", meetingConfig.pwd);
+
+            var signature = ZoomMtg.generateSDKSignature({
+                meetingNumber: meetingConfig.mn,
+                sdkKey: SDK_KEY,
+                sdkSecret: SDK_SECRET,
+                role: meetingConfig.role,
+                success: function (res) {
+                    meetingConfig.signature = res.result;
+                    meetingConfig.sdkKey = SDK_KEY;
+                    var joinUrl = "/webinar/live/meeting/{{theEvent.pk}}?" + testTool.serialize(meetingConfig);
+                    location.href=joinUrl
+                },
+            });
+    
+    
+        }
+    
+    </script>
+</body>
+
+</html>

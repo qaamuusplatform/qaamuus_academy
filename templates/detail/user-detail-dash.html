@@ -1,0 +1,742 @@
+{% extends 'authBase.html' %}
+{% load static %}
+{% block content %}
+
+
+<div class="pt-32pt">
+    <div class="container page__container d-flex flex-column flex-md-row align-items-center text-center text-sm-left">
+        <div class="flex d-flex flex-column flex-sm-row align-items-center mb-24pt mb-md-0">
+
+            <div class="mb-24pt mb-sm-0 mr-sm-24pt">
+                <h2 class="mb-0"><span id="userSplitName" style="color:#3498DB;" ></span>'s Dashboard</h2>
+
+                <ol class="breadcrumb p-0 m-0">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+
+                    <li class="breadcrumb-item active">
+
+                        Dashboard
+
+                    </li>
+
+                </ol>
+
+            </div>
+        </div>
+
+        <div class="row" role="tablist">
+            <div class="col-auto">
+                <a href="/user-edit/{{userInfo.userType.name}}/{{userInfo.pk}}/brd-info/" class="btn btn-outline-secondary">Edit Profile</a>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- Page Content -->
+
+<div class="container page__container">
+    <div class="page-section">
+
+        <div class="page-separator">
+            <div class="page-separator__text">Last Played Course</div>
+        </div>
+
+        <div class="row mb-lg-8pt">
+            {% if exists %}
+            <div class="col-lg-12">
+                <div class="card">
+                    <img src="{{latestAccessedCourse.theCourse.coverImage.url}}" alt="TypeScript" class="card-img"
+                        style="max-height: 100%;height: 250px;object-fit: cover; width: initial;">
+                    <div class="fullbleed bg-primary" style="opacity: .5;"></div>
+                    <img src="{{userInfo.profileImage.url}}" width="64" alt="Instruduction to TypeScript"
+                        class="rounded position-absolute" style="right: 1rem; top: 1rem;">
+                    <div class="card-body d-flex align-items-center justify-content-center fullbleed">
+                        <div>
+                            <h2 class="text-white mb-16pt">{{latestAccessedCourse.theCourse.title}}</h2>
+                            <div class="d-flex align-items-center mb-16pt justify-content-center">
+                                <div class="d-flex align-items-center mr-16pt">
+                                    <span class="material-icons icon-16pt text-white-50 mr-4pt">access_time</span>
+                                    <p class="flex text-white-50 lh-1 mb-0">{{latestAccessedCourse.stayedSeconds}} minutes left</p>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <span
+                                        class="material-icons icon-16pt text-white-50 mr-4pt">play_circle_outline</span>
+                                    <p class="flex text-white-50 lh-1 mb-0">{{latestAccessedCourse.theCourse.lessonCounts}} lessons</p>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-center">
+                                {% if latestAccessedCourse.status %}
+                                <a href="/course-tk/inrolled/lssn-tpc/{{latestAccessedCourse.theCourse.pk}}/{{latestAccessedCourse.theCourse.category}}/{{latestAccessedCourse.currentLesson.pk}}/" class="btn btn-white mr-8pt">Resume</a>
+                                <a href="/crs-dtl-wth/{{latestAccessedCourse.theCourse.pk}}/{{latestAccessedCourse.theCourse.title}}/" class="btn btn-outline-white ml-0">See detail</a>
+                                {% else %}
+                                <a href="/pymt-thcr/{{latestAccessedCourse.theCourse.category}}/{{latestAccessedCourse.theCourse.pk}}/{{latestAccessedCourse.theCourse.title}}" class="btn btn-accent">Course Is Not Active Now Please Upgrade </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex flex-wrap align-items-start">
+                    <div class="d-flex align-items-center mr-24pt">
+                        <a href="/crs-dtl-wth/{{latestAccessedCourse.theCourse.pk}}/{{latestAccessedCourse.theCourse.title}}/" class="mr-12pt">
+                            <img src="{{latestAccessedCourse.theCourse.prevImage.url}}" width="40" alt="Angular" class="rounded">
+                        </a>
+                        <div class="flex">
+                            <a class="card-title" href="student-take-course.html">{{latestAccessedCourse.theCourse.title}}</a>
+                            <p class="lh-1 mb-0">
+                                <span class="text-50 small">with</span>
+                                <span class="text-50 small">{{latestAccessedCourse.theCourse.instructor.fullName}}</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center py-4pt" style="white-space: nowrap;">
+                        <small class="text-50 mr-8pt">Your rating</small>
+                        <!-- <div class="rating mr-8pt">
+                            <span class="rating__item"><span class="material-icons text-primary">star</span></span>
+                            <span class="rating__item"><span class="material-icons text-primary">star</span></span>
+                            <span class="rating__item"><span class="material-icons text-primary">star</span></span>
+                            <span class="rating__item"><span class="material-icons text-primary">star</span></span>
+                            <span class="rating__item"><span
+                                    class="material-icons text-primary">star_border</span></span>
+                        </div>
+                        <small class="text-50">4/5</small> -->
+                    </div>
+                </div>
+
+
+            </div>
+            {% endif %}
+            <div class="col-lg-12">
+                <hr><br>
+            </div>
+        </div>
+
+        <div class="row mb-lg-16pt">
+            <div class="col-lg-12 mb-8pt mb-sm-0">
+                <div class="page-separator">
+                    <div class="page-separator__text">Inrolled Courses</div>
+                </div>
+                <div class="row card-group-row">
+                    
+                    {% for inrolledCourse in inrollmentCourses %}
+                        <div class="col-lg-4 card-group-row__col">
+
+                            <div class="card card-sm card--elevated p-relative o-hidden overlay overlay--primary-dodger-blue js-overlay card-group-row__card"
+                                data-toggle="popover" data-trigger="click">
+
+                                <a href="student-take-course.html" class="card-img-top js-image" data-position=""
+                                    data-height="140">
+                                    <img src="{{inrolledCourse.theCourse.coverImage.url}}" alt="course">
+                                    <span class="overlay__content">
+                                        <span class="overlay__action d-flex flex-column text-center">
+                                            <i class="material-icons icon-32pt">play_circle_outline</i>
+                                            <span class="card-title text-white">Resume</span>
+                                        </span>
+                                    </span>
+                                </a>
+                                
+                                {% if exists %}
+                                    {% if inrolledCourse == latestAccessedCourse %}
+                                        <span
+                                            class="corner-ribbon corner-ribbon--default-right-top corner-ribbon--shadow bg-accent text-white">PLAYED</span>
+                                    {% endif %}
+                                {% endif %}
+                                <div class="card-body flex">
+                                    <div class="d-flex">
+                                        <div class="flex">
+                                            <a class="card-title" href="student-take-course.html">{{inrolledCourse.theCourse.title}}</a>
+                                            <small class="text-50 font-weight-bold mb-4pt">{{inrolledCourse.theCourse.instructor.fullName}}</small>
+                                        </div>
+                                        <a href="#" data-toggle="tooltip"
+                                            data-title="Add Favorite" data-placement="top" data-boundary="window"
+                                            class="ml-4pt material-icons text-20 card-course__icon-favorite">favorite_border</a>
+                                    </div>
+                                
+                                </div>
+                                <div class="card-footer">
+                                    <div class="row justify-content-between">
+                                        <div class="col-auto d-flex align-items-center">
+                                            <span class="material-icons icon-16pt text-50 mr-4pt">access_time</span>
+                                            <p class="flex text-50 lh-1 mb-0"><small>6 hours</small></p>
+                                        </div>
+                                        <div class="col-auto d-flex align-items-center">
+                                            <span
+                                                class="material-icons icon-16pt text-50 mr-4pt">play_circle_outline</span>
+                                            <p class="flex text-50 lh-1 mb-0"><small>12 lessons</small></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="popoverContainer d-none">
+                                <div class="media">
+                                    <div class="media-left mr-12pt">
+                                        <img src="{{inrolledCourse.theCourse.instructor.profileImage.url}}" width="40" height="40"
+                                            alt="Angular" class="rounded">
+                                    </div>
+                                    <div class="media-body">
+                                        <div class="card-title mb-0">{{inrolledCourse.theCourse.title}}</div>
+                                        <p class="lh-1 mb-0">
+                                            <span class="text-50 small">with</span>
+                                            <span class="text-50 small font-weight-bold">{{inrolledCourse.theCourse.instructor.fullName}}</span>
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <p class="my-16pt text-70">{{inrolledCourse.theCourse.simDesc}}.</p>
+
+                                <!-- <div class="mb-16pt">
+                                    {{inrolledCourse.theCourse.youLearn|safe}}
+                                </div> -->
+
+                                <div class="my-32pt">
+                                    <div class="d-flex align-items-center mb-8pt justify-content-center">
+                                        <div class="d-flex align-items-center mr-8pt">
+                                            <span class="material-icons icon-16pt text-50 mr-4pt">access_time</span>
+                                            <p class="flex text-50 lh-1 mb-0"><small>{{inrolledCourse.theCourse.learnedSeconds}} minutes left</small></p>
+                                        </div>
+                                        <div class="d-flex align-items-center">
+                                            <span class="material-icons icon-16pt text-50 mr-4pt">play_circle_outline</span>
+                                            <p class="flex text-50 lh-1 mb-0"><small>{{inrolledCourse.theCourse.lessonCounts}} lessons</small></p>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex align-items-center justify-content-center">
+                                        {% if inrolledCourse.status %}
+                                        <a href="/course-tk/inrolled/lssn-tpc/{{inrolledCourse.theCourse.pk}}/{{inrolledCourse.theCourse.category}}/{{inrolledCourse.currentLesson.pk}}/" class="btn btn-primary mr-8pt">Resume</a>
+                                        <a href="/crs-dtl-wth/{{inrolledCourse.theCourse.pk}}/{{inrolledCourse.theCourse.searchKey.searchName}}/" class="btn btn-outline-secondary ml-0">See
+                                            Detail</a>
+                                        {% else %}
+                                        <a href="/crs-dtl-wth/{{inrolledCourse.theCourse.pk}}/{{inrolledCourse.theCourse.category}}/" class="btn btn-outline-secondary ml-0">See
+                                            Detail</a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+                    {% empty %}
+                    {% endfor %}
+                </div>
+
+            </div>
+      
+        </div>
+        
+        <div class="page-separator">
+            <div class="page-separator__text">Events and others</div>
+        </div>
+        
+        {% if inrolledEvents %}
+        <div class="position-relative carousel-card">
+            <div class="js-mdk-carousel row d-block" id="carousel-achievements">
+
+                <a class="carousel-control-next js-mdk-carousel-control" href="#carousel-achievements"
+                    role="button" data-slide="next">
+                    <span class="carousel-control-icon material-icons"
+                        aria-hidden="true">keyboard_arrow_right</span>
+                    <span class="sr-only">Next</span>
+                </a>
+
+                <div class="mdk-carousel__content">
+                    
+                    {% for yEvent in inrolledEvents %}
+                    <div class="col-12 col-sm-6">
+                        <a class="card border-0 mb-0" href="">
+                            <img src="{{yEvent.theEvent.coverImage.url}}" alt="{{yEvent.theEvent.title}}" class="card-img"
+                                style="max-height: 100%; width: initial;">
+                            <div class="fullbleed bg-primary" style="opacity: .5;"></div>
+                            <span
+                                class="card-body d-flex flex-column align-items-center justify-content-center fullbleed">
+                                <span class="row flex-nowrap">
+                                    <span class="col d-flex flex-column">
+                                        <span class="text-right flex mb-16pt">
+                                            <img src="{{yEvent.theEvent.persenter.profileImage.url}}" width="64"
+                                                alt="Flinto" class="rounded">
+                                        </span>
+                                    </span>
+                                    <span
+                                        class="col-auto text-center d-flex flex-column justify-content-center align-items-center">
+                                        <span
+                                            class="h5 text-white text-uppercase font-weight-normal m-0 d-block">Achievement</span>
+                                        <span class="text-white-60 d-block mb-24pt">{{yEvent.theEvent.dateTimeStarting}}</span>
+                                    </span>
+                                    
+                                </span>
+                                <span class="row flex-nowrap">
+                                    <span
+                                        class="col-auto text-center d-flex flex-column justify-content-center align-items-center">
+                                        <img src="{{yEvent.theEvent.coverImage.url}}" width="64"
+                                            alt="achievement">
+                                    </span>
+                                    <span class="col d-flex flex-column">
+                                        <span>
+                                            <span class="card-title text-white mb-4pt d-block">{{yEvent.theEvent.title}}</span>
+                                            <span class="text-white-60">{{yEvent.theEvent.simDesc}}</span>
+                                        </span>
+                                    </span>
+                                </span>
+                            </span>
+                        </a>
+
+                    </div>
+                    {% endfor %}
+
+                    
+
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div  class="alert alert-soft-warning mb-0 p-8pt" style="cursor: pointer;">
+            <div class="d-flex align-items-start">
+                <div class="mr-8pt">
+                    <i class="material-icons">card_giftcard</i>
+                </div>
+                <div class="flex">
+                    <small class="text-100">No Inrolled Events For you</small>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        <br>
+        gos
+        {% if inrolledEvents %}
+        <div class="row mb-lg-8pt">
+            <div class="col-lg-8">
+                <div id="carouselExampleFade" class="carousel carousel-card slide mb-24pt">
+                    <div class="carousel-inner">
+                        {% for yEvent in inrolledEvents %}
+                        {% if forloop.first %}
+
+                        <div class="carousel-item active">
+
+                            <a class="card border-0 mb-0" href="">
+                                <img src="{{yEvent.theEvent.coverImage.url}}" alt="{{yEvent.theEvent.title}}" class="card-img"
+                                    style="max-height: 100%; width: initial;">
+                                <div class="fullbleed bg-primary" style="opacity: .5;"></div>
+                                <span
+                                    class="card-body d-flex flex-column align-items-center justify-content-center fullbleed">
+                                    <span class="row flex-nowrap">
+                                        <span class="col d-flex flex-column">
+                                            <span class="text-right flex mb-16pt">
+                                                <img src="{{yEvent.theEvent.persenter.profileImage.url}}" width="64"
+                                                    alt="Flinto" class="rounded">
+                                            </span>
+                                        </span>
+                                        <span
+                                            class="col-auto text-center d-flex flex-column justify-content-center align-items-center">
+                                            <span
+                                                class="h5 text-white text-uppercase font-weight-normal m-0 d-block">Achievement</span>
+                                            <span class="text-white-60 d-block mb-24pt">{{yEvent.theEvent.dateTimeStarting}}</span>
+                                        </span>
+                                        
+                                    </span>
+                                    <span class="row flex-nowrap">
+                                        <span
+                                            class="col-auto text-center d-flex flex-column justify-content-center align-items-center">
+                                            <img src="{{yEvent.theEvent.coverImage.url}}" width="64"
+                                                alt="achievement">
+                                        </span>
+                                        <span class="col d-flex flex-column">
+                                            <span>
+                                                <span class="card-title text-white mb-4pt d-block">{{yEvent.theEvent.title}}</span>
+                                                <span class="text-white-60">{{yEvent.theEvent.simDesc}}</span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </span>
+                            </a>
+
+                        </div>
+                        {% else %}
+                        <div class="carousel-item">
+
+                            <a class="card border-0 mb-0" href="">
+                                <img src="{{yEvent.theEvent.coverImage.url}}" alt="Flinto" class="card-img"
+                                    style="max-height: 100%; width: initial;">
+                                <div class="fullbleed bg-primary" style="opacity: .5;"></div>
+                                <span
+                                    class="card-body d-flex flex-column align-items-center justify-content-center fullbleed">
+                                    <span class="row flex-nowrap">
+                                        <span class="col d-flex flex-column">
+                                            <span class="text-right flex mb-16pt">
+                                                <img src="{{yEvent.theEvent.persenter.profileImage.url}}" width="64"
+                                                    alt="Flinto" class="rounded">
+                                            </span>
+                                        </span>
+                                        <span
+                                            class="col-auto text-center d-flex flex-column justify-content-center align-items-center">
+                                            <span
+                                                class="h5 text-white text-uppercase font-weight-normal m-0 d-block">Achievement</span>
+                                            <span class="text-white-60 d-block mb-24pt">{{yEvent.theEvent.dateTimeStarting}}</span>
+                                        </span>
+                                        
+                                    </span>
+                                    <span class="row flex-nowrap">
+                                        <span
+                                            class="col-auto text-center d-flex flex-column justify-content-center align-items-center">
+                                            <img src="{{yEvent.theEvent.coverImage.url}}" width="64"
+                                                alt="achievement">
+                                        </span>
+                                        <span class="col d-flex flex-column">
+                                            <span>
+                                                <span class="card-title text-white mb-4pt d-block">{{yEvent.theEvent.title}}</span>
+                                                <span class="text-white-60">{{yEvent.theEvent.simDesc}}</span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </span>
+                            </a>
+
+                        </div>
+                        {% endif %}
+                      
+
+                        {% endfor %}
+                       
+                    </div>
+                    
+                    {% if inrolledEvents.count > 1 %}
+                    <a class="carousel-control-prev" href="#carouselExampleFade" role="button" data-slide="prev">
+                        <span class="carousel-control-icon material-icons" aria-hidden="true">keyboard_arrow_left</span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleFade" role="button" data-slide="next">
+                        <span class="carousel-control-icon material-icons"
+                            aria-hidden="true">keyboard_arrow_right</span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                    {% else %}
+
+                    {% endif %}
+                </div>
+
+            </div>
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-header d-flex align-items-center border-0">
+                        <div class="h2 mb-0 mr-3"> </div>
+                        <div class="flex">
+                            <p class="card-title">  </p>
+                            <p class="card-subtitle text-50"></p>
+                        </div>
+                        <i class="material-icons text-muted ml-2"></i>
+                    </div>
+                    <div class="card-body pt-0">
+                        <div class="chart" style="height: 128px;">
+                            <canvas id="iqChart" class="chart-canvas js-update-chart-line" data-chart-hide-axes="false"
+                                data-chart-points="true" data-chart-suffix="pt"
+                                data-chart-line-border-color="primary"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div  class="alert alert-soft-warning mb-0 p-8pt" style="cursor: pointer;">
+            <div class="d-flex align-items-start">
+                <div class="mr-8pt">
+                    <i class="material-icons">card_giftcard</i>
+                </div>
+                <div class="flex">
+                    <small class="text-100">No Inrolled Events For you</small>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        <div style="margin-top: 20px;" id="usrDiscu" class="page-separator">
+            <div class="page-separator__text">Discussions</div>
+        </div>
+        
+
+        <div class="card">
+            {% if userDiscussion %}
+            <div class="list-group list-group-flush">
+                {% for myDisc in userDiscussion %}
+                <div class="list-group-item p-3">
+                    <div class="row align-items-start">
+                        <div class="col-md-3 mb-8pt mb-md-0">
+                            <div class="media align-items-center">
+                                <div class="media-left mr-12pt">
+                                    <a href="" class="avatar avatar-sm">
+                                        <img src="{{myDisc.theUser.profileImage.url}}" title="{{myDisc.theUser.fullName}}" alt="avatar" class="avatar-img rounded-circle">
+                                        <!-- <span class="avatar-title rounded-circle">LB</span> -->
+                                    </a>
+                                </div>
+                                <div class="d-flex flex-column media-body media-middle">
+                                    <a href="" class="card-title">{{myDisc.theUser.fullName}}</a>
+                                    <small class="text-muted">{{myDisc.date|timesince}} ago</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col mb-8pt mb-md-0">
+                            <p class="mb-8pt"><a href="#" class="text-body"><strong>{{myDisc.discText}}</strong></a></p>
+
+                            <a href="#" class="chip chip-outline-secondary">{{myDisc.theLesson}}</a>
+
+                        </div>
+                        <div class="col-auto d-flex flex-column align-items-center justify-content-center">
+                            <h5 class="m-0">{{myDisc.theAnswers}}</h5>
+                            <p class="lh-1 mb-0"><small class="text-70">answers</small></p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                
+
+            </div>
+            <div class="card-footer p-8pt">
+
+                <ul class="pagination justify-content-start pagination-xsm m-0">
+                    {% if userDiscussion.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?discPage={{userDiscussion.previous_page_number}}#usrDiscu" aria-label="Previous">
+                            <span aria-hidden="true" class="material-icons">chevron_left</span>
+                            <span>Prev</span>
+                        </a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" aria-label="Previous">
+                            <span aria-hidden="true" class="material-icons">chevron_left</span>
+                            <span>Prev</span>
+                        </a>
+                    </li>
+                    {% endif %}
+                    {% for theCurrentPagin in userDiscussion.paginator %}
+                        <li class="page-item">
+                            <a class="page-link" href="?discPage={{theCurrentPagin.number}}#usrDiscu" aria-label="Page {{theCurrentPagin.number}}">
+                                <span>{{theCurrentPagin.number}}</span>
+                            </a>
+                        </li>
+                    {% endfor %}
+                    
+                    
+                    {% if userDiscussion.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?discPage={{theCurrentPagin.next_page_number}}#usrDiscu" aria-label="Next">
+                            <span>Next</span>
+                            <span aria-hidden="true" class="material-icons">chevron_right</span>
+                        </a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" aria-label="Next">
+                            <span>Next</span>
+                            <span aria-hidden="true" class="material-icons">chevron_right</span>
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+
+                <!-- <ul class="pagination justify-content-center pagination-sm">
+                                <li class="page-item disabled">
+                                    <a class="page-link" href="#" aria-label="Previous">
+                                    <span aria-hidden="true" class="material-icons">chevron_left</span>
+                                    <span>Prev</span>
+                                    </a>
+                                </li>
+                                <li class="page-item active">
+                                    <a class="page-link" href="#" aria-label="1">
+                                    <span>1</span>
+                                    </a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#" aria-label="1">
+                                    <span>2</span>
+                                    </a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#" aria-label="Next">
+                                    <span>Next</span>
+                                    <span aria-hidden="true" class="material-icons">chevron_right</span>
+                                    </a>
+                                </li>
+                                </ul> -->
+            </div>
+            {% else %}
+            <br>
+            <div class="col-auto text-center">
+                <a class="btn btn-outline-secondary">There is no discussion for you</a>
+            </div>
+            <br>
+            {% endif %}
+        </div>
+
+        <!-- <div class="page-separator">
+            <div class="page-separator__text">Quizzes</div>
+        </div> -->
+
+        <div class="row card-group-row">
+
+            <!-- <div class="card-group-row__col col-md-6">
+
+                <div class="card card-group-row__card card-sm">
+                    <div class="card-body d-flex align-items-center">
+                        <a href="student-take-quiz.html" class="avatar overlay overlay--primary avatar-4by3 mr-12pt">
+                            <img src="/static/images/paths/typescript_200x168.png" alt="Introduction to TypeScript"
+                                class="avatar-img rounded">
+                            <span class="overlay__content"></span>
+                        </a>
+                        <div class="flex mr-12pt">
+                            <a class="card-title" href="student-take-quiz.html">Introduction to
+                                TypeScript</a>
+                            <div class="card-subtitle text-50">3 days ago</div>
+                        </div>
+                        <div class="d-flex flex-column align-items-center">
+                            <span class="lead text-headings lh-1">2.8</span>
+                            <small class="text-50 text-uppercase text-headings">Score</small>
+                        </div>
+                    </div>
+
+                    <div class="progress rounded-0" style="height: 4px;">
+                        <div class="progress-bar bg-primary" role="progressbar" style="width: 37%;" aria-valuenow="37"
+                            aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+
+                    <div class="card-footer">
+                        <div class="d-flex align-items-center">
+                            <div class="flex mr-2">
+                                <a href="student-take-quiz.html" class="btn btn-light btn-sm">
+
+                                    <i class="material-icons icon--left">refresh</i> Continue
+
+                                </a>
+                            </div>
+
+                            <div class="dropdown">
+                                <a href="#" data-toggle="dropdown" data-caret="false" class="text-muted"><i
+                                        class="material-icons">more_horiz</i></a>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <a href="student-take-quiz.html" class="dropdown-item">Continue</a>
+                                    <a href="student-quiz-result-details.html" class="dropdown-item">View
+                                        Result</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a href="student-take-quiz.html" class="dropdown-item text-danger">Reset
+                                        Quiz</a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="card-group-row__col col-md-6">
+
+                <div class="card card-group-row__card card-sm">
+                    <div class="card-body d-flex align-items-center">
+                        <a href="student-take-quiz.html" class="avatar overlay overlay--primary avatar-4by3 mr-12pt">
+                            <img src="/static/images/paths/angular_200x168.png" alt="Angular Fundamentals"
+                                class="avatar-img rounded">
+                            <span class="overlay__content"></span>
+                        </a>
+                        <div class="flex mr-12pt">
+                            <a class="card-title" href="student-take-quiz.html">Angular Fundamentals</a>
+                            <div class="card-subtitle text-50">3 days ago</div>
+                        </div>
+                        <div class="d-flex flex-column align-items-center">
+                            <span class="lead text-headings lh-1">3.3</span>
+                            <small class="text-50 text-uppercase text-headings">Score</small>
+                        </div>
+                    </div>
+
+                    <div class="card-footer">
+                        <div class="d-flex align-items-center">
+                            <div class="flex mr-2">
+                                <a href="student-take-quiz.html" class="btn btn-light btn-sm">
+
+                                    <i class="material-icons icon--left">playlist_add_check</i> Reset
+                                    <span class="badge badge-dark badge-notifications ml-2">5</span>
+
+                                </a>
+                            </div>
+
+                            <div class="dropdown">
+                                <a href="#" data-toggle="dropdown" data-caret="false" class="text-muted"><i
+                                        class="material-icons">more_horiz</i></a>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <a href="student-take-quiz.html" class="dropdown-item">Continue</a>
+                                    <a href="student-quiz-result-details.html" class="dropdown-item">View
+                                        Result</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a href="student-take-quiz.html" class="dropdown-item text-danger">Reset
+                                        Quiz</a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div> -->
+
+        </div>
+
+        <div class="mb-32pt">
+
+            <ul class="pagination justify-content-start pagination-xsm m-0">
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" aria-label="Previous">
+                        <span aria-hidden="true" class="material-icons">chevron_left</span>
+                        <span>Prev</span>
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Page 1">
+                        <span>1</span>
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Page 2">
+                        <span>2</span>
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Next">
+                        <span>Next</span>
+                        <span aria-hidden="true" class="material-icons">chevron_right</span>
+                    </a>
+                </li>
+            </ul>
+
+            <!-- <ul class="pagination justify-content-center pagination-sm">
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#" aria-label="Previous">
+                                <span aria-hidden="true" class="material-icons">chevron_left</span>
+                                <span>Prev</span>
+                                </a>
+                            </li>
+                            <li class="page-item active">
+                                <a class="page-link" href="#" aria-label="1">
+                                <span>1</span>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="#" aria-label="1">
+                                <span>2</span>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="#" aria-label="Next">
+                                <span>Next</span>
+                                <span aria-hidden="true" class="material-icons">chevron_right</span>
+                                </a>
+                            </li>
+                            </ul> -->
+        </div>
+
+    </div>
+</div>
+
+<script src="{% static "vendor/jquery.min.js" %}"></script>
+<script>
+    var theUserName='{{userInfo.fullName}}'
+    $(function () {
+        document.getElementById('userSplitName').innerHTML=theUserName.toString().split(' ')[0]
+        console.log(theUserName)
+    })
+</script>
+{% endblock %}
