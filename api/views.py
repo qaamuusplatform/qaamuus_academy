@@ -2,14 +2,16 @@ from django.urls import reverse
 from datetime import timedelta,datetime
 from django.shortcuts import render,redirect
 from rest_framework.decorators import api_view
+from itertools import chain
 from rest_framework.response import Response
+from rest_framework.exceptions import AuthenticationFailed
 from django.http import HttpResponse, response
 from django.views import View
 import requests
 from django.contrib.auth.models import User
 from a_webinar.models import EventView
 from api.serializers import *
-
+import jwt
 # send email
 import random
 from django.core.mail import EmailMultiAlternatives
@@ -75,6 +77,62 @@ def userDetail(request,pk):
     serializer=UserSerializer(user,many=False)
     return Response(serializer.data)
 
+@api_view(['POST'])
+def jwtLogin(request):
+    theUser=''
+    username=request.POST.get('username')
+    password=request.POST.get('password')
+    if username.find('@')!=-1:
+        theUser=User.objects.filter(email=username).first()
+    else:
+        theUser=User.objects.filter(username=username).first()
+    if theUser is None:
+        raise AuthenticationFailed('User not found')
+
+    if not theUser.check_password(password):
+        raise AuthenticationFailed('Incorrect Password')
+
+
+    payload={
+        'id':theUser.id,
+        'exp':datetime.utcnow()+timedelta(days=10),
+        'iat':datetime.utcnow()
+    }
+    jwtToken=jwt.encode(payload,'secret',algorithm='HS256')
+    
+    jwtUserResponse=Response()
+    jwtUserResponse.set_cookie(key='jwt',value=jwtToken,httponly=True)
+
+    jwtUserResponse.data={
+        'jwt':jwtToken
+    }
+    return jwtUserResponse
+
+@api_view(['GET'])
+def jwtUser(request):
+    jwtToken=request.COOKIES.get('jwt')
+    if not jwtToken:
+        raise AuthenticationFailed("unAuth")
+    
+    try:
+        payload=jwt.decode(jwt=jwtToken,key="secret",algorithms='HS256')
+    except jwt.ExpiredSignatureError:
+        raise AuthenticationFailed("unAuthenticated")
+    theUser=User.objects.filter(id=payload['id']).first()
+    theUserInfo=UserProfile.objects.filter(user=theUser).first()
+    serializerUserInfo=UserProfileSerializer(theUserInfo)
+    return Response(serializerUserInfo.data)    
+
+@api_view(['GET'])
+def jwtLogout(request):
+    jwtResponse=Response()
+    jwtResponse.delete_cookie('jwt')
+
+    jwtResponse.data={
+        "message":"success",
+        "code":200
+    }      
+    return jwtResponse  
 
 
 @api_view(['GET'])
@@ -107,7 +165,7 @@ def userProfileList(request):
 
 @api_view(['POST','GET'])
 def userProfileCreate(request):
-    serializer=UserProfileSerializer(data=request.data)
+    serializer=UserProfileCreateSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
         return Response({"status": "success", "data": serializer.data})
@@ -117,7 +175,7 @@ def userProfileCreate(request):
 @api_view(['POST'])
 def userProfileUpdate(request,pk):
     theObject=UserProfile.objects.get(pk=pk)
-    serializer=UserProfileSerializer(instance=theObject,data=request.data,partial=True)
+    serializer=UserProfileCreateSerializer(instance=theObject,data=request.data,partial=True)
     if serializer.is_valid():
         serializer.save()
         return Response({"status": "success", "data": serializer.data})

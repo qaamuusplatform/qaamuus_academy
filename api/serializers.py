@@ -10,11 +10,16 @@ class UserSerializer(serializers.ModelSerializer):
         model=User
         fields='__all__'
         
+class UserProfileCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=UserProfile
+        fields='__all__'
 
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model=UserProfile
         fields='__all__'
+        depth=1
 
 class QaCoursesSerializer(serializers.ModelSerializer):
     class Meta:
