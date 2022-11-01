@@ -86,7 +86,7 @@ def checkingUserExist(request,username):
 @api_view(['GET'])
 def checkUserExistEmailAndUsername(request,username,email):
     isExist=True
-    if User.objects.filter(username=username).exists() and User.objects.filter(email=email).exists():
+    if User.objects.filter(username=username).exists()==False and User.objects.filter(email=email).exists()==False:
         isExist=False
     else:
         isExist=True
