@@ -9,6 +9,7 @@ urlpatterns = [
     path('user-detail/<str:pk>/',views.userDetail),
     path('user-password-format/<str:pk>/',views.passwordFormat),
     path('checkingUserExist/<str:username>/',views.checkingUserExist), 
+    path('checkUserExistEmailAndUsername/<str:username>/<str:email>/',views.checkUserExistEmailAndUsername), 
 
     
     # userProfile

@@ -83,6 +83,17 @@ def checkingUserExist(request,username):
     # serializer=ClasseSerializer(classe,many=True)
     return Response({'isExist':userr})
 
+@api_view(['GET'])
+def checkUserExistEmailAndUsername(request,username,email):
+    isExist=True
+    if User.objects.filter(username=username).exists() and User.objects.filter(email=email).exists():
+        isExist=False
+    else:
+        isExist=True
+    
+    # serializer=ClasseSerializer(classe,many=True)
+    return Response({'isExist':isExist})
+
 
 
 
