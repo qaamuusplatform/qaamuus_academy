@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from rest_framework.exceptions import AuthenticationFailed
 from django.http import HttpResponse, response
 from django.views import View
+import json
 import requests
 from django.contrib.auth.models import User
 from a_webinar.models import EventView
@@ -45,6 +46,9 @@ def userCreate(request):
     serializer=UserSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
+        theUser=User.objects.get(pk=serializer.data['id'])
+        theUser.set_password(theUser.password)
+        theUser.save()
         return Response({"status": "success", "data": serializer.data})
     else:
         return Response({"status": "error", "data": serializer.errors})
@@ -60,6 +64,9 @@ def userUpdate(request,pk):
     serializer=UserSerializer(instance=user,data=request.data,partial=True)
     if serializer.is_valid():
         serializer.save()
+        theUser=User.objects.get(pk=serializer.data['id'])
+        theUser.set_password(theUser.password)
+        theUser.save()
         return Response({"status": "success", "data": serializer.data})
     else:
         return Response({"status": "error", "data": serializer.errors})
@@ -80,18 +87,20 @@ def userDetail(request,pk):
 @api_view(['POST'])
 def jwtLogin(request):
     theUser=''
-    username=request.POST.get('username')
-    password=request.POST.get('password')
+    username=request.data['username']
+    password=request.data['password']
+
+    
     if username.find('@')!=-1:
         theUser=User.objects.filter(email=username).first()
     else:
         theUser=User.objects.filter(username=username).first()
     if theUser is None:
-        raise AuthenticationFailed('User not found')
+        raise AuthenticationFailed('username or email not found')
 
     if not theUser.check_password(password):
         raise AuthenticationFailed('Incorrect Password')
-
+        print('')
 
     payload={
         'id':theUser.id,
