@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 
-from a_webinar.models import LiveEventComment
+from a_webinar.models import *
 
 from .models import *
 
@@ -25,6 +25,30 @@ class QaCoursesSerializer(serializers.ModelSerializer):
     class Meta:
         model=QaCourses
         fields='__all__'
+        depth=1
+
+class InrolledCreateCourseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=InrolledCourse
+        fields='__all__'
+
+class InrolledCourseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=InrolledCourse
+        fields='__all__'
+        depth=1
+
+class EventEnrolledSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=EventEnrolled
+        fields='__all__'
+        depth=1
+
+class EventEnrolledCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=EventEnrolled
+        fields='__all__'
+        
 
 class CourseReviewSerializer(serializers.ModelSerializer):
     class Meta:

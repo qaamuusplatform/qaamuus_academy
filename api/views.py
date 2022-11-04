@@ -10,7 +10,7 @@ from django.views import View
 import json
 import requests
 from django.contrib.auth.models import User
-from a_webinar.models import EventView
+from a_webinar.models import *
 from api.serializers import *
 import jwt
 # send email
@@ -100,7 +100,6 @@ def jwtLogin(request):
 
     if not theUser.check_password(password):
         raise AuthenticationFailed('Incorrect Password')
-        print('')
 
     payload={
         'id':theUser.id,
@@ -204,6 +203,12 @@ def userProfileDetail(request,pk):
     serializer=UserProfileSerializer(theObject,many=False)
     return Response(serializer.data)
 
+@api_view(['GET'])
+def userEnrollmentsDetail(request,pk):
+    theUser=UserProfile.objects.get(pk=pk)
+    enrolledCourses=InrolledCourseSerializer(InrolledCourse.objects.filter(theUser=theUser),many=True)
+    bookedEvents=EventEnrolledSerializer(EventEnrolled.objects.filter(theUser=theUser),many=True)
+    return Response({'enrolledCourses':enrolledCourses.data,'bookedEvents':bookedEvents.data})
 
 
 

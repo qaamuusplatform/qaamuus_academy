@@ -21,6 +21,7 @@ urlpatterns = [
     path('userProfile-update/<str:pk>/',views.userProfileUpdate),
     path('userProfile-delete/<str:pk>/',views.userProfileDelete),
     path('userProfile-detail/<str:pk>/',views.userProfileDetail),
+    path('userEnrollments-detail/<str:pk>/',views.userEnrollmentsDetail),
 
 
     # courses
