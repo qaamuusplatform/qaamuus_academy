@@ -36,7 +36,7 @@ class InrolledCourseSerializer(serializers.ModelSerializer):
     class Meta:
         model=InrolledCourse
         fields='__all__'
-        depth=1
+        depth=2
 
 class EventEnrolledSerializer(serializers.ModelSerializer):
     class Meta:
