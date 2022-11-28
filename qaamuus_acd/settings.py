@@ -37,7 +37,6 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'storages',
     'corsheaders',
     'django.contrib.staticfiles',
     'api',
@@ -104,25 +103,12 @@ TEMPLATES = [
 WSGI_APPLICATION = 'qaamuus_acd.wsgi.application'
 
 
-if config("DATABASE_URL","") != "":
-    r = urlparse(config("DATABASE_URL"))
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.postgresql_psycopg2",
-            "NAME": os.path.relpath(r.path,"/"),
-            "USER": r.username,
-            "PASSWORD": r.password,
-            "HOST": r.hostname,
-            "PORT":r.port,
-            "OPTIONS": {"sslmode":"require"}
-        }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
 }
 # https://qaamuusstaticfiles.sgp1.digitaloceanspaces.com
 
@@ -166,7 +152,7 @@ MEDIA_URL='/media/'
 
 MEDIA_ROOT=os.path.join(BASE_DIR,'media')
 
-from .cdn.conf import *
+# from .cdn.conf import *
 
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
