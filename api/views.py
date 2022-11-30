@@ -10,6 +10,7 @@ from django.views import View
 import json
 import requests
 from django.contrib.auth.models import User
+from a_system.models import OurInterFriends
 from a_webinar.models import *
 from api.serializers import *
 import jwt
@@ -221,6 +222,94 @@ def userEnrollmentsDetail(request,pk):
     enrolledCourses=InrolledCourseSerializer(InrolledCourse.objects.filter(theUser=theUser),many=True)
     bookedEvents=EventEnrolledSerializer(EventEnrolled.objects.filter(theUser=theUser),many=True)
     return Response({'enrolledCourses':enrolledCourses.data,'bookedEvents':bookedEvents.data})
+
+
+
+
+# qr courses
+@api_view(['GET'])
+def ourInternationalFriendsList(request):
+    objects=OurInterFriends.objects.all()
+    serializer=OurInterFriendsSerializer(objects,many=True)
+    return Response(serializer.data)
+
+@api_view(['POST','GET'])
+def ourInternationalFriendsCreate(request):
+    serializer=OurInterFriendsSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response({"status": "success", "data": serializer.data})
+    else:
+        return Response({"status": "error", "data": serializer.errors})
+
+@api_view(['POST'])
+def ourInternationalFriendsUpdate(request,pk):
+    theObject=OurInterFriends.objects.get(pk=pk)
+    serializer=OurInterFriendsSerializer(instance=theObject,data=request.data,partial=True)
+    if serializer.is_valid():
+        serializer.save()
+        return Response({"status": "success", "data": serializer.data})
+    else:
+        return Response({"status": "error", "data": serializer.errors})
+
+@api_view(['DELETE'])
+def ourInternationalFriendsDelete(request,pk):
+    theObject=OurInterFriends.objects.get(pk=pk)
+    
+    theObject.delete()
+    return Response()
+
+@api_view(['GET'])
+def ourInternationalFriendsDetail(request,pk):
+    theObject=OurInterFriends.objects.get(pk=pk)
+    serializer=OurInterFriendsSerializer(theObject,many=False)
+    return Response(serializer.data)
+
+
+
+
+
+
+# qr feedBacks
+@api_view(['GET'])
+def feedBacksList(request):
+    objects=FeedBacks.objects.all()
+    serializer=FeedBacksSerializer(objects,many=True)
+    return Response(serializer.data)
+
+@api_view(['POST','GET'])
+def feedBacksCreate(request):
+    serializer=FeedBacksSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response({"status": "success", "data": serializer.data})
+    else:
+        return Response({"status": "error", "data": serializer.errors})
+
+@api_view(['POST'])
+def feedBacksUpdate(request,pk):
+    theObject=FeedBacks.objects.get(pk=pk)
+    serializer=FeedBacksSerializer(instance=theObject,data=request.data,partial=True)
+    if serializer.is_valid():
+        serializer.save()
+        return Response({"status": "success", "data": serializer.data})
+    else:
+        return Response({"status": "error", "data": serializer.errors})
+
+@api_view(['DELETE'])
+def feedBacksDelete(request,pk):
+    theObject=FeedBacks.objects.get(pk=pk)
+    
+    theObject.delete()
+    return Response()
+
+@api_view(['GET'])
+def feedBacksDetail(request,pk):
+    theObject=FeedBacks.objects.get(pk=pk)
+    serializer=FeedBacksSerializer(theObject,many=False)
+    return Response(serializer.data)
+
+
 
 
 

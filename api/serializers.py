@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
+from a_system.models import OurInterFriends
 
 from a_webinar.models import *
 
@@ -20,6 +21,20 @@ class UserProfileSerializer(serializers.ModelSerializer):
         model=UserProfile
         fields='__all__'
         depth=1
+
+
+class OurInterFriendsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=OurInterFriends
+        fields='__all__'
+        depth=1
+
+class FeedBacksSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=FeedBacks
+        fields='__all__'
+        depth=1
+
 
 class QaCoursesSerializer(serializers.ModelSerializer):
     class Meta:

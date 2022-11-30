@@ -23,6 +23,18 @@ urlpatterns = [
     path('userProfile-detail/<str:pk>/',views.userProfileDetail),
     path('userEnrollments-detail/<str:pk>/',views.userEnrollmentsDetail),
 
+    path('ourInternationalFriends-list/',views.ourInternationalFriendsList),
+    path('ourInternationalFriends-create/',views.ourInternationalFriendsCreate),
+    path('ourInternationalFriends-update/<str:pk>/',views.ourInternationalFriendsUpdate),
+    path('ourInternationalFriends-delete/<str:pk>/',views.ourInternationalFriendsDelete),
+    path('ourInternationalFriends-detail/<str:pk>/',views.ourInternationalFriendsDetail),
+
+    
+    path('feedBacks-list/',views.feedBacksList),
+    path('feedBacks-create/',views.feedBacksCreate),
+    path('feedBacks-update/<str:pk>/',views.feedBacksUpdate),
+    path('feedBacks-delete/<str:pk>/',views.feedBacksDelete),
+    path('feedBacks-detail/<str:pk>/',views.feedBacksDetail),
 
     # courses
     path('qaCourse-list/',views.qaCoursesList),
