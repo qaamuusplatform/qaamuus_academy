@@ -161,6 +161,9 @@ def checkUserExistEmailAndUsername(request,username,email):
     return Response({'isExist':isExist})
 
 
+def generateRandomReffralCode():
+    randomNum ='qReff_'+str(random.randint(4,9000))
+    return randomNum
 
 
 
@@ -173,13 +176,22 @@ def userProfileList(request):
 
 @api_view(['POST','GET'])
 def userProfileCreate(request):
-    serializer=UserProfileCreateSerializer(data=request.data)
-    if serializer.is_valid():
-        serializer.save()
-        return Response({"status": "success", "data": serializer.data})
+    userModalData=UserSerializer(data=request.data)
+    if userModalData.is_valid():
+        userModalData.save()
+        theUser=User.objects.get(pk=userModalData.data['id'])
+        theUser.set_password(theUser.password)
+        theUser.save()
+        request.data["user"]=userModalData.data['id']
+        request.data["referralCode"]=generateRandomReffralCode()
+        userProfileData=UserProfileCreateSerializer(data=request.data)
+        if userProfileData.is_valid():
+            userProfileData.save()
+            return Response({"status": "success", "data": userProfileData.data})
+        else:
+            return Response({"status": "error", "data": userProfileData.errors})
     else:
-        return Response({"status": "error", "data": serializer.errors})
-
+        return Response({"status": "error", "data": userModalData.errors})
 @api_view(['POST'])
 def userProfileUpdate(request,pk):
     theObject=UserProfile.objects.get(pk=pk)

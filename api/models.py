@@ -3,7 +3,7 @@ from email.policy import default
 from django.db import models
 from django.utils.safestring import mark_safe
 from django.contrib.auth.models import User
-
+import random
 from ckeditor.fields import RichTextField
 # Create your models here.
 
@@ -20,6 +20,7 @@ class SearchKeys(models.Model):
 
     def __str__(self) -> str:
         return str(self.searchName)
+
 
 class UserProfile(models.Model):
     user=models.OneToOneField(User,on_delete=models.CASCADE)
@@ -38,11 +39,19 @@ class UserProfile(models.Model):
     learnedSeconds=models.IntegerField(default=0)
     status=models.BooleanField(default=True)
     contactMe=models.TextField(null=True,blank=True)
+    referralCode=models.CharField(default='qReff_9002',max_length=10)
     userType=models.ForeignKey(UserTypes,on_delete=models.CASCADE,default=1)
     teacherPoints=models.FloatField(default=1)
     user_activated=models.BooleanField(default=True)
+
+    # def save(self,*args,**kwargs):
+    #     if self._state.adding:
+    #         self.referralCode=generateRandomReffralCode()
     def theImage(self):
-        return mark_safe('<img src={} width="100px" >'.format(self.profileImage.url))
+        if self.profileImage:
+            return mark_safe('<img src={} width="100px" >'.format(self.profileImage.url))
+        else:
+            return mark_safe('<img src={} width="100px" >'.format('https://st3.depositphotos.com/3581215/18899/v/450/depositphotos_188994514-stock-illustration-vector-illustration-male-silhouette-profile.jpg')) 
     theImage.allow_tags=True
     def __str__(self) -> str:
         return str(self.fullName )+' -- '+str(self.number)
