@@ -197,7 +197,7 @@ class EventView(models.Model):
             # }
             # updatedMeeting=updateMeeting(self.meetingNumber,theMeetingDetail)
             print('updated')
-            updatedMeeting=getMeetingDetail(self.meetingNumber)
+            # updatedMeeting=getMeetingDetail(self.meetingNumber)
             # self.meetingNumber=createdMeeting["id"]
             # print(updatedMeeting)
             # self.meetingPassword=createdMeeting["password"]

@@ -29,6 +29,12 @@ class OurInterFriendsSerializer(serializers.ModelSerializer):
         fields='__all__'
         depth=1
 
+class EventViewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=EventView
+        fields='__all__'
+        depth=1
+
 class FeedBacksSerializer(serializers.ModelSerializer):
     class Meta:
         model=FeedBacks

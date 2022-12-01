@@ -226,7 +226,58 @@ def userEnrollmentsDetail(request,pk):
 
 
 
+
+
+
 # qr courses
+@api_view(['GET'])
+def qaEventList(request):
+    objects=EventView.objects.all()
+    serializer=EventViewSerializer(objects,many=True)
+    return Response(serializer.data)
+
+@api_view(['POST','GET'])
+def qaEventCreate(request):
+    serializer=EventViewSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response({"status": "success", "data": serializer.data})
+    else:
+        return Response({"status": "error", "data": serializer.errors})
+
+@api_view(['POST'])
+def qaEventUpdate(request,pk):
+    theObject=EventView.objects.get(pk=pk)
+    serializer=EventViewSerializer(instance=theObject,data=request.data,partial=True)
+    if serializer.is_valid():
+        serializer.save()
+        return Response({"status": "success", "data": serializer.data})
+    else:
+        return Response({"status": "error", "data": serializer.errors})
+
+@api_view(['DELETE'])
+def qaEventDelete(request,pk):
+    theObject=EventView.objects.get(pk=pk)
+    
+    theObject.delete()
+    return Response()
+
+@api_view(['GET'])
+def qaEventDetail(request,pk):
+    theObject=EventView.objects.get(pk=pk)
+    serializer=EventViewSerializer(theObject,many=False)
+    return Response(serializer.data)
+
+
+
+
+
+
+
+
+
+
+# qr internation
 @api_view(['GET'])
 def ourInternationalFriendsList(request):
     objects=OurInterFriends.objects.all()

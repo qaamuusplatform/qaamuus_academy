@@ -23,6 +23,13 @@ urlpatterns = [
     path('userProfile-detail/<str:pk>/',views.userProfileDetail),
     path('userEnrollments-detail/<str:pk>/',views.userEnrollmentsDetail),
 
+
+    path('qaEvent-list/',views.qaEventList),
+    path('qaEvent-create/',views.qaEventCreate),
+    path('qaEvent-update/<str:pk>/',views.qaEventUpdate),
+    path('qaEvent-delete/<str:pk>/',views.qaEventDelete),
+    path('qaEvent-detail/<str:pk>/',views.qaEventDetail),
+
     path('ourInternationalFriends-list/',views.ourInternationalFriendsList),
     path('ourInternationalFriends-create/',views.ourInternationalFriendsCreate),
     path('ourInternationalFriends-update/<str:pk>/',views.ourInternationalFriendsUpdate),
