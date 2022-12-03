@@ -63,7 +63,7 @@ class EventEnrolledSerializer(serializers.ModelSerializer):
     class Meta:
         model=EventEnrolled
         fields='__all__'
-        depth=1
+        depth=2
 
 class EventEnrolledCreateSerializer(serializers.ModelSerializer):
     class Meta:
