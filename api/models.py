@@ -29,6 +29,7 @@ class UserProfile(models.Model):
     password=models.CharField(max_length=255)
     email=models.CharField(max_length=255,unique=True)
     userTitle=models.CharField(max_length=255,null=True,blank=True)
+    
     fullName=models.CharField(max_length=255)
     aboutMe=models.TextField(null=True,blank=True)
     stayedSeconds=models.IntegerField(default=0)
@@ -81,6 +82,7 @@ class CourseCategory(models.Model):
 
 class QaCourses(models.Model):
     title=models.CharField(max_length=255)
+    slag=models.CharField(max_length=2555,default='')
     simDesc=models.TextField(null=True,blank=True)
     fullDesc=RichTextField()
     youLearn=RichTextField(null=True,blank=True)
