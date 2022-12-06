@@ -82,7 +82,7 @@ class CourseCategory(models.Model):
 
 class QaCourses(models.Model):
     title=models.CharField(max_length=255)
-    slag=models.CharField(max_length=2555,default='')
+    slug=models.CharField(max_length=2555,default='')
     simDesc=models.TextField(null=True,blank=True)
     fullDesc=RichTextField()
     youLearn=RichTextField(null=True,blank=True)

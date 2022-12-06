@@ -68,7 +68,7 @@ def getMeetingDetail(meetingId):
 
 class EventView(models.Model):
     title=models.CharField(max_length=255)
-    slag=models.CharField(max_length=2555,default='')
+    slug=models.CharField(max_length=2555,default='')
     simDesc=models.CharField(max_length=255,null=True,blank=True)
     desc=RichTextField(blank=True,null=True)
     dataRegistred=models.DateTimeField(auto_now=True)
