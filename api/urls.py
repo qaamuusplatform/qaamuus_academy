@@ -49,6 +49,7 @@ urlpatterns = [
     path('qaCourse-update/<str:pk>/',views.qaCoursesUpdate),
     path('qaCourse-delete/<str:pk>/',views.qaCoursesDelete),
     path('qaCourse-detail/<str:pk>/',views.qaCoursesDetail),
+    path('qaCourse-detail-slug/<str:slug>/',views.qaCoursesDetailSlug),
 
      # lessons
     path('lesson-list/',views.lessonList),
