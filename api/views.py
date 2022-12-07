@@ -404,6 +404,13 @@ def qaCoursesDetail(request,pk):
     serializer=QaCoursesSerializer(theObject,many=False)
     return Response(serializer.data)
 
+@api_view(['GET'])
+def qaCoursesDetailSlug(request,slug):
+    theObject=QaCourses.objects.get(slug=slug)
+    serializer=QaCoursesSerializer(theObject,many=False)
+    return Response(serializer.data)
+
+
 
 
 

@@ -68,6 +68,7 @@ def getMeetingDetail(meetingId):
 
 class EventView(models.Model):
     title=models.CharField(max_length=255)
+    slug=models.CharField(max_length=2555,default='')
     simDesc=models.CharField(max_length=255,null=True,blank=True)
     desc=RichTextField(blank=True,null=True)
     dataRegistred=models.DateTimeField(auto_now=True)
@@ -93,117 +94,6 @@ class EventView(models.Model):
     heroEvent=models.BooleanField(default=False)
     enrolledStudents=models.ManyToManyField(UserProfile,related_name='members')
 
-    def save(self,*args,**kwargs):
-        if self._state.adding:
-            if self.isRealLiveSdk:
-                theMeetingDetail={"topic":self.title,
-                        "start_time":self.dateTimeStarting.strftime("%Y-%m-%dT%H:%M:%SZ"),
-                        "agenda": self.eventType,
-                        "duration":40,
-                        "timezone": "Africa/Mogadishu",
-                        "settings":{
-                            "host_video":"false",
-                            "participant_video":"false",
-                            "cn_meeting":"false",
-                            "in_meeting":"false",
-                            "join_before_host":"false",
-                            "jbh_time":0,
-                            "mute_upon_entry":"false",
-                            "watermark":"false",
-                            "use_pmi":"false",
-                            "approval_type":2,
-                            "audio":"voip",
-                            "auto_recording":"none",
-                            "enforce_login":"false",
-                            "enforce_login_domains":"",
-                            "alternative_hosts":"",
-                            "alternative_host_update_polls":"false",
-                            "close_registration":"false",
-                            "show_share_button":"false",
-                            "allow_multiple_devices":"false",
-                            "registrants_confirmation_email":"true",
-                            "waiting_room":"false",
-                            "request_permission_to_unmute_participants":"false",
-                            "registrants_email_notification":"true",
-                            "meeting_authentication":"false",
-                            "encryption_type":"enhanced_encryption",
-                            "approved_or_denied_countries_or_regions":{
-                                "enable":"false"
-                            },
-                            "breakout_room":{
-                                "enable":"false"
-                            },
-                            "alternative_hosts_email_notification":"true",
-                            "device_testing":"false",
-                            "focus_mode":"false",
-                            "private_meeting":"false",
-                            "email_notification":"true",
-                            "host_save_video_order":"false"
-                        },
-                }
-                createdMeeting=createMeeting(theMeetingDetail)
-                print('is created',createdMeeting)
-                self.meetingNumber=createdMeeting["id"]
-                self.meetingPassword=createdMeeting["password"]
-                self.join_URL=createdMeeting["join_url"]
-            # self.save()
-        else:
-            datetime.datetime.now().strftime
-            # theMeetingDetail={"topic":self.title,
-            #         "start_time":self.dateTimeStarting.strftime("%Y-%m-%dT%H:%M:%SZ"),
-            #         "agenda": self.eventType,
-            #         "duration":40,
-            #         "timezone": "Africa/Mogadishu",
-            #         "settings":{
-            #             "host_video":"false",
-            #             "participant_video":"false",
-            #             "cn_meeting":"false",
-            #             "in_meeting":"false",
-            #             "join_before_host":"false",
-            #             "jbh_time":0,
-            #             "mute_upon_entry":"false",
-            #             "watermark":"false",
-            #             "use_pmi":"false",
-            #             "approval_type":2,
-            #             "audio":"voip",
-            #             "auto_recording":"none",
-            #             "enforce_login":"false",
-            #             "enforce_login_domains":"",
-            #             "alternative_hosts":"",
-            #             "alternative_host_update_polls":"false",
-            #             "close_registration":"false",
-            #             "show_share_button":"false",
-            #             "allow_multiple_devices":"false",
-            #             "registrants_confirmation_email":"true",
-            #             "waiting_room":"false",
-            #             "request_permission_to_unmute_participants":"false",
-            #             "registrants_email_notification":"true",
-            #             "meeting_authentication":"false",
-            #             "encryption_type":"enhanced_encryption",
-            #             "approved_or_denied_countries_or_regions":{
-            #                 "enable":"false"
-            #             },
-            #             "breakout_room":{
-            #                 "enable":"false"
-            #             },
-            #             "alternative_hosts_email_notification":"true",
-            #             "device_testing":"false",
-            #             "focus_mode":"false",
-            #             "private_meeting":"false",
-            #             "email_notification":"true",
-            #             "host_save_video_order":"false"
-            #         },
-                    
-            # }
-            # updatedMeeting=updateMeeting(self.meetingNumber,theMeetingDetail)
-            print('updated')
-            # updatedMeeting=getMeetingDetail(self.meetingNumber)
-            # self.meetingNumber=createdMeeting["id"]
-            # print(updatedMeeting)
-            # self.meetingPassword=createdMeeting["password"]
-            # self.join_URL=createdMeeting["join_url"]
-        return super().save()
-    
     def __str__(self) -> str:
         return str(self.pk)+ str(self.title)+' -- '+str(self.simDesc)
 
