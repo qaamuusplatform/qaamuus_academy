@@ -70,7 +70,7 @@ class QaCoursesSerializer(serializers.ModelSerializer):
     theComponents=lessonCompoSerializer(read_only=True,many=True)
     class Meta:
         model=QaCourses
-        fields=['id','title','theComponents']
+        fields='__all__'
         depth=3
 
 
