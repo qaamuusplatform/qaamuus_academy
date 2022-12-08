@@ -51,6 +51,12 @@ urlpatterns = [
     path('qaCourse-detail/<str:pk>/',views.qaCoursesDetail),
     path('qaCourse-detail-slug/<str:slug>/',views.qaCoursesDetailSlug),
 
+    
+    path('lessonComponent-list/',views.lessonsComponentList),
+    path('lessonComponent-create/',views.lessonsComponentCreate),
+    path('lessonComponent-update/<str:pk>/',views.lessonsComponentUpdate),
+    path('lessonComponent-delete/<str:pk>/',views.lessonsComponentDelete),
+    path('lessonComponent-detail/<str:pk>/',views.lessonsComponentDetail),
      # lessons
     path('lesson-list/',views.lessonList),
     path('this-course-lessons-list/<str:pk>/',views.thisCourseLessonList),

@@ -103,7 +103,10 @@ class QaCourses(models.Model):
     instructor=models.ForeignKey(UserProfile,on_delete=models.CASCADE)
     searchKey=models.ManyToManyField(SearchKeys,blank=True,null=True)
 
-    
+    def save(self,*args,**kwargs):
+        self.slug = self.title.replace(' ','-').casefold()
+        # self.save()
+        return super().save()
 
     def courPrevIg(self):
         return mark_safe('<img src={} width="100px" >'.format(self.prevImage.url))
@@ -115,7 +118,14 @@ class QaCourses(models.Model):
 
 class lessonCompo(models.Model):
     compoName=models.CharField(max_length=255,default='')
-    theCourse=models.ForeignKey(QaCourses,on_delete=models.CASCADE,default=1)
+    orderNum=models.IntegerField(default=0)
+    lessonsCount=models.IntegerField(default=1)
+    totalHours=models.CharField(default='30:00',max_length=10)
+    simDesc=models.TextField(default='')
+    theCourse=models.ForeignKey(QaCourses,related_name='theComponents',on_delete=models.CASCADE,default=1)
+    
+    class Meta:
+        ordering = ['orderNum']
     def __str__(self) -> str:
         return str(self.compoName)+' -- '+str(self.theCourse)
 
@@ -123,9 +133,9 @@ class lessonCompo(models.Model):
 class Lessons(models.Model):
     title=models.CharField(max_length=255)  
     lessonNum=models.IntegerField(default=1)
-    theCourse=models.ForeignKey(QaCourses,on_delete=models.CASCADE)
+    theCourse=models.ForeignKey(QaCourses,related_name='theLessons',on_delete=models.CASCADE)
     simDesc=models.TextField(null=True,blank=True)
-    compo=models.ForeignKey(lessonCompo,on_delete=models.CASCADE,default=1)
+    compo=models.ForeignKey(lessonCompo,related_name='theCompoLessons',on_delete=models.CASCADE,default=1)
     fullDesc=RichTextField()
     lessonVideo=models.FileField(upload_to='videos/lessons/',null=True,blank=True)
     lessonLink=models.CharField(max_length=3000,null=True,blank=True)
@@ -134,6 +144,11 @@ class Lessons(models.Model):
 
     def __str__(self) -> str:
         return str(self.title)+' -- '+str(self.theCourse.title)
+
+    def save(self,*args,**kwargs):
+        self.compo.lessonsCount=Lessons.objects.filter(compo=self.compo).count()
+        self.save()
+        return super().save()
 
 
 class LessonDiscussion(models.Model):

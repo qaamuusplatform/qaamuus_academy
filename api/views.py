@@ -408,6 +408,7 @@ def qaCoursesDetail(request,pk):
 def qaCoursesDetailSlug(request,slug):
     theObject=QaCourses.objects.get(slug=slug)
     serializer=QaCoursesSerializer(theObject,many=False)
+    
     return Response(serializer.data)
 
 
@@ -418,7 +419,43 @@ def qaCoursesDetailSlug(request,slug):
 
 
 
+@api_view(['GET'])
+def lessonsComponentList(request):
+    objects=lessonCompo.objects.all()
+    serializer=lessonCompoSerializer(objects,many=True)
+    return Response(serializer.data)
 
+@api_view(['POST','GET'])
+def lessonsComponentCreate(request):
+    serializer=lessonCompoSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response({"status": "success", "data": serializer.data})
+    else:
+        return Response({"status": "error", "data": serializer.errors})
+
+@api_view(['POST'])
+def lessonsComponentUpdate(request,pk):
+    theObject=lessonCompo.objects.get(pk=pk)
+    serializer=lessonCompoSerializer(instance=theObject,data=request.data,partial=True)
+    if serializer.is_valid():
+        serializer.save()
+        return Response({"status": "success", "data": serializer.data})
+    else:
+        return Response({"status": "error", "data": serializer.errors})
+
+@api_view(['DELETE'])
+def lessonsComponentDelete(request,pk):
+    theObject=lessonCompo.objects.get(pk=pk)
+    
+    theObject.delete()
+    return Response()
+
+@api_view(['GET'])
+def lessonsComponentDetail(request,pk):
+    theObject=lessonCompo.objects.get(pk=pk)
+    serializer=lessonCompoSerializer(theObject,many=False)
+    return Response(serializer.data)
 
 
 

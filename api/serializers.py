@@ -42,11 +42,37 @@ class FeedBacksSerializer(serializers.ModelSerializer):
         depth=1
 
 
+
+
+
+class LessonsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Lessons
+        fields='__all__'
+        depth=1
+
+class LessonsUnAuthSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Lessons
+        fields=['title','lessonNum','simDesc','fullDesc','duration']
+        depth=1
+
+
+class lessonCompoSerializer(serializers.ModelSerializer):
+    theCompoLessons=LessonsUnAuthSerializer(read_only=True,many=True)
+    class Meta:
+        model=lessonCompo
+        fields=['id','compoName','lessonsCount','totalHours','theCompoLessons','simDesc']
+        depth=1
+
+
 class QaCoursesSerializer(serializers.ModelSerializer):
+    theComponents=lessonCompoSerializer(read_only=True,many=True)
     class Meta:
         model=QaCourses
         fields='__all__'
-        depth=1
+        depth=3
+
 
 class InrolledCreateCourseSerializer(serializers.ModelSerializer):
     class Meta:
@@ -83,11 +109,7 @@ class CourseReviewCreateSerializer(serializers.ModelSerializer):
         fields='__all__'
 
 
-class LessonsSerializer(serializers.ModelSerializer):
-    class Meta:
-        model=Lessons
-        fields='__all__'
-        depth=1
+
 
 
 class TopicSerializer(serializers.ModelSerializer):
