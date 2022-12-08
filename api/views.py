@@ -215,6 +215,14 @@ def userProfileDetail(request,pk):
     theObject=UserProfile.objects.get(pk=pk)
     serializer=UserProfileSerializer(theObject,many=False)
     return Response(serializer.data)
+@api_view(['GET'])
+def userProfileDetailUsername(request,username):
+    try:
+        theObject=UserProfile.objects.get(user=User.objects.get(username=username))
+        serializer=UserProfileSerializer(theObject,many=False)
+        return Response(serializer.data)
+    except:
+        return Response({'status':False,'detail':'invalid username'})
 
 @api_view(['GET'])
 def userEnrollmentsDetail(request,pk):
@@ -268,7 +276,14 @@ def qaEventDetail(request,pk):
     serializer=EventViewSerializer(theObject,many=False)
     return Response(serializer.data)
 
-
+@api_view(['GET'])
+def qaEventDetailSlug(request,slug):
+    try:
+        theObject=EventView.objects.get(slug=slug)
+        serializer=EventViewSerializer(theObject,many=False)
+        return Response(serializer.data)
+    except:
+        return Response({'message':'invalid event'})
 
 
 

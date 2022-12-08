@@ -21,6 +21,7 @@ urlpatterns = [
     path('userProfile-update/<str:pk>/',views.userProfileUpdate),
     path('userProfile-delete/<str:pk>/',views.userProfileDelete),
     path('userProfile-detail/<str:pk>/',views.userProfileDetail),
+    path('userProfile-detail-username/<str:username>/',views.userProfileDetailUsername),
     path('userEnrollments-detail/<str:pk>/',views.userEnrollmentsDetail),
 
 
@@ -28,6 +29,7 @@ urlpatterns = [
     path('qaEvent-create/',views.qaEventCreate),
     path('qaEvent-update/<str:pk>/',views.qaEventUpdate),
     path('qaEvent-delete/<str:pk>/',views.qaEventDelete),
+    path('qaEvent-detail-slug/<str:slug>/',views.qaEventDetailSlug),
     path('qaEvent-detail/<str:pk>/',views.qaEventDetail),
 
     path('ourInternationalFriends-list/',views.ourInternationalFriendsList),
