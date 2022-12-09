@@ -11,12 +11,22 @@ class UserSerializer(serializers.ModelSerializer):
         model=User
         fields='__all__'
         
+class InstructorCertificationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=InstructorCertification
+        fields='__all__'
+
+
 class UserProfileCreateSerializer(serializers.ModelSerializer):
+    
     class Meta:
         model=UserProfile
         fields='__all__'
 
+
+
 class UserProfileSerializer(serializers.ModelSerializer):
+    theCertifications=InstructorCertificationSerializer(read_only=True,many=True)
     class Meta:
         model=UserProfile
         fields='__all__'
