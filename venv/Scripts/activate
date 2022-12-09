@@ -38,7 +38,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="C:\Users\pc\Documents\real-web\qaamuus_academy\venv"
+VIRTUAL_ENV="C:\Users\Qaamuus Academy\Documents\mohaData\qaamuus_academy_back\venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

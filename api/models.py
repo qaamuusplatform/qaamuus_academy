@@ -101,7 +101,8 @@ class QaCourses(models.Model):
     coverImage=models.ImageField(upload_to='images/courseImages/',blank=True,null=True)
     prevImage=models.ImageField(upload_to='images/courseImages/')
     instructor=models.ForeignKey(UserProfile,on_delete=models.CASCADE)
-    searchKey=models.ManyToManyField(SearchKeys,blank=True,null=True)
+    searchKeys=models.ManyToManyField(SearchKeys,blank=True,null=True)
+    # relatedCourses=models.ManyToManyField(QaCourses,blank=True,null=True)
 
     def save(self,*args,**kwargs):
         self.slug = self.title.replace(' ','-').casefold()
