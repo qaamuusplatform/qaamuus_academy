@@ -48,6 +48,6 @@ admin.site.register(lessonCompo)
 admin.site.register(LessonDiscussion)
 @admin.register(InrolledCourse)
 class InrolledCourseAdmin(admin.ModelAdmin):
-    list_display=('theCourse','theUser','startDate','endDate','courseProgress','status')
+    list_display=('theCourse','theUser','courseProgress','status')
     # ordering=('-dateInrolled')
-    search_fields=('pk','theUser__fullName','theUser__number','theUser__email','startDate','endDate')
+    search_fields=('pk','theUser__fullName','theUser__number','theUser__email','startDate')

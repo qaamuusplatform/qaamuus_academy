@@ -915,32 +915,96 @@ def str2bool(v):
 def getThisCourseFirstLesson(courseId):
     thisCourseLessons=Lessons.objects.filter(theCourse=courseId)
     return thisCourseLessons[0]
-@api_view(['GET'])
-def inrollCourseToUser(request,usrId,crsId,months,status):
-    if InrolledCourse.objects.filter(theCourse=crsId,theUser=UserProfile.objects.get(pk=usrId)).exists()==False:
-            theCourse= InrolledCourse.objects.create(
-                theUser=UserProfile.objects.get(pk=usrId),
-                theCourse=QaCourses.objects.get(pk=crsId),
-                dateInrolled=datetime.now(),
-                startDate=datetime.now(),
-                endDate=datetime.now() + timedelta(days=int(months)*30),
-                courseProgress=0,
-                currentLesson=getThisCourseFirstLesson(QaCourses.objects.get(pk=crsId)),
-                status=str2bool(status),
-                stayedSeconds=0,
-                itsLatestAccessedCourse=True
-            )
-            inrolledUserList= QaCourses.objects.get(pk=crsId)
-            inrolledUserList.inrolledUsers.add(UserProfile.objects.get(pk=usrId))
-            inrolledUserList.save()
-            return Response({'status':True,'scopeId':theCourse.pk,'message':'User Was Inrolled Registred Without Activation'})
+
+@api_view(['POST'])
+def inrollCourseToUser(request,paymentType):
+    fullResp=''
+    usrId=request.data['userId']
+    usrNumber=request.data['number']
+    usrMoney=request.data['money']
+    crsId=request.data['courseId']
+    months=request.data['months']
+    # status=request.data['status']
+    # paidResp=waafiPaidMoney(usrNumber,usrMoney)
+    if True:
+        if InrolledCourse.objects.filter(theCourse=crsId,theUser=UserProfile.objects.get(pk=usrId)).exists()==False:
+                theCourse= InrolledCourse.objects.create(
+                    theUser=UserProfile.objects.get(pk=usrId),
+                    theCourse=QaCourses.objects.get(pk=crsId),
+                    dateInrolled=datetime.now(),
+                    startDate=datetime.now(),
+                    endDate=datetime.now() + timedelta(days=int(months)*30),
+                    courseProgress=0,
+                    currentLesson=getThisCourseFirstLesson(QaCourses.objects.get(pk=crsId)),
+                    status=True,
+                    stayedSeconds=0,
+                    itsLatestAccessedCourse=True
+                )
+                inrolledUserList= QaCourses.objects.get(pk=crsId)
+                inrolledUserList.inrolledUsers.add(UserProfile.objects.get(pk=usrId))
+                inrolledUserList.save()
+                fullResp={'paided':True,'status':'success','scopeId':theCourse.pk,'message':'Waad Ku Guuleesatay Iska Diiwaangalinta Courskan'}
+                return Response({'status':True,'scopeId':theCourse.pk,'message':'User Was Inrolled Registred Without Activation'})
+        else:
+            theCourse=InrolledCourse.objects.get(theCourse=crsId,theUser=UserProfile.objects.get(pk=usrId))
+            theCourse.status=True
+            theCourse.currentLesson=getThisCourseFirstLesson(theCourse.theCourse)
+            theCourse.startDate=datetime.now()
+            theCourse.endDate= (datetime.now() + timedelta(days=int(months)*30))
+            print('inside')
+            # theCourse.endDate=str(datetime.now() + timedelta(days=int(months)*30)).split(' ')[0]
+            theCourse.save()
+            fullResp={'paided':True,'courseInfo':{'courseTitle':theCourse.theCourse.title,'fromDate':theCourse.startDate,'toDate':theCourse.endDate},'status':'success','scopeId':theCourse.pk,'message':'Waad Ku Guuleesatay Iska Diiwaangalinta Courskan Markale'}
     else:
-        theCourse=InrolledCourse.objects.get(theCourse=crsId,theUser=UserProfile.objects.get(pk=usrId))
-        theCourse.status=str2bool(status)
-        theCourse.currentLesson=getThisCourseFirstLesson(theCourse.theCourse)
-        theCourse.endDate=str(datetime.now() + timedelta(days=int(months)*30)).split(' ')[0]
-        theCourse.save()
-        return Response({'status':theCourse.status,'scopeId':theCourse.pk,'message':'This user is alerdy inrolled you can update it'})
+        fullResp={'paided':False,'status':'failed','scopeId':'','message':'Processka lacag bixinta laguma guulaysan fadlan ku celi markale'}
+    
+    return Response(fullResp)
+
+
+
+
+
+
+
+@api_view(['POST'])
+def inrollEventToUser(request,paymentType):
+    fullResp=''
+    usrId=request.data['userId']
+    usrNumber=request.data['number']
+    usrMoney=request.data['money']
+    evtId=request.data['evtId']
+    # paidResp=waafiPaidMoney(usrNumber,usrMoney)
+    if True:
+        if EventEnrolled.objects.filter(theEvent=evtId,theUser=UserProfile.objects.get(pk=usrId)).exists()==False:
+                theEvent= EventEnrolled.objects.create(
+                    theUser=UserProfile.objects.get(pk=usrId),
+                    theEvent=EventView.objects.get(pk=evtId),
+                    paided=True,
+                )
+                inrolledUserList= EventView.objects.get(pk=evtId)
+                inrolledUserList.enrolledStudents.add(UserProfile.objects.get(pk=usrId))
+                inrolledUserList.save()
+                fullResp={'status':True,'alerdyInrolled':False,'scopeId':theEvent.pk,'message':'Waad ku guulaysatay iska diiwaangalinta eventigan'}
+        else:
+            theEvent=EventEnrolled.objects.get(theEvent=evtId,theUser=UserProfile.objects.get(pk=usrId))
+            fullResp={'status':True,'alerdyInrolled':True,'scopeId':theEvent.pk,'message':'Waad ku guulaysatay iska diiwaangalinta eventigan'}
+    else:
+        fullResp={'status':False,'alerdyInrolled':False,'scopeId':'','message':'Processka lacag bixinta laguma guulaysan fadlan ku celi markale'}
+
+    return Response(fullResp)
+
+@api_view(['GET'])
+def checkThisUserInrolledEvent(request,usrId,evtId):
+    if EventEnrolled.objects.filter(theEvent=evtId,theUser=UserProfile.objects.get(pk=usrId)).exists():
+        if EventEnrolled.objects.get(theEvent=evtId,theUser=UserProfile.objects.get(pk=usrId)).paided==True:
+            return Response({'paided':True,'exists':True})
+        else:
+            return Response({'paided':False,'exists':True})
+    else:
+        return Response({'paided':False,'exists':False})
+
+
+
 
 
 
@@ -998,3 +1062,42 @@ def sendResetPasswordCode(request,username):
 
 
     
+
+
+
+
+
+def waafiPaidMoney(usrNumber,usrMoney):
+    theJsonData={
+        "schemaVersion": "1.0",
+        "requestId": "10111331033",
+        "timestamp": "client_timestamp",
+        "channelName": "WEB",
+        "serviceName": "API_PURCHASE",
+        "serviceParams": {
+            "merchantUid": "M0910332",
+            "apiUserId": "1000527",
+            "apiKey": "API-1620730280AHX",
+            "paymentMethod": "mwallet_account",
+            "payerInfo": { "accountNo": '252'+usrNumber },
+            "transactionInfo": {
+                "referenceId": "12334",
+                "invoiceId": "7896504",
+                "amount": usrMoney,
+                "currency": "USD",
+                "description": "Test USD"
+            }
+        }
+    }
+    resp = requests.post('https://api.waafipay.net/asm',json=theJsonData,headers={ 'Content-type': 'application/json;charset=ISO-8859-1' })
+    jsonPaidResp=json.loads(resp.text)
+    if jsonPaidResp['responseCode']=='2001':
+        return {'paided':True,'info':jsonPaidResp}
+    else:
+        return {'paided':False,'info':jsonPaidResp}
+
+def eDahabPaidMoney(usrNumber,usrMoney):
+
+    return Response({'paided':True})
+
+

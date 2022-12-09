@@ -93,6 +93,10 @@ class EventView(models.Model):
     isPublic=models.BooleanField(default=True)
     heroEvent=models.BooleanField(default=False)
     enrolledStudents=models.ManyToManyField(UserProfile,related_name='members')
+    def save(self,*args,**kwargs):
+        self.slug = self.title.replace(' ','-').casefold()
+        # self.save()
+        return super().save()
 
     def __str__(self) -> str:
         return str(self.pk)+ str(self.title)+' -- '+str(self.simDesc)
