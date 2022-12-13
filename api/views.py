@@ -1059,13 +1059,28 @@ def inrollEventToUser(request,paymentType):
 
 @api_view(['GET'])
 def checkThisUserInrolledEvent(request,usrId,evtId):
-    if EventEnrolled.objects.filter(theEvent=evtId,theUser=UserProfile.objects.get(pk=usrId)).exists():
-        if EventEnrolled.objects.get(theEvent=evtId,theUser=UserProfile.objects.get(pk=usrId)).paided==True:
-            return Response({'paided':True,'exists':True,'theEvent':EventEnrolled.objects.get(theEvent=evtId,theUser=UserProfile.objects.get(pk=usrId))})
+    eventEnrolled = EventEnrolled.objects.filter(theEvent=evtId,theUser=UserProfile.objects.get(pk=usrId))
+    if eventEnrolled.exists():
+        eventSerializer=EventViewSerializer((eventEnrolled.first()).theEvent,many=False)
+        if (eventEnrolled.first()).paided==True:
+            return Response({'paided':True,'exists':True,'theEvent':eventSerializer.data})
         else:
-            return Response({'paided':False,'exists':True})
+            return Response({'paided':False,'exists':True,'theEvent':eventSerializer.data})
     else:
         return Response({'paided':False,'exists':False})
+
+@api_view(['GET'])
+def checkThisUserInrolledEventSlug(request,usrId,slug):
+    eventEnrolled = EventEnrolled.objects.filter(theEvent=(EventView.objects.filter(slug=slug).first()).pk,theUser=UserProfile.objects.get(pk=usrId))
+    if eventEnrolled.exists():
+        eventSerializer=EventViewSerializer((eventEnrolled.first()).theEvent,many=False)
+        if (eventEnrolled.first()).paided==True:
+            return Response({'paided':True,'exists':True,'theEvent':eventSerializer.data})
+        else:
+            return Response({'paided':False,'exists':True,'theEvent':eventSerializer.data})
+    else:
+        return Response({'paided':False,'exists':False})
+
 
 
 

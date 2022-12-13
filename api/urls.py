@@ -133,6 +133,7 @@ urlpatterns = [
     
     path('inrollEventToUser/<str:paymentType>/',views.inrollEventToUser),
     path('checkThisUserInrolledEvent/<str:usrId>/<str:evtId>/',views.checkThisUserInrolledEvent),
+    path('checkThisUserInrolledEvent-slug/<str:usrId>/<str:slug>/',views.checkThisUserInrolledEventSlug),
 
 
     path('qa-paid-money/<str:payType>/<str:usrNumber>/<str:amount>/<str:crsId>/<str:months>/<str:usrId>/',views.qaPaidMoney),
