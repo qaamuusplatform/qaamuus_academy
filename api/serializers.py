@@ -89,6 +89,12 @@ class InrolledCreateCourseSerializer(serializers.ModelSerializer):
         model=InrolledCourse
         fields='__all__'
 
+class CouponCodeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=CouponCode
+        fields='__all__'
+
+
 class InrolledCourseSerializer(serializers.ModelSerializer):
     class Meta:
         model=InrolledCourse

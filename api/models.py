@@ -116,6 +116,14 @@ class QaCourses(models.Model):
     def __str__(self) -> str:
         return str(self.title)+' -- '+str(self.instructor)
 
+class CouponCode(models.Model):
+    couponCode=models.CharField(max_length=255,default='')
+    expireDate=models.DateField(default=datetime.now() + timedelta(days=2))
+    discountPrice=models.FloatField(default=5)
+
+    def __str__(self) -> str:
+        return str(self.couponCode)+' -- '+str(self.discountPrice)+' -- '+str(self.expireDate)
+
 
 class lessonCompo(models.Model):
     compoName=models.CharField(max_length=255,default='')

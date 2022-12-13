@@ -720,6 +720,70 @@ def userNotificationsDetail(request,pk):
 
 
 
+
+
+
+
+
+
+
+# notification reivew
+@api_view(['GET'])
+def couponCodeList(request):
+    objects=CouponCode.objects.all()
+    serializer=CouponCodeSerializer(objects,many=True)
+    return Response(serializer.data)
+
+@api_view(['POST','GET'])
+def couponCodeCreate(request):
+    serializer=CouponCodeSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response({"status": "success", "data": serializer.data})
+    else:
+        return Response({"status": "error", "data": serializer.errors})
+
+@api_view(['POST'])
+def couponCodeUpdate(request,pk):
+    theObject=CouponCode.objects.get(pk=pk)
+    serializer=CouponCodeSerializer(instance=theObject,data=request.data,partial=True)
+    if serializer.is_valid():
+        serializer.save()
+        return Response({"status": "success", "data": serializer.data})
+    else:
+        return Response({"status": "error", "data": serializer.errors})
+
+
+@api_view(['GET'])
+def couponCodeDetail(request,pk):
+    theObject=CouponCode.objects.get(pk=pk)
+    serializer=CouponCodeSerializer()(theObject,many=False)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def couponCodeCheck(request,couponCode):
+    try:
+        theObject=CouponCode.objects.get(couponCode=couponCode)
+        serializer=CouponCodeSerializer(theObject,many=False)
+        return Response({'isReferralCode':False,'isCouponCode':True,'isExpired':False,'exists':True,'discountPrice':theObject.discountPrice})
+    except:
+        theUserReff=UserProfile.objects.filter(referralCode=couponCode)
+        if theUserReff.exists():
+            return Response({'isReferralCode':True,'isCouponCode':False,'exists':True})
+        else:
+            return Response({'isReferralCode':False,'isCouponCode':False,'exists':False})
+
+@api_view(['DELETE'])
+def couponCodeDelete(request,pk):
+    theObject=CouponCode.objects.get(pk=pk)
+    theObject.delete()
+    return Response()
+
+
+
+
+
+
 # notification reivew
 @api_view(['GET'])
 def voiteModelList(request):

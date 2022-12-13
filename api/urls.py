@@ -106,6 +106,14 @@ urlpatterns = [
     path('userNotifications-update/<str:pk>/',views.userNotificationsUpdate),
     path('userNotifications-detail/<str:pk>/',views.userNotificationsDetail),
 
+    
+    path('couponCode-list/',views.couponCodeList),
+    path('couponCode-create/',views.couponCodeCreate),
+    path('couponCode-update/<str:pk>/',views.couponCodeUpdate),
+    path('couponCode-detail/<str:pk>/',views.couponCodeDetail),
+    path('couponCode-check/<str:couponCode>/',views.couponCodeCheck),
+    path('couponCode-delete/<str:pk>/',views.couponCodeDelete),
+
     path('voiteModel-list/',views.voiteModelList),
     path('voiteModel-create/',views.voiteModelCreate),
     path('voiteModel-update/<str:pk>/',views.voiteModelUpdate),

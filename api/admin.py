@@ -3,7 +3,7 @@ from . models import *
 # Register your models here.
 admin.site.register(UserTypes)
 # admin.site.register(UserProfile)
-
+admin.site.register(CouponCode)
 @admin.register(UserProfile)
 class UserProfileAdmin(admin.ModelAdmin):
     list_display=('fullName','theImage','user','userType','number','email','status')
