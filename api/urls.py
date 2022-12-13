@@ -118,7 +118,15 @@ urlpatterns = [
     path('lessonAnswers-detail/<str:pk>/',views.lessonAnswersDetail),
 
     # payment qa
-    path('inroll-course-toUser/<str:usrId>/<str:crsId>/<str:months>/<str:status>/',views.inrollCourseToUser),
+    # path('inroll-course-toUser/<str:usrId>/<str:crsId>/<str:months>/<str:status>/',views.inrollCourseToUser),
+    path('inrollCourseToUser/<str:paymentType>/',views.inrollCourseToUser),
+    # path('checkThisUserInrolledCourse/<str:usrId>/<str:crsId>/',views.checkThisUserInrolledCourse),
+
+    
+    path('inrollEventToUser/<str:paymentType>/',views.inrollEventToUser),
+    path('checkThisUserInrolledEvent/<str:usrId>/<str:evtId>/',views.checkThisUserInrolledEvent),
+
+
     path('qa-paid-money/<str:payType>/<str:usrNumber>/<str:amount>/<str:crsId>/<str:months>/<str:usrId>/',views.qaPaidMoney),
 
 

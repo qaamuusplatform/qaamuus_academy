@@ -58,7 +58,7 @@ class UserProfile(models.Model):
         return str(self.fullName )+' -- '+str(self.number)
 
 class InstructorCertification(models.Model):
-    theUser=models.ForeignKey(UserProfile,on_delete=models.CASCADE)
+    theUser=models.ForeignKey(UserProfile,related_name='theCertifications',on_delete=models.CASCADE)
     certificateName=models.CharField(max_length=255)
     certificateDesc=models.CharField(max_length=2655)
     certificateDate=models.DateField()
