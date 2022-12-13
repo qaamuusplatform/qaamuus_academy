@@ -997,7 +997,7 @@ def inrollEventToUser(request,paymentType):
 def checkThisUserInrolledEvent(request,usrId,evtId):
     if EventEnrolled.objects.filter(theEvent=evtId,theUser=UserProfile.objects.get(pk=usrId)).exists():
         if EventEnrolled.objects.get(theEvent=evtId,theUser=UserProfile.objects.get(pk=usrId)).paided==True:
-            return Response({'paided':True,'exists':True})
+            return Response({'paided':True,'exists':True,'theEvent':EventEnrolled.objects.get(theEvent=evtId,theUser=UserProfile.objects.get(pk=usrId))})
         else:
             return Response({'paided':False,'exists':True})
     else:
