@@ -1092,7 +1092,8 @@ def checkThisUserInrolledEventSlug(request,usrId,slug):
         else:
             return Response({'paided':False,'exists':True,'theEvent':eventSerializer.data})
     else:
-        return Response({'paided':False,'exists':False})
+        eventSerializer=EventViewSerializer(EventView.objects.filter(slug=slug).first().theEvent,many=False)
+        return Response({'paided':False,'exists':False,'theEvent':eventSerializer.data})
 
 
 
