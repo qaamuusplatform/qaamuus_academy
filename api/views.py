@@ -235,12 +235,14 @@ def userProfileDetailUsername(request,username):
 
 @api_view(['GET'])
 def userEnrollmentsDetail(request,pk):
-    theUser=UserProfile.objects.get(pk=pk)
-    enrolledCourses=InrolledCourseSerializer(InrolledCourse.objects.filter(theUser=theUser),many=True)
-    bookedEvents=EventEnrolledSerializer(EventEnrolled.objects.filter(theUser=theUser),many=True)
-    return Response({'enrolledCourses':enrolledCourses.data,'bookedEvents':bookedEvents.data})
-
-
+    try:
+        theUser=UserProfile.objects.get(pk=pk)
+        userReferralCodeBoughts=InrolledCourseSerializer(InrolledCourse.objects.filter(referralCode=theUser.referralCode),many=True)
+        enrolledCourses=InrolledCourseSerializer(InrolledCourse.objects.filter(theUser=theUser),many=True)
+        bookedEvents=EventEnrolledSerializer(EventEnrolled.objects.filter(theUser=theUser),many=True)
+        return Response({'enrolledCourses':enrolledCourses.data,'bookedEvents':bookedEvents.data,'userReferralCodeBoughts':userReferralCodeBoughts.data})
+    except:
+        return Response({'message':'user not available'})
 
 
 
@@ -1084,18 +1086,22 @@ def checkThisUserInrolledEvent(request,usrId,evtId):
 
 @api_view(['GET'])
 def checkThisUserInrolledEventSlug(request,usrId,slug):
-    eventEnrolled = EventEnrolled.objects.filter(theEvent=(EventView.objects.filter(slug=slug).first()).pk,theUser=UserProfile.objects.get(pk=usrId))
-    if eventEnrolled.exists():
-        eventSerializer=EventViewSerializer((eventEnrolled.first()).theEvent,many=False)
-        if (eventEnrolled.first()).paided==True:
-            return Response({'paided':True,'exists':True,'theEvent':eventSerializer.data})
+    try:
+        eventEnrolled = EventEnrolled.objects.filter(theEvent=(EventView.objects.filter(slug=slug).first()).pk,theUser=UserProfile.objects.get(pk=usrId))
+        if eventEnrolled.exists():
+            eventSerializer=EventViewSerializer((eventEnrolled.first()).theEvent,many=False)
+            if (eventEnrolled.first()).paided==True:
+                return Response({'paided':True,'exists':True,'theEvent':eventSerializer.data})
+            else:
+                return Response({'paided':False,'exists':True,'theEvent':eventSerializer.data})
         else:
-            return Response({'paided':False,'exists':True,'theEvent':eventSerializer.data})
-    else:
-        eventSerializer=EventViewSerializer(EventView.objects.filter(slug=slug).first().theEvent,many=False)
-        return Response({'paided':False,'exists':False,'theEvent':eventSerializer.data})
-
-
+            return Response({'paided':False,'exists':False,'theEvent':eventSerializer.data})
+    except:
+        try:
+            eventSerializer=EventViewSerializer(EventView.objects.get(slug=slug),many=False)
+            return Response({'paided':False,'exists':False,'theEvent':eventSerializer.data})
+        except:
+            return Response({'paided':False,'exists':False,'theEvent':'not exist'})
 
 
 
