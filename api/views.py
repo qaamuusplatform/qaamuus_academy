@@ -196,8 +196,18 @@ def userProfileCreate(request):
 @api_view(['POST'])
 def userProfileUpdate(request,pk):
     theObject=UserProfile.objects.get(pk=pk)
+    theUser=User.objects.get(pk=(theObject.user).pk)
+    userModalData=UserSerializer(instance=theUser,data=request.data,partial=True)
     serializer=UserProfileCreateSerializer(instance=theObject,data=request.data,partial=True)
     if serializer.is_valid():
+        if userModalData.is_valid():
+            userModalData.save()
+            if request.data['password']:
+                theUser.set_password(theUser.password)
+                theUser.save()
+                print(theUser.password)
+        else:
+            return Response({"status": "error", "data": userModalData.errors})
         serializer.save()
         return Response({"status": "success", "data": serializer.data})
     else:
@@ -206,8 +216,7 @@ def userProfileUpdate(request,pk):
 @api_view(['DELETE'])
 def userProfileDelete(request,pk):
     theObject=UserProfile.objects.get(pk=pk)
-    
-    theObject.delete()
+    theObject.user.delete()
     return Response()
 
 @api_view(['GET'])
