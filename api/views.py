@@ -988,6 +988,8 @@ def inrollCourseToUser(request,paymentType):
     usrMoney=request.data['money']
     crsId=request.data['courseId']
     months=request.data['months']
+    referralCode=request.data['referralCode']
+    cupponCode=request.data['cupponCode']
     # status=request.data['status']
     # paidResp=waafiPaidMoney(usrNumber,usrMoney)
     if True:
@@ -997,6 +999,8 @@ def inrollCourseToUser(request,paymentType):
                     theCourse=QaCourses.objects.get(pk=crsId),
                     dateInrolled=datetime.now(),
                     startDate=datetime.now(),
+                    referralCode=referralCode,
+                    cupponCode=cupponCode,
                     endDate=datetime.now() + timedelta(days=int(months)*30),
                     courseProgress=0,
                     currentLesson=getThisCourseFirstLesson(QaCourses.objects.get(pk=crsId)),

@@ -38,6 +38,7 @@ class UserProfile(models.Model):
     third_link=models.CharField(max_length=3000,null=True,blank=True)
     # followedUsers=models.ManyToManyField()
     learnedSeconds=models.IntegerField(default=0)
+    city=models.CharField(default='',null=True,blank=True,max_length=255)
     status=models.BooleanField(default=True)
     contactMe=models.TextField(null=True,blank=True)
     referralCode=models.CharField(default='qReff_9002',max_length=10)
@@ -214,6 +215,8 @@ def one_month_from_today():
 class InrolledCourse(models.Model):
     theUser=models.ForeignKey(UserProfile,on_delete=models.CASCADE)
     theCourse=models.ForeignKey(QaCourses,on_delete=models.CASCADE)
+    referralCode=models.CharField(null=True,blank=True,max_length=255)
+    cupponCode=models.CharField(null=True,blank=True,max_length=255)
     status=models.BooleanField(default=False)
     dateInrolled=models.DateTimeField(auto_now=True)
     startDate=models.DateTimeField(auto_now=True)
