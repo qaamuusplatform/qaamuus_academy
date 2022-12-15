@@ -149,6 +149,11 @@ def checkingUserExist(request,username):
     userr=User.objects.filter(username=username).exists()
     # serializer=ClasseSerializer(classe,many=True)
     return Response({'isExist':userr})
+@api_view(['GET'])
+def checkingEmailExist(request,email):
+    userr=User.objects.filter(email=email).exists()
+    # serializer=ClasseSerializer(classe,many=True)
+    return Response({'isExist':userr})
 
 @api_view(['GET'])
 def checkUserExistEmailAndUsername(request,username,email):
@@ -1002,6 +1007,7 @@ def inrollCourseToUser(request,paymentType):
     referralCode=request.data['referralCode']
     cupponCode=request.data['cupponCode']
     # status=request.data['status']
+
     # paidResp=waafiPaidMoney(usrNumber,usrMoney)
     if True:
         if InrolledCourse.objects.filter(theCourse=crsId,theUser=UserProfile.objects.get(pk=usrId)).exists()==False:
