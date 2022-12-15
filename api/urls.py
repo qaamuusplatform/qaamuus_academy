@@ -23,6 +23,8 @@ urlpatterns = [
     path('userProfile-detail/<str:pk>/',views.userProfileDetail),
     path('userProfile-detail-username/<str:username>/',views.userProfileDetailUsername),
     path('userEnrollments-detail/<str:pk>/',views.userEnrollmentsDetail),
+    path('sendActivationEmailCode/<str:email>/',views.sendActivationEmailCode),
+
 
 
     path('qaEvent-list/',views.qaEventList),

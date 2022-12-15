@@ -1161,7 +1161,22 @@ def sendResetPasswordCode(request,username):
 
 
     
+@api_view(['GET'])
+def sendActivationEmailCode(request,email):
+    sendedCode=random.randint(111111,999999)
+    msg_html = render_to_string('invoice/email-activation.html',{'theUserName':'Maxamed','activationLink':(int(sendedCode)+len(email))   })
+    text_content = strip_tags(msg_html)
+    emailStatus = EmailMultiAlternatives(
+        'Qaamuus Activate Email',
+        text_content,
+        'QAAMUUS ACADEMY '+settings.EMAIL_HOST_USER,
+        [email]
+    )
+    emailStatus.attach_alternative(msg_html,"text/html")
+    emailStatus.send()
+    status=200
 
+    return Response({'sendedCode':sendedCode})
 
 
 
