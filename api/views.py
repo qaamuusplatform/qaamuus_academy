@@ -1058,8 +1058,8 @@ def inrollEventToUser(request,paymentType):
     usrNumber=request.data['number']
     usrMoney=request.data['money']
     evtId=request.data['evtId']
-    # paidResp=waafiPaidMoney(usrNumber,usrMoney)
-    if True:
+    paidResp=waafiPaidMoney(usrNumber,usrMoney)
+    if paidResp['paided']:
         if EventEnrolled.objects.filter(theEvent=evtId,theUser=UserProfile.objects.get(pk=usrId)).exists()==False:
                 theEvent= EventEnrolled.objects.create(
                     theUser=UserProfile.objects.get(pk=usrId),
