@@ -1,6 +1,6 @@
 from django.contrib import admin
 from . models import *
-# Register your admin sites modal.
+# Register your admin sites modals.
 admin.site.register(UserTypes)
 # admin.site.register(UserProfile)
 admin.site.register(CouponCode)
