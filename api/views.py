@@ -96,13 +96,17 @@ def jwtAuthTokenUser(request):
     try:
         access_token_obj = AccessToken(str(request.auth))
         theUser=User.objects.get(id=access_token_obj['user_id'])
-        try:
-            userProfileSerializer = UserProfileSerializer(UserProfile.objects.get(user=theUser),many=False)
-            return Response(userProfileSerializer.data)
-        except:
-            theUserSerializer=UserSerializer(theUser,many=False)
-            return Response(theUserSerializer.data)
+        userProfileSerializer = UserProfileSerializer(UserProfile.objects.get(user=theUser),many=False)
+        return Response(userProfileSerializer.data)
     except:
+        access_token_obj = AccessToken(str(request.auth))
+        theUser=User.objects.get(id=access_token_obj['user_id'])
+        # try:
+        #     userProfileSerializer = UserProfileSerializer(UserProfile.objects.get(user=theUser),many=False)
+        #     return Response(userProfileSerializer.data)
+        # except:
+        #     theUserSerializer=UserSerializer(theUser,many=False)
+        #     return Response(theUserSerializer.data)
         return Response({'status':404,'message':'token expired please login in again'})
 
 
