@@ -127,8 +127,8 @@ def jwtAuthTokenLogin(request):
     domain='http://'+str(get_current_site(request).domain)
     if request.is_secure():
         domain = 'https://'+str(get_current_site(request).domain)
-
-    response=requests.post(str(domain+'/api/token/'),json={"username":username,"password":password})
+    
+    response=requests.post(str(domain+'/api/token/'),json={"username":theUser.username,"password":password})
     tokenResp=json.loads(response.text)
     return Response({"status":response.status_code,"refresh":tokenResp["refresh"],"access":tokenResp["access"]})
 
