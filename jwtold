@@ -1,0 +1,57 @@
+@api_view(['POST'])
+def jwtLogin(request):
+    theUser=''
+    username=request.data['username']
+    password=request.data['password']
+
+    
+    if username.find('@')!=-1:
+        theUser=User.objects.filter(email=username).first()
+    else:
+        theUser=User.objects.filter(username=username).first()
+    if theUser is None:
+        raise AuthenticationFailed('username or email not found')
+
+    if not theUser.check_password(password):
+        raise AuthenticationFailed('Incorrect Password')
+
+    payload={
+        'id':theUser.id,
+        'exp':datetime.utcnow()+timedelta(days=10),
+        'iat':datetime.utcnow()
+    }
+    jwtToken=jwt.encode(payload,'secret',algorithm='HS256')
+    
+    jwtUserResponse=Response()
+    jwtUserResponse.set_cookie(key='jwt',value=jwtToken,httponly=True)
+
+    jwtUserResponse.data={
+        'jwt':jwtToken
+    }
+    return jwtUserResponse
+
+@api_view(['GET'])
+def jwtUser(request):
+    jwtToken=request.COOKIES.get('jwt')
+    if not jwtToken:
+        raise AuthenticationFailed("unAuth")
+    
+    try:
+        payload=jwt.decode(jwt=jwtToken,key="secret",algorithms='HS256')
+    except jwt.ExpiredSignatureError:
+        raise AuthenticationFailed("unAuthenticated")
+    theUser=User.objects.filter(id=payload['id']).first()
+    theUserInfo=UserProfile.objects.filter(user=theUser).first()
+    serializerUserInfo=UserProfileSerializer(theUserInfo)
+    return Response(serializerUserInfo.data)    
+
+@api_view(['GET'])
+def jwtLogout(request):
+    jwtResponse=Response()
+    jwtResponse.delete_cookie('jwt')
+
+    jwtResponse.data={
+        "message":"success",
+        "code":200
+    }      
+    return jwtResponse  

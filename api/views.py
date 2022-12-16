@@ -110,7 +110,7 @@ def jwtLogin(request):
     jwtToken=jwt.encode(payload,'secret',algorithm='HS256')
     
     jwtUserResponse=Response()
-    jwtUserResponse.set_cookie(key='jwt',value=jwtToken,httponly=True)
+    jwtUserResponse.set_cookie(key='jwt',value=jwtToken,httponly=False)
 
     jwtUserResponse.data={
         'jwt':jwtToken
