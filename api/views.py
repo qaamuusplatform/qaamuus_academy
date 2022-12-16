@@ -4,7 +4,7 @@ from django.shortcuts import render,redirect
 from rest_framework.decorators import api_view
 # from rest_framework.authtoken.models import Token
 from django.contrib.sites.shortcuts import get_current_site
-from rest_framework_simplejwt.tokens import AccessToken
+from rest_framework_simplejwt.tokens import AccessToken,RefreshToken
 from itertools import chain
 from rest_framework.response import Response
 from rest_framework.exceptions import AuthenticationFailed
@@ -124,13 +124,16 @@ def jwtAuthTokenLogin(request):
 
     if not theUser.check_password(password):
         raise AuthenticationFailed('Incorrect Password')
-    domain='http://'+str(get_current_site(request).domain)
-    if request.is_secure():
-        domain = 'https://'+str(get_current_site(request).domain)
     
-    response=requests.post(str(domain+'/api/token/'),json={"username":theUser.username,"password":password})
-    tokenResp=json.loads(response.text)
-    return Response({"status":response.status_code,"refresh":tokenResp["refresh"],"access":tokenResp["access"]})
+    generatedToken=RefreshToken.for_user(theUser)
+    # domain='http://'+str(get_current_site(request).domain)
+    # if request.is_secure():
+    #     domain = 'https://'+str(get_current_site(request).domain)
+    
+    
+    # response=requests.post(str(domain+'/api/token/'),json={"username":theUser.username,"password":password})
+    # tokenResp=json.loads(response.text)
+    return Response({"status":200,"refresh":str(generatedToken),"access":str(generatedToken.access_token)})
 
 
 
