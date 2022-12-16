@@ -2,6 +2,9 @@ from django.urls import reverse
 from datetime import timedelta,datetime
 from django.shortcuts import render,redirect
 from rest_framework.decorators import api_view
+# from rest_framework.authtoken.models import Token
+from django.contrib.sites.shortcuts import get_current_site
+from rest_framework_simplejwt.tokens import AccessToken
 from itertools import chain
 from rest_framework.response import Response
 from rest_framework.exceptions import AuthenticationFailed
@@ -84,6 +87,57 @@ def userDetail(request,pk):
     user=User.objects.get(pk=pk)
     serializer=UserSerializer(user,many=False)
     return Response(serializer.data)
+
+
+
+
+@api_view(['GET'])
+def jwtAuthTokenUser(request):
+    try:
+        access_token_obj = AccessToken(str(request.auth))
+        theUser=User.objects.get(id=access_token_obj['user_id'])
+        try:
+            userProfileSerializer = UserProfileSerializer(UserProfile.objects.get(user=theUser),many=False)
+            return Response(userProfileSerializer.data)
+        except:
+            theUserSerializer=UserSerializer(theUser,many=False)
+            return Response(theUserSerializer.data)
+    except:
+        return Response({'status':404,'message':'token expired please login in again'})
+
+
+@api_view(['POST'])
+def jwtAuthTokenLogin(request):
+    theUser=''
+    username=request.data['username']
+    password=request.data['password']
+    if username.find('@')!=-1:
+        theUser=User.objects.filter(email=username).first()
+    else:
+        theUser=User.objects.filter(username=username).first()
+    if theUser is None:
+        raise AuthenticationFailed('username or email not found')
+
+    if not theUser.check_password(password):
+        raise AuthenticationFailed('Incorrect Password')
+    domain='http://'+str(get_current_site(request).domain)
+    if request.is_secure():
+        domain = 'https://'+str(get_current_site(request).domain)
+
+    response=requests.post(str(domain+'/api/token/'),json={"username":username,"password":password})
+    tokenResp=json.loads(response.text)
+    return Response({"status":response.status_code,"refresh":tokenResp["refresh"],"access":tokenResp["access"]})
+
+
+
+
+
+
+
+
+
+
+
 
 @api_view(['POST'])
 def jwtLogin(request):

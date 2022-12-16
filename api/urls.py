@@ -10,6 +10,12 @@ urlpatterns = [
     path('user-password-format/<str:pk>/',views.passwordFormat),
     path('checkingUserExist/<str:username>/',views.checkingUserExist), 
     path('checkingEmailExist/<str:email>/',views.checkingEmailExist), 
+    
+    path('jwtAuthToken-user/',views.jwtAuthTokenUser),
+    path('jwtAuthToken-login/',views.jwtAuthTokenLogin),
+
+
+
     path('jwt-login/',views.jwtLogin),
     path('jwt-user/',views.jwtUser),
     path('jwt-logout/',views.jwtLogout),
