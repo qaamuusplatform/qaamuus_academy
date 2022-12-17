@@ -114,6 +114,9 @@ urlpatterns = [
     path('userNotifications-create/',views.userNotificationsCreate),
     path('userNotifications-update/<str:pk>/',views.userNotificationsUpdate),
     path('userNotifications-detail/<str:pk>/',views.userNotificationsDetail),
+    path('userNotifications-delete/<str:pk>/',views.userNotificationsDelete),
+    path('thisUserNotifications-list/<str:userId>/',views.thisUserNotificationsList),
+
 
     
     path('couponCode-list/',views.couponCodeList),
