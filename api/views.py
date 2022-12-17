@@ -759,6 +759,12 @@ def discussionDetail(request,pk):
 
 
 
+@api_view(['GET'])
+def thisUserDiscussionsList(request,userId):
+    objects=LessonDiscussion.objects.filter(theUser=UserProfile.objects.get(pk=userId))
+    serializer=LessonDiscussionSerializer(objects,many=True)
+    return Response(serializer.data)
+
 
 
 
@@ -809,7 +815,7 @@ def userNotificationsDelete(request,pk):
 @api_view(['GET'])
 def thisUserNotificationsList(request,userId):
     try:
-        objects=UserNotifications.objects.filter(theUser=UserProfile.objects.get(pk=userId))
+        objects=UserNotifications.objects.filter(theUser=UserProfile.objects.get(pk=userId)).order_by('-seen')
         serializer=UserNotificationsSerializer(objects,many=True)
         return Response(serializer.data)
     except:

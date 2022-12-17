@@ -23,10 +23,15 @@ class UserProfileCreateSerializer(serializers.ModelSerializer):
         model=UserProfile
         fields='__all__'
 
-
+class UserNotificationsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=UserNotifications
+        fields='__all__'
+        depth=2
 
 class UserProfileSerializer(serializers.ModelSerializer):
     theCertifications=InstructorCertificationSerializer(read_only=True,many=True)
+    theNotifications=UserNotificationsSerializer(read_only=True,many=True)
     class Meta:
         model=UserProfile
         fields='__all__'
@@ -65,7 +70,7 @@ class LessonsSerializer(serializers.ModelSerializer):
 class LessonsUnAuthSerializer(serializers.ModelSerializer):
     class Meta:
         model=Lessons
-        fields=['title','lessonNum','simDesc','fullDesc','duration']
+        fields=['title','lessonNum','simDesc','fullDesc','duration','fullDesc','lessonVideo','lessonLink','dateRegistred']
         depth=1
 
 
@@ -158,11 +163,7 @@ class AnswerDiscussionSerializer(serializers.ModelSerializer):
         fields='__all__'
         depth=1
 
-class UserNotificationsSerializer(serializers.ModelSerializer):
-    class Meta:
-        model=UserNotifications
-        fields='__all__'
-        depth=2
+
 
 class UserNotificationsCreateSerializer(serializers.ModelSerializer):
     class Meta:

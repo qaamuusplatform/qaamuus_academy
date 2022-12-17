@@ -203,12 +203,18 @@ class Topic(models.Model):
         return str(self.title)+' -- '+str(self.theLesson.title)
 
 class UserNotifications(models.Model):
-    toUser=models.ForeignKey(UserProfile,on_delete=models.CASCADE)
+    toUser=models.ForeignKey(UserProfile,related_name='theNotifications',on_delete=models.CASCADE)
     seen=models.BooleanField(default=False)
     title=models.CharField(default='',max_length=255,null=True,blank=True)
     fromUser=models.ForeignKey(UserProfile,on_delete=models.CASCADE,related_name='sender')
     text=models.TextField(default='')
     dateTime=models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['seen']
+    
+    def __str__(self) -> str:
+        return str(self.title)+' -- '+str(self.seen)
 
 def one_month_from_today():
     return datetime.now() + timedelta(days=30)

@@ -100,6 +100,7 @@ urlpatterns = [
     path('discussion-update/<str:pk>/',views.discussionUpdate),
     path('discussion-delete/<str:pk>/',views.discussionDelete),
     path('discussion-detail/<str:pk>/',views.discussionDetail),
+    path('thisUserDiscussions-list/<str:userId>/',views.thisUserDiscussionsList),
 
      # comment
     path('liveEventComment-list/',views.liveEventCommentList),
