@@ -797,9 +797,23 @@ def userNotificationsDetail(request,pk):
 
 
 
+@api_view(['DELETE'])
+def userNotificationsDelete(request,pk):
+    theObject=UserNotifications.objects.get(pk=pk)
+    theObject.delete()
+    return Response()
 
 
 
+# notification reivew
+@api_view(['GET'])
+def thisUserNotificationsList(request,userId):
+    try:
+        objects=UserNotifications.objects.filter(theUser=UserProfile.objects.get(pk=userId))
+        serializer=UserNotificationsSerializer(objects,many=True)
+        return Response(serializer.data)
+    except:
+        return Response({"message":"ivalid id"})
 
 
 

@@ -205,6 +205,7 @@ class Topic(models.Model):
 class UserNotifications(models.Model):
     toUser=models.ForeignKey(UserProfile,on_delete=models.CASCADE)
     seen=models.BooleanField(default=False)
+    title=models.CharField(default='',max_length=255,null=True,blank=True)
     fromUser=models.ForeignKey(UserProfile,on_delete=models.CASCADE,related_name='sender')
     text=models.TextField(default='')
     dateTime=models.DateTimeField(auto_now=True)

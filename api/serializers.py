@@ -30,7 +30,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model=UserProfile
         fields='__all__'
-        depth=1
+        depth=2
 
 
 class OurInterFriendsSerializer(serializers.ModelSerializer):
@@ -39,16 +39,12 @@ class OurInterFriendsSerializer(serializers.ModelSerializer):
         fields='__all__'
         depth=1
 
+
 class EventViewSerializer(serializers.ModelSerializer):
     class Meta:
         model=EventView
         fields='__all__'
-        depth=1
-class EventViewSerializer(serializers.ModelSerializer):
-    class Meta:
-        model=EventView
-        fields='__all__'
-        depth=1
+        depth=2
 
 class FeedBacksSerializer(serializers.ModelSerializer):
     class Meta:
@@ -110,7 +106,7 @@ class EventEnrolledSerializer(serializers.ModelSerializer):
     class Meta:
         model=EventEnrolled
         fields='__all__'
-        depth=2
+        depth=3
 
 class EventEnrolledCreateSerializer(serializers.ModelSerializer):
     class Meta:
@@ -166,7 +162,7 @@ class UserNotificationsSerializer(serializers.ModelSerializer):
     class Meta:
         model=UserNotifications
         fields='__all__'
-        depth=1
+        depth=2
 
 class UserNotificationsCreateSerializer(serializers.ModelSerializer):
     class Meta:
