@@ -268,10 +268,12 @@ def userProfileUpdate(request,pk):
     if serializer.is_valid():
         if userModalData.is_valid():
             userModalData.save()
-            if request.data['password']:
-                theUser.set_password(theUser.password)
-                theUser.save()
-                print(theUser.password)
+            try:
+                if request.data['password']:
+                    theUser.set_password(theUser.password)
+                    theUser.save()
+            except:
+                pass
         else:
             return Response({"status": "error", "data": userModalData.errors})
         serializer.save()
