@@ -31,7 +31,7 @@ class UserProfile(models.Model):
     userTitle=models.CharField(max_length=255,null=True,blank=True)
     
     fullName=models.CharField(max_length=255)
-    aboutMe=models.TextField(null=True,blank=True)
+    aboutMe=RichTextField(null=True,blank=True)
     stayedSeconds=models.IntegerField(default=0)
     facebook_link=models.CharField(max_length=3000,null=True,blank=True)
     twitter_link=models.CharField(max_length=3000,null=True,blank=True)
