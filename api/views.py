@@ -1180,17 +1180,17 @@ def checkThisUserInrolledEventSlug(request,usrId,slug):
         if eventEnrolled.exists():
             eventSerializer=EventViewSerializer((eventEnrolled.first()).theEvent,many=False)
             if (eventEnrolled.first()).paided==True:
-                return Response({'paided':True,'exists':True,'theEvent':eventSerializer.data})
+                return Response({'paided':True,'isEnrolled':True,'exists':True,'theEvent':eventSerializer.data})
             else:
-                return Response({'paided':False,'exists':True,'theEvent':eventSerializer.data})
+                return Response({'paided':False,'isEnrolled':True,'exists':True,'theEvent':eventSerializer.data})
         else:
-            return Response({'paided':False,'exists':False,'theEvent':eventSerializer.data})
+            return Response({'paided':False,'isEnrolled':False,'exists':False,'theEvent':eventSerializer.data})
     except:
         try:
             eventSerializer=EventViewSerializer(EventView.objects.get(slug=slug),many=False)
-            return Response({'paided':False,'exists':False,'theEvent':eventSerializer.data})
+            return Response({'paided':False,'isEnrolled':False,'exists':False,'theEvent':eventSerializer.data})
         except:
-            return Response({'paided':False,'exists':False,'theEvent':'not exist'})
+            return Response({'paided':False,'isEnrolled':False,'exists':False,'theEvent':'not exist'})
 
 
 
