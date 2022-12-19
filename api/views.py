@@ -1129,7 +1129,22 @@ def inrollCourseToUser(request,paymentType):
     return Response(fullResp)
 
 
-
+@api_view(['GET'])
+def checkThisUserInrolledCourseSlug(request,usrId,slug):
+    try:
+        courseEnrolled = InrolledCourse.objects.filter(theCourse=QaCourses.objects.get(slug=slug)).filter(theUser=UserProfile.objects.get(pk=usrId))
+        if courseEnrolled.exists():
+            print('not exist')
+            courseSerializer=QaCoursesSerializer(courseEnrolled[0].theCourse,many=False)
+            return Response({'isEnrolled':True,'theCourse':courseSerializer.data})
+        else:
+            return Response({'isEnrolled':False,'theCourse':courseSerializer.data})
+    except:
+        try:
+            courseSerializer=QaCoursesSerializer(QaCourses.objects.get(slug=slug),many=False)
+            return Response({'isEnrolled':False,'theCourse':courseSerializer.data})
+        except:
+            return Response({'isEnrolled':False,'theCourse':'not exist'})
 
 
 
