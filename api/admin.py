@@ -4,6 +4,7 @@ from . models import *
 admin.site.register(UserTypes)
 # admin.site.register(UserProfile)
 admin.site.register(CouponCode)
+admin.site.register(CourseReview)
 admin.site.register(UserNotifications)
 @admin.register(UserProfile)
 class UserProfileAdmin(admin.ModelAdmin):

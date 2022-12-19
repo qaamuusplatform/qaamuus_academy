@@ -37,18 +37,32 @@ class UserProfileSerializer(serializers.ModelSerializer):
         fields='__all__'
         depth=2
 
-
+class UnAuthUserProfileSerializer(serializers.ModelSerializer):
+    
+    theCertifications=InstructorCertificationSerializer(read_only=True,many=True)
+    class Meta:
+        model=UserProfile
+        fields=['pk','fullName','profileImage','userTitle','userType','theCertifications']
+        depth=2
 class OurInterFriendsSerializer(serializers.ModelSerializer):
     class Meta:
         model=OurInterFriends
         fields='__all__'
         depth=1
 
+class EventReviewSerializer(serializers.ModelSerializer):
+    theUser=UnAuthUserProfileSerializer()
+    class Meta:
+        model=EventReview
+        fields=['theEvent','theUser','theText','theRate','dateTime']
+        depth=1
 
 class EventViewSerializer(serializers.ModelSerializer):
+    theReviews=EventReviewSerializer(read_only=True,many=True)
+    persenter=UnAuthUserProfileSerializer()
     class Meta:
         model=EventView
-        fields='__all__'
+        fields=['pk','title','slug','persenter','coHosts','theReviews','simDesc','desc','prevVideo','image','language','level','duration','heroEvent','isPublic','price','itsFree','isLiveIcon','isEnded','eventType','videoUrl','coverImage','dateTimeStarting']
         depth=2
 
 class FeedBacksSerializer(serializers.ModelSerializer):
@@ -82,11 +96,26 @@ class lessonCompoSerializer(serializers.ModelSerializer):
         depth=1
 
 
+
+
+
+class CourseReviewSerializer(serializers.ModelSerializer):
+    theUser=UnAuthUserProfileSerializer()
+    class Meta:
+        model=CourseReview
+        fields=['theCourse','theUser','theText','theRate','dateTime']
+        depth=1
+
+
+
 class QaCoursesSerializer(serializers.ModelSerializer):
     theComponents=lessonCompoSerializer(read_only=True,many=True)
+    theReviews=CourseReviewSerializer(read_only=True,many=True)
+    instructor=UnAuthUserProfileSerializer()
+    
     class Meta:
         model=QaCourses
-        fields='__all__'
+        fields=['pk','title','slug','instructor','theComponents','theReviews','simDesc','fullDesc','youLearn','category','regularPrice','saledPrice','showRegularPrice','itsFree','lessonCounts','dateRegistred','level','houres','status','prevVideo','coverImage','prevImage','instructor','searchKeys']
         depth=3
 
 
@@ -119,11 +148,6 @@ class EventEnrolledCreateSerializer(serializers.ModelSerializer):
         fields='__all__'
         
 
-class CourseReviewSerializer(serializers.ModelSerializer):
-    class Meta:
-        model=CourseReview
-        fields='__all__'
-        depth=1
 
 class CourseReviewCreateSerializer(serializers.ModelSerializer):
     class Meta:

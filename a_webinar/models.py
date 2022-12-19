@@ -80,19 +80,19 @@ class EventView(models.Model):
     isLiveIcon=models.BooleanField(default=False)
     isEnded=models.BooleanField(default=False)
     eventType=models.CharField(max_length=255)
-    persenter=models.ForeignKey(UserProfile,on_delete=models.CASCADE)
+    persenter=models.ForeignKey(UserProfile,related_name='persenter',on_delete=models.CASCADE)
+    
     dateTimeStarting=models.DateTimeField()
     language=models.CharField(max_length=255)
     level=models.CharField(max_length=255)
-    meetingNumber=models.CharField(max_length=255,blank=True)
-    meetingPassword=models.CharField(max_length=255,blank=True)
+    meetingId=models.CharField(max_length=255,blank=True)
     join_URL=models.CharField(max_length=555,blank=True)
     duration=models.CharField(max_length=255)
     itsFree=models.BooleanField(default=False)
     price=models.FloatField(default=0)
     isPublic=models.BooleanField(default=True)
     heroEvent=models.BooleanField(default=False)
-    enrolledStudents=models.ManyToManyField(UserProfile,related_name='members')
+    coHosts=models.ManyToManyField(UserProfile,related_name='coHosts')
     def save(self,*args,**kwargs):
         self.slug = self.title.replace(' ','-').casefold()
         # self.save()
@@ -118,6 +118,12 @@ class LiveEventComment(models.Model):
     commentText=models.TextField(null=True,blank=True)
     dateTr=models.DateTimeField(auto_now=True)
     
+class EventReview(models.Model):
+    theEvent=models.ForeignKey(EventView,related_name='theReviews',on_delete=models.CASCADE)
+    theUser=models.ForeignKey(UserProfile,on_delete=models.CASCADE)
+    theText=models.TextField(default='')
+    theRate=models.IntegerField(default=3)
+    dateTime=models.DateTimeField(auto_now=True)
 
 
 
