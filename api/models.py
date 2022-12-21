@@ -166,7 +166,7 @@ class Lessons(models.Model):
 
 class LessonDiscussion(models.Model):
     theUser=models.ForeignKey(UserProfile,on_delete=models.CASCADE)
-    theLesson=models.ForeignKey(Lessons,on_delete=models.CASCADE)
+    theLesson=models.ForeignKey(Lessons,related_name='theDiscussions',on_delete=models.CASCADE)
     discText=models.TextField()
     theAnswers=models.IntegerField(default=0)
     date=models.DateTimeField(auto_now=True)
@@ -176,7 +176,7 @@ class LessonDiscussion(models.Model):
 
 class LessonAnswers(models.Model):
     theUser=models.ForeignKey(UserProfile,on_delete=models.CASCADE)
-    theDiscussion=models.ForeignKey(LessonDiscussion,on_delete=models.CASCADE)
+    theDiscussion=models.ForeignKey(LessonDiscussion,related_name='theDiscussionAnswers',on_delete=models.CASCADE)
     ansText=RichTextField()
     likedTheAnswer=models.ManyToManyField(UserProfile,related_name='likedUsers',null=True,blank=True)
     date=models.DateTimeField(auto_now=True)

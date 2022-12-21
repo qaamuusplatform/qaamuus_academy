@@ -73,18 +73,34 @@ class FeedBacksSerializer(serializers.ModelSerializer):
 
 
 
+class AnswerDiscussionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=LessonAnswers
+        fields='__all__'
+        depth=1
 
+class LessonDiscussionSerializer(serializers.ModelSerializer):
+    dateSince=serializers.ReadOnlyField(source='date|timesince')
+    theDiscussionAnswers=AnswerDiscussionSerializer(read_only=True,many=True)
+    class Meta:
+        model=LessonDiscussion
+        fields='__all__'
+        depth=1
 
 class LessonsSerializer(serializers.ModelSerializer):
+    theDiscussions=LessonDiscussionSerializer(read_only=True,many=True)
     class Meta:
         model=Lessons
         fields='__all__'
         depth=1
 
+
+
 class LessonsUnAuthSerializer(serializers.ModelSerializer):
+    theDiscussions=LessonDiscussionSerializer(read_only=True,many=True)
     class Meta:
         model=Lessons
-        fields=['title','lessonNum','simDesc','fullDesc','duration','fullDesc','lessonVideo','lessonLink','dateRegistred']
+        fields=['title','lessonNum','simDesc','fullDesc','duration','fullDesc','lessonVideo','lessonLink','dateRegistred','theDiscussions']
         depth=1
 
 
@@ -99,7 +115,9 @@ class lessonCompoSerializer(serializers.ModelSerializer):
 
 
 
+
 class CourseReviewSerializer(serializers.ModelSerializer):
+    
     theUser=UnAuthUserProfileSerializer()
     class Meta:
         model=CourseReview
@@ -112,10 +130,9 @@ class QaCoursesSerializer(serializers.ModelSerializer):
     theComponents=lessonCompoSerializer(read_only=True,many=True)
     theReviews=CourseReviewSerializer(read_only=True,many=True)
     instructor=UnAuthUserProfileSerializer()
-    
     class Meta:
         model=QaCourses
-        fields=['pk','title','slug','instructor','theComponents','theReviews','simDesc','fullDesc','youLearn','category','regularPrice','saledPrice','showRegularPrice','itsFree','lessonCounts','dateRegistred','level','houres','status','prevVideo','coverImage','prevImage','instructor','searchKeys']
+        fields=['id','pk','title','slug','instructor','theComponents','theReviews','simDesc','fullDesc','youLearn','category','regularPrice','saledPrice','showRegularPrice','itsFree','lessonCounts','dateRegistred','level','houres','status','prevVideo','coverImage','prevImage','instructor','searchKeys']
         depth=3
 
 
@@ -164,28 +181,18 @@ class TopicSerializer(serializers.ModelSerializer):
         fields='__all__'
         depth=1
 
-class LessonDiscussionSerializer(serializers.ModelSerializer):
-    dateSince=serializers.ReadOnlyField(source='date|timesince')
-    class Meta:
-        model=LessonDiscussion
-        fields='__all__'
-        depth=1
 
-class LessonDiscussionCreateSerializer(serializers.ModelSerializer):
-    class Meta:
-        model=LessonDiscussion
-        fields='__all__'
 
 class AnswerDiscussionCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model=LessonAnswers
         fields='__all__'
-
-class AnswerDiscussionSerializer(serializers.ModelSerializer):
+class LessonDiscussionCreateSerializer(serializers.ModelSerializer):
     class Meta:
-        model=LessonAnswers
+        model=LessonDiscussion
         fields='__all__'
-        depth=1
+
+
 
 
 
