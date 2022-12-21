@@ -160,7 +160,6 @@ class Lessons(models.Model):
 
     def save(self,*args,**kwargs):
         self.compo.lessonsCount=Lessons.objects.filter(compo=self.compo).count()
-        self.save()
         return super().save()
 
 
