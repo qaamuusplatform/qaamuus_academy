@@ -1156,25 +1156,50 @@ def inrollEventToUser(request,paymentType):
     usrNumber=request.data['number']
     usrMoney=request.data['money']
     evtId=request.data['evtId']
-    paidResp=waafiPaidMoney(usrNumber,usrMoney)
-    if paidResp['paided']:
-        if EventEnrolled.objects.filter(theEvent=evtId,theUser=UserProfile.objects.get(pk=usrId)).exists()==False:
+    enrollingEvent=EventView.objects.get(pk=evtId)
+    if enrollingEvent.itsFree or enrollingEvent.price==0:
+        try:
+            if EventEnrolled.objects.filter(theEvent=evtId,theUser=UserProfile.objects.get(pk=usrId)).exists()==False:
                 theEvent= EventEnrolled.objects.create(
                     theUser=UserProfile.objects.get(pk=usrId),
                     theEvent=EventView.objects.get(pk=evtId),
                     paided=True,
                 )
-                inrolledUserList= EventView.objects.get(pk=evtId)
-                inrolledUserList.enrolledStudents.add(UserProfile.objects.get(pk=usrId))
-                inrolledUserList.save()
+                # inrolledUserList= EventView.objects.get(pk=evtId)
+                # inrolledUserList.enrolledStudents.add(UserProfile.objects.get(pk=usrId))
+                # inrolledUserList.save()
                 fullResp={'status':True,'alerdyInrolled':False,'scopeId':theEvent.pk,'message':'Waad ku guulaysatay iska diiwaangalinta eventigan'}
-        else:
-            theEvent=EventEnrolled.objects.get(theEvent=evtId,theUser=UserProfile.objects.get(pk=usrId))
-            fullResp={'status':True,'alerdyInrolled':True,'scopeId':theEvent.pk,'message':'Waad ku guulaysatay iska diiwaangalinta eventigan'}
+            else:
+                print('arrrrr enrorr')
+                theEvent=EventEnrolled.objects.get(theEvent=evtId,theUser=UserProfile.objects.get(pk=usrId))
+                fullResp={'status':True,'alerdyInrolled':True,'scopeId':theEvent.pk,'message':'Waad ku guulaysatay iska diiwaangalinta eventigan'}
+        except:
+            fullResp={"status":False,"error":"user id not found"}
     else:
-        fullResp={'status':False,'alerdyInrolled':False,'scopeId':'','message':'Processka lacag bixinta laguma guulaysan fadlan ku celi markale'}
+        paidResp=waafiPaidMoney(usrNumber,usrMoney)
+        if paidResp['paided']:
+            try:
+                if EventEnrolled.objects.filter(theEvent=evtId,theUser=UserProfile.objects.get(pk=usrId)).exists()==False:
+                        theEvent= EventEnrolled.objects.create(
+                            theUser=UserProfile.objects.get(pk=usrId),
+                            theEvent=EventView.objects.get(pk=evtId),
+                            paided=True,
+                        )
+                        inrolledUserList= EventView.objects.get(pk=evtId)
+                        inrolledUserList.enrolledStudents.add(UserProfile.objects.get(pk=usrId))
+                        inrolledUserList.save()
+                        fullResp={'status':True,'alerdyInrolled':False,'scopeId':theEvent.pk,'message':'Waad ku guulaysatay iska diiwaangalinta eventigan'}
+                else:
+                    theEvent=EventEnrolled.objects.get(theEvent=evtId,theUser=UserProfile.objects.get(pk=usrId))
+                    fullResp={'status':True,'alerdyInrolled':True,'scopeId':theEvent.pk,'message':'Waad ku guulaysatay iska diiwaangalinta eventigan'}
+            except:
+                fullResp = {"status":False,"error":"user id not found"}
+        else:
+            fullResp={'status':False,'alerdyInrolled':False,'scopeId':'','message':'Processka lacag bixinta laguma guulaysan fadlan ku celi markale'}
 
     return Response(fullResp)
+
+
 
 @api_view(['GET'])
 def checkThisUserInrolledEvent(request,usrId,evtId):

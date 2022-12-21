@@ -27,6 +27,7 @@ class UserProfile(models.Model):
     number=models.CharField(max_length=16, default=0)
     profileImage=models.ImageField(upload_to='images/usrProfile',null=True,blank=True)
     password=models.CharField(max_length=255)
+    username=models.CharField(max_length=255,default='')
     email=models.CharField(max_length=255,unique=True)
     userTitle=models.CharField(max_length=255,null=True,blank=True)
     
