@@ -1,7 +1,7 @@
 
 from django.contrib import admin
 from .models import *
-# Register your hee.
+# Register your he.
 
 admin.site.register(EventView)
 admin.site.register(EventReview)
