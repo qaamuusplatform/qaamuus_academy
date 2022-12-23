@@ -27,6 +27,7 @@ class UserProfile(models.Model):
     number=models.CharField(max_length=16, default=0)
     profileImage=models.ImageField(upload_to='images/usrProfile',null=True,blank=True)
     password=models.CharField(max_length=255)
+    username=models.CharField(max_length=255,default='')
     email=models.CharField(max_length=255,unique=True)
     userTitle=models.CharField(max_length=255,null=True,blank=True)
     
@@ -94,8 +95,10 @@ class QaCourses(models.Model):
     saledPrice=models.FloatField(default=0)
     lessonCounts=models.IntegerField(default=0)
     itsFree=models.BooleanField(default=False)
+    hasCertificate=models.BooleanField(default=False)
     dateRegistred=models.DateField(auto_now=True)
     level=models.CharField(max_length=255,default='Standared')
+    language=models.CharField(max_length=255,default='Somali')
     houres=models.CharField(max_length=255,default='0')
     status=models.BooleanField(default=True)
     prevVideo=models.CharField(max_length=255000)
@@ -157,13 +160,12 @@ class Lessons(models.Model):
 
     def save(self,*args,**kwargs):
         self.compo.lessonsCount=Lessons.objects.filter(compo=self.compo).count()
-        self.save()
         return super().save()
 
 
 class LessonDiscussion(models.Model):
     theUser=models.ForeignKey(UserProfile,on_delete=models.CASCADE)
-    theLesson=models.ForeignKey(Lessons,on_delete=models.CASCADE)
+    theLesson=models.ForeignKey(Lessons,related_name='theDiscussions',on_delete=models.CASCADE)
     discText=models.TextField()
     theAnswers=models.IntegerField(default=0)
     date=models.DateTimeField(auto_now=True)
@@ -173,7 +175,7 @@ class LessonDiscussion(models.Model):
 
 class LessonAnswers(models.Model):
     theUser=models.ForeignKey(UserProfile,on_delete=models.CASCADE)
-    theDiscussion=models.ForeignKey(LessonDiscussion,on_delete=models.CASCADE)
+    theDiscussion=models.ForeignKey(LessonDiscussion,related_name='theDiscussionAnswers',on_delete=models.CASCADE)
     ansText=RichTextField()
     likedTheAnswer=models.ManyToManyField(UserProfile,related_name='likedUsers',null=True,blank=True)
     date=models.DateTimeField(auto_now=True)
