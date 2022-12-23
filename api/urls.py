@@ -26,6 +26,7 @@ urlpatterns = [
     path('userProfile-list/',views.userProfileList),
     path('userProfile-create/',views.userProfileCreate),
     path('userProfile-update/<str:pk>/',views.userProfileUpdate),
+    path('userProfile-update-email/<str:email>/',views.userProfileUpdateEmail),
     path('userProfile-delete/<str:pk>/',views.userProfileDelete),
     path('userProfile-detail/<str:pk>/',views.userProfileDetail),
     path('userProfile-detail-username/<str:username>/',views.userProfileDetailUsername),
