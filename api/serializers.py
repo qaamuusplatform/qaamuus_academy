@@ -132,7 +132,7 @@ class QaCoursesSerializer(serializers.ModelSerializer):
     instructor=UnAuthUserProfileSerializer()
     class Meta:
         model=QaCourses
-        fields=['id','pk','title','slug','instructor','theComponents','theReviews','simDesc','fullDesc','youLearn','category','regularPrice','saledPrice','showRegularPrice','itsFree','lessonCounts','dateRegistred','level','houres','status','prevVideo','coverImage','prevImage','instructor','searchKeys']
+        fields=['id','pk','title','discountPrice','showDiscountPrice','slug','instructor','theComponents','theReviews','simDesc','fullDesc','youLearn','category','regularPrice','saledPrice','showRegularPrice','itsFree','lessonCounts','dateRegistred','level','houres','status','prevVideo','coverImage','prevImage','instructor','searchKeys']
         depth=3
 
 
