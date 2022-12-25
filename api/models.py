@@ -93,6 +93,8 @@ class QaCourses(models.Model):
     regularPrice=models.FloatField(default=0)
     showRegularPrice=models.BooleanField(default=True)
     saledPrice=models.FloatField(default=0)
+    showDiscountPrice=models.BooleanField(default=True)
+    discountPrice=models.FloatField(default=0)
     lessonCounts=models.IntegerField(default=0)
     itsFree=models.BooleanField(default=False)
     hasCertificate=models.BooleanField(default=False)

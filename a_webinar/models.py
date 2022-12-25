@@ -90,6 +90,8 @@ class EventView(models.Model):
     duration=models.CharField(max_length=255)
     itsFree=models.BooleanField(default=False)
     price=models.FloatField(default=0)
+    discountPrice=models.FloatField(default=0)
+    showDiscountPrice=models.FloatField(default=0)
     isPublic=models.BooleanField(default=True)
     heroEvent=models.BooleanField(default=False)
     coHosts=models.ManyToManyField(UserProfile,related_name='coHosts')
