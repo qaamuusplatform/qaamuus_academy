@@ -1113,7 +1113,7 @@ def inrollCourseToUser(request,paymentType):
     cupponCode=request.data['cupponCode']
     # status=request.data['status']
     enrollingCourse=QaCourses.objects.get(pk=crsId)
-    if enrollingCourse.itsFree or enrollingCourse.saledPrice == 0:
+    if enrollingCourse.itsFree or enrollingCourse.regularPrice == 0:
         try:
             if InrolledCourse.objects.filter(theCourse=crsId,theUser=UserProfile.objects.get(pk=usrId)).exists()==False:
                 print('cppp')
