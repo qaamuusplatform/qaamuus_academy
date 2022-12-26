@@ -158,5 +158,5 @@ urlpatterns = [
     path('qr-send-main/<str:userProfilePK>/',views.qSendMain),
     path('get-current-time/',views.getCurrentTime),
 
-    path('send-reset-password-code/<str:username>/',views.sendResetPasswordCode)
+    path('send-reset-password-code/<str:email>/',views.sendResetPasswordCode)
 ]

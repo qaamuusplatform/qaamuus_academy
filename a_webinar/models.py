@@ -76,7 +76,7 @@ class EventView(models.Model):
     coverImage=models.ImageField(upload_to='images/events',null=True,blank=True)
     image=models.ImageField(upload_to='images/events',null=True,blank=True)
     videoUrl=models.CharField(max_length=50000,default='https://qcdn.qaamuus.academy/media/video/videoUploaded/Akaadeemiyadda_Qaamuus.mp4')
-    isRealLiveSdk=models.BooleanField(default=False)
+    isLiveSdk=models.BooleanField(default=False)
     isLiveIcon=models.BooleanField(default=False)
     isEnded=models.BooleanField(default=False)
     eventType=models.CharField(max_length=255)

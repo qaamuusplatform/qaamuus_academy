@@ -1316,39 +1316,68 @@ def getCurrentTime(request):
     return Response({'dateTimeNow':datetime.now()}) 
 
 @api_view(['GET'])
-def sendResetPasswordCode(request,username):
+def sendResetPasswordCode(request,email):
     sendedCode=random.randint(111111,999999)
     theUser=''
     status=400
     try:
-        if username.find('@')!=-1:
-            theUser=UserProfile.objects.get(email=username)
-            msg_html = render_to_string('invoice/reset-password.html', {'theUserName': theUser.fullName.split(' ')[0],'sendedCode':(int(sendedCode)+int(theUser.pk))})
-            text_content = strip_tags(msg_html)
-            emailStatus = EmailMultiAlternatives(
-                'Qaamuus Reset Password',
-                text_content,
-                'QAAMUUS ACADEMY '+settings.EMAIL_HOST_USER,
-                [theUser.email],
-            )
-            emailStatus.attach_alternative(msg_html,"text/html")
-            emailStatus.send()
-            status=200
-        else:
-            theUser=UserProfile.objects.get(number=username)
-            status='invalid email'
+        theUser=UserProfile.objects.get(email=email)
+        msg_html = render_to_string('invoice/reset-password.html', {'theUserName': theUser.fullName.split(' ')[0],'sendedCode':(int(sendedCode)+len(email))})
+        text_content = strip_tags(msg_html)
+        emailStatus = EmailMultiAlternatives(
+            'Qaamuus Reset Password',
+            text_content,
+            'QAAMUUS ACADEMY '+settings.EMAIL_HOST_USER,
+            [theUser.email],
+        )
+        emailStatus.attach_alternative(msg_html,"text/html")
+        emailStatus.send()
+        status=200
     except:
         status=100
-        return Response({'sendedCode':sendedCode,'status':status,'theUserId':theUser.pk})
+        return Response({'sendedCode':sendedCode,'sended':false,'status':status,'theUserId':theUser.pk})
     
-    return Response({'sendedCode':sendedCode,'status':status,'theUserId':theUser.pk})
+    return Response({'sendedCode':sendedCode,'sended':true,'status':status,'theUserId':theUser.pk})
+
+
+
+# @api_view(['GET'])
+# def sendResetPasswordCode(request,email):
+#     sendedCode=random.randint(111111,999999)
+#     theUser=''
+#     status=400
+#     try:
+#         if email.find('@')!=-1:
+#             theUser=UserProfile.objects.get(email=email)
+#             msg_html = render_to_string('invoice/reset-password.html', {'theUserName': theUser.fullName.split(' ')[0],'sendedCode':(int(sendedCode)+int(theUser.pk))})
+#             text_content = strip_tags(msg_html)
+#             emailStatus = EmailMultiAlternatives(
+#                 'Qaamuus Reset Password',
+#                 text_content,
+#                 'QAAMUUS ACADEMY '+settings.EMAIL_HOST_USER,
+#                 [theUser.email],
+#             )
+#             emailStatus.attach_alternative(msg_html,"text/html")
+#             emailStatus.send()
+#             status=200
+#         else:
+#             theUser=UserProfile.objects.get(number=username)
+#             status='invalid email'
+#     except:
+#         status=100
+#         return Response({'sendedCode':sendedCode,'status':status,'theUserId':theUser.pk})
+    
+#     return Response({'sendedCode':sendedCode,'status':status,'theUserId':theUser.pk})
+
+
+
 
 
     
 @api_view(['GET'])
 def sendActivationEmailCode(request,email):
     sendedCode=random.randint(111111,999999)
-    msg_html = render_to_string('invoice/email-activation.html',{'theUserName':'Maxamed','activationLink':(int(sendedCode)+len(email))   })
+    msg_html = render_to_string('invoice/activate-email-code.html',{'activationCode':(int(sendedCode)+len(email))   })
     text_content = strip_tags(msg_html)
     emailStatus = EmailMultiAlternatives(
         'Qaamuus Activate Email',
