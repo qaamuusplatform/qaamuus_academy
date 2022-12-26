@@ -1335,9 +1335,9 @@ def sendResetPasswordCode(request,email):
         status=200
     except:
         status=100
-        return Response({'sendedCode':sendedCode,'sended':false,'status':status,'theUserId':theUser.pk})
+        return Response({'sendedCode':sendedCode,'sended':False,'status':status,'theUserId':theUser.pk})
     
-    return Response({'sendedCode':sendedCode,'sended':true,'status':status,'theUserId':theUser.pk})
+    return Response({'sendedCode':sendedCode,'sended':True,'status':status,'theUserId':theUser.pk})
 
 
 
