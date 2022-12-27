@@ -97,6 +97,8 @@ class EventView(models.Model):
     coHosts=models.ManyToManyField(UserProfile,related_name='coHosts')
     def save(self,*args,**kwargs):
         self.slug = self.title.replace(' ','-').casefold()
+        self.meetingId = self.title.replace(' ','').casefold()
+
         # self.save()
         return super().save()
 

@@ -62,7 +62,7 @@ class EventViewSerializer(serializers.ModelSerializer):
     persenter=UnAuthUserProfileSerializer()
     class Meta:
         model=EventView
-        fields=['pk','id','title','slug','persenter','coHosts','theReviews','simDesc','desc','prevVideo','image','language','isLiveSdk','level','duration','heroEvent','isPublic','price','itsFree','discountPrice','discountPrice','isLiveIcon','isEnded','eventType','videoUrl','coverImage','dateTimeStarting']
+        fields=['pk','id','title','slug','persenter','coHosts','theReviews','simDesc','desc','prevVideo','image','language','meetingId','isLiveSdk','level','duration','heroEvent','isPublic','price','itsFree','discountPrice','discountPrice','isLiveIcon','isEnded','eventType','videoUrl','coverImage','dateTimeStarting']
         depth=2
 
 class FeedBacksSerializer(serializers.ModelSerializer):
