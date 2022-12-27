@@ -42,7 +42,7 @@ class UnAuthUserProfileSerializer(serializers.ModelSerializer):
     theCertifications=InstructorCertificationSerializer(read_only=True,many=True)
     class Meta:
         model=UserProfile
-        fields=['pk','fullName','profileImage','userTitle','userType','theCertifications']
+        fields=['pk','fullName','username','number','aboutMe','userType','profileImage','userTitle','userType','theCertifications']
         depth=2
 class OurInterFriendsSerializer(serializers.ModelSerializer):
     class Meta:
@@ -62,7 +62,7 @@ class EventViewSerializer(serializers.ModelSerializer):
     persenter=UnAuthUserProfileSerializer()
     class Meta:
         model=EventView
-        fields=['pk','title','slug','persenter','coHosts','theReviews','simDesc','desc','prevVideo','image','language','isLiveSdk','level','duration','heroEvent','isPublic','price','itsFree','discountPrice','discountPrice','isLiveIcon','isEnded','eventType','videoUrl','coverImage','dateTimeStarting']
+        fields=['pk','id','title','slug','persenter','coHosts','theReviews','simDesc','desc','prevVideo','image','language','isLiveSdk','level','duration','heroEvent','isPublic','price','itsFree','discountPrice','discountPrice','isLiveIcon','isEnded','eventType','videoUrl','coverImage','dateTimeStarting']
         depth=2
 
 class FeedBacksSerializer(serializers.ModelSerializer):
