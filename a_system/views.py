@@ -446,12 +446,17 @@ def userProfileInfo(request):
                 'userInfo':{}
             }
     else:
-        if(UserProfile.objects.filter(user=User.objects.get(pk=request.user.id)).exists()==True):
+        try:
+            if(UserProfile.objects.filter(user=User.objects.get(pk=request.user.id)).exists()==True):
+                return {
+                    'userInfo': UserProfile.objects.get(user=User.objects.get(pk=request.user.id))
+                }
+            else:
+                return {
+                    'userInfo': ''
+                }
+        except:
             return {
-                'userInfo': UserProfile.objects.get(user=User.objects.get(pk=request.user.id))
-            }
-        else:
-            return {
-                'userInfo': ''
-            }
+                    'userInfo': ''
+                }
         
