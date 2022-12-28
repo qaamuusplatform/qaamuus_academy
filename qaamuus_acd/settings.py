@@ -38,7 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'corsheaders',
+    'cloudinary_storage',
     'django.contrib.staticfiles',
+    'cloudinary',
     'api',
     'rest_framework_simplejwt',
     'rest_framework.authtoken',
@@ -148,6 +150,13 @@ DATABASES = {
         'PORT': config("PORT"),
     }
 }
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'dw6vcihvc',
+    'API_KEY': '563644916747992',
+    'API_SECRET': 'LT3kD9H-tJO_gQLL8PIeSoPSgDI'
+}
+
 # https://qaamuusstaticfiles.sgp1.digitaloceanspaces.com
 
 # top DO00QBBDKQZHJH7DX3G6
@@ -187,6 +196,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 MEDIA_URL='/media/'
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 MEDIA_ROOT=os.path.join(BASE_DIR,'media')
 
