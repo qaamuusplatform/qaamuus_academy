@@ -41,7 +41,7 @@ class UserProfile(models.Model):
     learnedSeconds=models.IntegerField(default=0)
     city=models.CharField(default='',null=True,blank=True,max_length=255)
     status=models.BooleanField(default=True)
-    contactMe=models.TextField(null=True,blank=True)
+    simAboutMe=models.TextField(null=True,blank=True)
     referralCode=models.CharField(default='qReff_9002',max_length=10)
     userType=models.ForeignKey(UserTypes,on_delete=models.CASCADE,default=1)
     teacherPoints=models.FloatField(default=1)
