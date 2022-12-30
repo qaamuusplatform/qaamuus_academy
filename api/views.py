@@ -1147,39 +1147,40 @@ def inrollCourseToUser(request,paymentType):
             fullResp={"status":False,"message":"course id or user id invalid"}
 
     else:
-        paidResp=waafiPaidMoney(usrNumber,usrMoney)
-        if paidResp['paided']:
-            if InrolledCourse.objects.filter(theCourse=crsId,theUser=UserProfile.objects.get(pk=usrId)).exists()==False:
-                    theCourse= InrolledCourse.objects.create(
-                        theUser=UserProfile.objects.get(pk=usrId),
-                        theCourse=QaCourses.objects.get(pk=crsId),
-                        dateInrolled=datetime.now(),
-                        startDate=datetime.now(),
-                        referralCode=referralCode,
-                        cupponCode=cupponCode,
-                        endDate=datetime.now() + timedelta(days=int(months)*30),
-                        courseProgress=0,
-                        currentLesson=getThisCourseFirstLesson(QaCourses.objects.get(pk=crsId)),
-                        status=True,
-                        stayedSeconds=0,
-                        itsLatestAccessedCourse=True
-                    )
-                    inrolledUserList= QaCourses.objects.get(pk=crsId)
-                    inrolledUserList.inrolledUsers.add(UserProfile.objects.get(pk=usrId))
-                    inrolledUserList.save()
-                    fullResp={'paided':True,'status':'success','scopeId':theCourse.pk,'message':'Waad Ku Guuleesatay Iska Diiwaangalinta Courskan'}
-            else:
-                theCourse=InrolledCourse.objects.get(theCourse=crsId,theUser=UserProfile.objects.get(pk=usrId))
-                theCourse.status=True
-                theCourse.currentLesson=getThisCourseFirstLesson(theCourse.theCourse)
-                theCourse.startDate=datetime.now()
-                theCourse.endDate= (datetime.now() + timedelta(days=int(months)*30))
-                print('inside')
-                # theCourse.endDate=str(datetime.now() + timedelta(days=int(months)*30)).split(' ')[0]
-                theCourse.save()
-                fullResp={'paided':True,'courseInfo':{'courseTitle':theCourse.theCourse.title,'fromDate':theCourse.startDate,'toDate':theCourse.endDate},'status':'success','scopeId':theCourse.pk,'message':'Waad Ku Guuleesatay Iska Diiwaangalinta Courskan Markale'}
-        else:
-            fullResp={'paided':False,'status':'failed','scopeId':'','message':'Processka lacag bixinta laguma guulaysan fadlan ku celi markale'}
+        paidResp=takePaymentFromTheUser(paymentType,usrNumber,usrMoney)
+        print(paidResp)
+        # if paidResp['paided']:
+        #     if InrolledCourse.objects.filter(theCourse=crsId,theUser=UserProfile.objects.get(pk=usrId)).exists()==False:
+        #             theCourse= InrolledCourse.objects.create(
+        #                 theUser=UserProfile.objects.get(pk=usrId),
+        #                 theCourse=QaCourses.objects.get(pk=crsId),
+        #                 dateInrolled=datetime.now(),
+        #                 startDate=datetime.now(),
+        #                 referralCode=referralCode,
+        #                 cupponCode=cupponCode,
+        #                 endDate=datetime.now() + timedelta(days=int(months)*30),
+        #                 courseProgress=0,
+        #                 currentLesson=getThisCourseFirstLesson(QaCourses.objects.get(pk=crsId)),
+        #                 status=True,
+        #                 stayedSeconds=0,
+        #                 itsLatestAccessedCourse=True
+        #             )
+        #             inrolledUserList= QaCourses.objects.get(pk=crsId)
+        #             inrolledUserList.inrolledUsers.add(UserProfile.objects.get(pk=usrId))
+        #             inrolledUserList.save()
+        #             fullResp={'paided':True,'status':'success','scopeId':theCourse.pk,'message':'Waad Ku Guuleesatay Iska Diiwaangalinta Courskan'}
+        #     else:
+        #         theCourse=InrolledCourse.objects.get(theCourse=crsId,theUser=UserProfile.objects.get(pk=usrId))
+        #         theCourse.status=True
+        #         theCourse.currentLesson=getThisCourseFirstLesson(theCourse.theCourse)
+        #         theCourse.startDate=datetime.now()
+        #         theCourse.endDate= (datetime.now() + timedelta(days=int(months)*30))
+        #         print('inside')
+        #         # theCourse.endDate=str(datetime.now() + timedelta(days=int(months)*30)).split(' ')[0]
+        #         theCourse.save()
+        #         fullResp={'paided':True,'courseInfo':{'courseTitle':theCourse.theCourse.title,'fromDate':theCourse.startDate,'toDate':theCourse.endDate},'status':'success','scopeId':theCourse.pk,'message':'Waad Ku Guuleesatay Iska Diiwaangalinta Courskan Markale'}
+        # else:
+        #     fullResp={'paided':False,'status':'failed','scopeId':'','message':'Processka lacag bixinta laguma guulaysan fadlan ku celi markale'}
     
     return Response(fullResp)
 
@@ -1338,6 +1339,21 @@ def sendResetPasswordCode(request,email):
         return Response({'sendedCode':sendedCode,'sended':False,'status':status,'theUserId':theUser.pk})
     
     return Response({'sendedCode':sendedCode,'sended':True,'status':status,'theUserId':theUser.pk})
+
+
+def takePaymentFromTheUser(paymentType,usrNumber,usrMoney):
+    if paymentType=='waafi':
+        paidResp=waafiPaidMoney(usrNumber,usrMoney)
+        return Response({'paided':paidResp['paided'],'type':'eDahab'})
+    elif paymentType=='eDahab':
+        paidResp=Response({'paided':False,'type':'eDahab'})
+        return paidResp
+    elif paymentType=='pabalCc':
+        print('paypal')
+        return Response({'paided':True,'type':'paypalCc'})
+    else:
+        print('cashond')
+        return Response({'paided':False,'type':'cash'})
 
 
 
