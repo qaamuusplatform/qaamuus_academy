@@ -38,7 +38,6 @@ class UserProfileSerializer(serializers.ModelSerializer):
         depth=2
 
 class UnAuthUserProfileSerializer(serializers.ModelSerializer):
-    
     theCertifications=InstructorCertificationSerializer(read_only=True,many=True)
     class Meta:
         model=UserProfile

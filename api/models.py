@@ -106,7 +106,7 @@ class QaCourses(models.Model):
     prevVideo=models.CharField(max_length=255000)
     coverImage=models.ImageField(upload_to='images/courseImages/',blank=True,null=True)
     prevImage=models.ImageField(upload_to='images/courseImages/')
-    instructor=models.ForeignKey(UserProfile,related_name='instructor',on_delete=models.CASCADE)
+    instructor=models.ForeignKey(UserProfile,related_name='instructorCourses',on_delete=models.CASCADE)
     searchKeys=models.ManyToManyField(SearchKeys,blank=True,null=True)
     # relatedCourses=models.ManyToManyField(QaCourses,blank=True,null=True)
 
@@ -236,6 +236,7 @@ class InrolledCourse(models.Model):
     currentLesson=models.ForeignKey(Lessons,on_delete=models.CASCADE,null=True,blank=True)
     stayedSeconds=models.CharField(max_length=255)
     itsLatestAccessedCourse=models.BooleanField(default=False)
+    paymentType=models.CharField(default='waafi',max_length=255)
 
 
 class CourseReview(models.Model):
