@@ -49,6 +49,11 @@ class OurInterFriendsSerializer(serializers.ModelSerializer):
         fields='__all__'
         depth=1
 
+class EventReviewSerializerCreate(serializers.ModelSerializer):
+    class Meta:
+        model=EventReview
+        fields=['theEvent','theText','theRate','dateTime']
+
 class EventReviewSerializer(serializers.ModelSerializer):
     theUser=UnAuthUserProfileSerializer()
     class Meta:

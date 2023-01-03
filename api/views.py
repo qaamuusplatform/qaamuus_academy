@@ -736,6 +736,63 @@ def courseReviewDetail(request,pk):
 
 
 
+# qrCourse reivew
+@api_view(['GET'])
+def eventReviewList(request):
+    objects=EventReview.objects.all()
+    serializer=EventReviewSerializerCreate(objects,many=True)
+    return Response(serializer.data)
+
+
+@api_view(['POST','GET'])
+def eventReviewCreate(request):
+    serializer=EventReviewSerializerCreate(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response({"status": "success", "data": serializer.data})
+    else:
+        return Response({"status": "error", "data": serializer.errors})
+
+@api_view(['POST'])
+def eventReviewUpdate(request,pk):
+    theObject=EventReview.objects.get(pk=pk)
+    serializer=EventReviewSerializerCreate(instance=theObject,data=request.data,partial=True)
+    if serializer.is_valid():
+        serializer.save()
+        return Response({"status": "success", "data": serializer.data})
+    else:
+        return Response({"status": "error", "data": serializer.errors})
+
+@api_view(['DELETE'])
+def eventReviewDelete(request,pk):
+    theObject=EventReview.objects.get(pk=pk)
+    
+    theObject.delete()
+    return Response()
+
+@api_view(['GET'])
+def eventReviewDetail(request,pk):
+    theObject=EventReview.objects.get(pk=pk)
+    serializer=EventReviewSerializerCreate(theObject,many=False)
+    return Response(serializer.data)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # qrCourses List
 @api_view(['GET'])
 def discussionList(request):
@@ -1341,6 +1398,16 @@ def checkThisUserInrolledEventSlug(request,usrId,slug):
             return Response({'paided':False,'isEnrolled':False,'exists':False,'theEvent':eventSerializer.data})
         except:
             return Response({'paided':False,'isEnrolled':False,'exists':False,'theEvent':'not exist'})
+
+@api_view(['GET'])
+def enrolledCourseDetail(request,usrId,slug):
+
+    enrollmentCourses=InrolledCourse.objects.filter(theCourse=QaCourses.objects.get(slug=slug)).get(theUser=UserProfile.objects.get(pk=usrId))
+    enrolledCreateCourseSerializer=InrolledCreateCourseSerializer(enrollmentCourses,many=False)
+    return Response(enrolledCreateCourseSerializer.data)
+    # except:
+    #     return Response({'status':'course-slug or userid not exist'})
+
 
 
 

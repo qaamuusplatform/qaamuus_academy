@@ -93,6 +93,12 @@ urlpatterns = [
     path('courseReview-update/<str:pk>/',views.courseReviewUpdate),
     path('courseReview-delete/<str:pk>/',views.courseReviewDelete),
     path('courseReview-detail/<str:pk>/',views.courseReviewDetail),
+
+    path('eventReview-list/',views.eventReviewList),
+    path('eventReview-create/',views.eventReviewCreate),
+    path('eventReview-update/<str:pk>/',views.eventReviewUpdate),
+    path('eventReview-delete/<str:pk>/',views.eventReviewDelete),
+    path('eventReview-detail/<str:pk>/',views.eventReviewDetail),
     
     # courses
     path('discussion-list/',views.discussionList),
@@ -148,6 +154,7 @@ urlpatterns = [
     path('inrollEventToUser/<str:paymentType>/',views.inrollEventToUser),
     path('checkThisUserInrolledEvent/<str:usrId>/<str:evtId>/',views.checkThisUserInrolledEvent),
     path('checkThisUserInrolledEvent-slug/<str:usrId>/<str:slug>/',views.checkThisUserInrolledEventSlug),
+    path('enrolledCourseDetail-slug/<str:usrId>/<str:slug>/',views.enrolledCourseDetail),
 
     
 
