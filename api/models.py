@@ -229,6 +229,7 @@ class InrolledCourse(models.Model):
     referralCode=models.CharField(null=True,blank=True,max_length=255)
     cupponCode=models.CharField(null=True,blank=True,max_length=255)
     status=models.BooleanField(default=False)
+    paided=models.BooleanField(default=False)
     dateInrolled=models.DateTimeField(auto_now=True)
     startDate=models.DateTimeField(auto_now=True)
     endDate=models.DateField(default=one_month_from_today)

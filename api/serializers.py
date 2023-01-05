@@ -52,13 +52,13 @@ class OurInterFriendsSerializer(serializers.ModelSerializer):
 class EventReviewSerializerCreate(serializers.ModelSerializer):
     class Meta:
         model=EventReview
-        fields=['theEvent','theText','theRate','dateTime']
+        fields=['pk','id','theEvent','theText','theRate','dateTime']
 
 class EventReviewSerializer(serializers.ModelSerializer):
     theUser=UnAuthUserProfileSerializer()
     class Meta:
         model=EventReview
-        fields=['theEvent','theUser','theText','theRate','dateTime']
+        fields=['pk','id','theEvent','theUser','theText','theRate','dateTime']
         depth=1
 
 class EventViewSerializer(serializers.ModelSerializer):
@@ -125,7 +125,7 @@ class CourseReviewSerializer(serializers.ModelSerializer):
     theUser=UnAuthUserProfileSerializer()
     class Meta:
         model=CourseReview
-        fields=['theCourse','theUser','theText','theRate','dateTime']
+        fields=['pk','id','theCourse','theUser','theText','theRate','dateTime']
         depth=1
 
 
