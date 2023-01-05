@@ -1249,17 +1249,17 @@ def takePaymentFromTheUser(paymentType,usrNumber,usrMoney):
 def checkThisUserInrolledCourseSlug(request,usrId,slug):
     try:
         courseEnrolled = InrolledCourse.objects.filter(theCourse=QaCourses.objects.get(slug=slug)).filter(theUser=UserProfile.objects.get(pk=usrId))
-        if courseEnrolled.exists():
+        if courseEnrolled.filter(paided=True).exists():
             courseSerializer=QaCoursesSerializer(courseEnrolled[0].theCourse,many=False)
-            return Response({'isEnrolled':True,'theCourse':courseSerializer.data})
-        else:
-            return Response({'isEnrolled':False,'theCourse':courseSerializer.data})
+            return Response({'isEnrolled':True,'paided':True,'theCourse':courseSerializer.data})
+        elif courseEnrolled.filter(paided=False).exists():
+            return Response({'isEnrolled':False,'paided':False,'theCourse':courseSerializer.data})
     except:
         try:
             courseSerializer=QaCoursesSerializer(QaCourses.objects.get(slug=slug),many=False)
-            return Response({'isEnrolled':False,'theCourse':courseSerializer.data})
+            return Response({'isEnrolled':False,'paided':False,'theCourse':courseSerializer.data})
         except:
-            return Response({'isEnrolled':False,'theCourse':'not exist'})
+            return Response({'isEnrolled':False,'paided':False,'theCourse':'not exist'})
 
 
 
