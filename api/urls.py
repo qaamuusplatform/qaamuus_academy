@@ -147,11 +147,11 @@ urlpatterns = [
 
     # payment qa
     # path('inroll-course-toUser/<str:usrId>/<str:crsId>/<str:months>/<str:status>/',views.inrollCourseToUser),
-    path('inrollCourseToUser/<str:paymentType>/',views.inrollCourseToUser),
+    path('inrollCourseToUser/<str:paymentType>/',views.enrollingCourseToUser),
     path('checkThisUserInrolledCourse-slug/<str:usrId>/<str:slug>/',views.checkThisUserInrolledCourseSlug),
 
     
-    path('inrollEventToUser/<str:paymentType>/',views.inrollEventToUser),
+    path('inrollEventToUser/<str:paymentType>/',views.enrollingCourseToUser),
     path('checkThisUserInrolledEvent/<str:usrId>/<str:evtId>/',views.checkThisUserInrolledEvent),
     path('checkThisUserInrolledEvent-slug/<str:usrId>/<str:slug>/',views.checkThisUserInrolledEventSlug),
     path('enrolledCourseDetail-slug/<str:usrId>/<str:slug>/',views.enrolledCourseDetail),

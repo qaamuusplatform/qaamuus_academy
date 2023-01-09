@@ -106,7 +106,7 @@ class EventView(models.Model):
         return str(self.pk)+ str(self.title)+' -- '+str(self.simDesc)
 
 class EventEnrolled(models.Model):
-    theUser=models.ForeignKey(UserProfile,on_delete=models.CASCADE)
+    theUser=models.ForeignKey(UserProfile,related_name='enrolledEvents',on_delete=models.CASCADE)
     theEvent=models.ForeignKey(EventView,on_delete=models.CASCADE)
     paided=models.BooleanField(default=True)
     paymentMethod=models.CharField(max_length=25,null=True,blank=True)

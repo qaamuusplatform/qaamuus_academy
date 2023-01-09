@@ -30,7 +30,7 @@ class UserProfile(models.Model):
     username=models.CharField(max_length=255,default='')
     email=models.CharField(max_length=255,unique=True)
     userTitle=models.CharField(max_length=255,null=True,blank=True)
-    
+    summerInfo=models.CharField(max_length=400,null=True,blank=True)
     fullName=models.CharField(max_length=255)
     aboutMe=RichTextField(null=True,blank=True)
     stayedSeconds=models.IntegerField(default=0)
@@ -224,7 +224,7 @@ def one_month_from_today():
     return datetime.now() + timedelta(days=30)
     
 class InrolledCourse(models.Model):
-    theUser=models.ForeignKey(UserProfile,on_delete=models.CASCADE)
+    theUser=models.ForeignKey(UserProfile,related_name='enrolledCourses',on_delete=models.CASCADE)
     theCourse=models.ForeignKey(QaCourses,on_delete=models.CASCADE)
     referralCode=models.CharField(null=True,blank=True,max_length=255)
     cupponCode=models.CharField(null=True,blank=True,max_length=255)
