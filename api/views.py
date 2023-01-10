@@ -1280,6 +1280,30 @@ def courseAssigning(request,paymentType):
             fullResp={'paided':False,'status':'failed','message':'Laguma Guulaysan Lacag bixinta fadlan ku celi markale'}
     return fullResp
 
+
+@api_view(['GET'])
+def checkWatchThisCourseSlug(request,usrId,slug):
+    try:
+        courseEnrolled = InrolledCourse.objects.filter(theCourse=QaCourses.objects.get(slug=slug)).filter(theUser=UserProfile.objects.get(pk=usrId))
+        if courseEnrolled.filter(paided=True).exists():
+            enrollmentCourse=InrolledCourseSerializer(courseEnrolled.first,many=False)
+            courseSerializer=QaCoursesSerializer(courseEnrolled[0].theCourse,many=False)
+            return Response({'isEnrolled':True,'paided':True,'theCourse':courseSerializer.data,'enrollmentCourse':enrollmentCourse.data})
+        elif courseEnrolled.filter(paided=False).exists():
+            return Response({'isEnrolled':True,'paided':False,'theCourse':courseSerializer.data,'enrollmentCourse':enrollmentCourse.data})
+        else:
+            return Response({'isEnrolled':False,'paided':False,'theCourse':courseSerializer.data})
+    except:
+        try:
+            courseSerializer=QaCoursesSerializer(QaCourses.objects.get(slug=slug),many=False)
+            return Response({'isEnrolled':False,'paided':False,'theCourse':courseSerializer.data})
+        except:
+            return Response({'isEnrolled':False,'paided':False,'theCourse':False})
+    return Response({'isEnrolled':False,'paided':False,'theCourse':False})
+
+
+
+
 @api_view(['GET'])
 def checkThisUserInrolledCourseSlug(request,usrId,slug):
     try:
