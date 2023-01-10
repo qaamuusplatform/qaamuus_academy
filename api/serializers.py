@@ -66,7 +66,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
     enrolledEvents=EventEnrolledSerializer(read_only=True,many=True)
     # instructorCourses=QaCoursesSerializer(read_only=True,many=True)
     instructorCourses=QaInstructorCourseCoursesSerializer(read_only=True,many=True)
-    # instructorEvents=EventViewInstructorSerializer(read_only=True,many=True)
+    persenter=EventViewInstructorSerializer(read_only=True,many=True)
     class Meta:
         model=UserProfile
         fields='__all__'

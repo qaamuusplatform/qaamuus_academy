@@ -1162,7 +1162,6 @@ def getThisCourseFirstLesson(courseId):
 
 @api_view(['POST'])
 def enrollingCourseToUser(request,paymentType):
-
     fullResp=''
     try:
         # usrId=request.data['userId']
@@ -1321,11 +1320,12 @@ def inrollEventToUser(request,paymentType):
                 # inrolledUserList= EventView.objects.get(pk=evtId)
                 # inrolledUserList.enrolledStudents.add(UserProfile.objects.get(pk=usrId))
                 # inrolledUserList.save()
-                fullResp={'status':True,'alerdyInrolled':False,'scopeId':theEvent.pk,'message':'Waad ku guulaysatay iska diiwaangalinta eventigan'}
+                fullResp={'paided':True,'status':True,'alerdyInrolled':False,'scopeId':theEvent.pk,'message':'Waad ku guulaysatay iska diiwaangalinta eventigan'}
             else:
-                print('arrrrr enrorr')
-                theEvent=EventEnrolled.objects.get(theEvent=evtId,theUser=UserProfile.objects.get(pk=usrId))
-                fullResp={'status':True,'alerdyInrolled':True,'scopeId':theEvent.pk,'message':'Waad ku guulaysatay iska diiwaangalinta eventigan'}
+                theEvent=EventEnrolled.objects.filter(theEvent=evtId,theUser=UserProfile.objects.get(pk=usrId)).first()
+                theEvent.paided=True
+                theEvent.save()
+                fullResp={'paided':True,'status':True,'alerdyInrolled':True,'scopeId':theEvent.pk,'message':'Waad ku guulaysatay iska diiwaangalinta eventigan'}
         except:
             fullResp={"status":False,"error":"user id not found"}
     else:
@@ -1344,11 +1344,13 @@ def inrollEventToUser(request,paymentType):
                         fullResp={'status':True,'alerdyInrolled':False,'scopeId':theEvent.pk,'message':'Waad ku guulaysatay iska diiwaangalinta eventigan'}
                 else:
                     theEvent=EventEnrolled.objects.get(theEvent=evtId,theUser=UserProfile.objects.get(pk=usrId))
-                    fullResp={'status':True,'alerdyInrolled':True,'scopeId':theEvent.pk,'message':'Waad ku guulaysatay iska diiwaangalinta eventigan'}
+                    theEvent.paided=True
+                    theEvent.save()
+                    fullResp={'paided':True,'status':True,'alerdyInrolled':True,'scopeId':theEvent.pk,'message':'Waad ku guulaysatay iska diiwaangalinta eventigan'}
             except:
-                fullResp = {"status":False,"error":"user id not found"}
-        else:
-            fullResp={'status':False,'alerdyInrolled':False,'scopeId':'','message':'Processka lacag bixinta laguma guulaysan fadlan ku celi markale'}
+                fullResp = {'paided':False,"status":False,"error":"user id not found"}
+        else :
+            fullResp={'paided':False,'status':False,'alerdyInrolled':False,'scopeId':'','message':'Processka lacag bixinta laguma guulaysan fadlan ku celi markale'}
 
     return Response(fullResp)
 
