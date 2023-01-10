@@ -29,11 +29,19 @@ class EventEnrolledSerializer(serializers.ModelSerializer):
         fields='__all__'
         depth=3
 
-class InrolledCourseSerializer(serializers.ModelSerializer):
 
+
+class InrolledCourseSerializer(serializers.ModelSerializer):
     class Meta:
         model=InrolledCourse
-        fields=['status','paided','dateInrolled','startDate','endDate','courseProgress','courseProgress','currentLesson','stayedSeconds']
+        fields=['theCourse','status','paided','dateInrolled','startDate','endDate','courseProgress','courseProgress','currentLesson','stayedSeconds']
+        depth=2
+
+
+class InrolledSimCourseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=InrolledCourse
+        fields=['status','paided','dateInrolled','startDate','endDate','courseProgress','courseProgress','currentLesson','stayedSeconds','itsLatestAccessedCourse']
         depth=2
 
 

@@ -1286,7 +1286,7 @@ def checkWatchThisCourseSlug(request,usrId,slug):
     try:
         courseEnrolled = InrolledCourse.objects.filter(theCourse=QaCourses.objects.get(slug=slug)).filter(theUser=UserProfile.objects.get(pk=usrId))
         if courseEnrolled.filter(paided=True).exists():
-            enrollmentCourse=InrolledCourseSerializer(courseEnrolled.first(),many=False)
+            enrollmentCourse=InrolledSimCourseSerializer(courseEnrolled.first(),many=False)
             courseSerializer=QaCoursesSerializer(courseEnrolled[0].theCourse,many=False)
             return Response({'isEnrolled':True,'paided':True,'theCourse':courseSerializer.data,'enrollmentCourse':enrollmentCourse.data})
         elif courseEnrolled.filter(paided=False).exists():
