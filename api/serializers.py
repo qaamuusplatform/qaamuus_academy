@@ -30,9 +30,10 @@ class EventEnrolledSerializer(serializers.ModelSerializer):
         depth=3
 
 class InrolledCourseSerializer(serializers.ModelSerializer):
+
     class Meta:
         model=InrolledCourse
-        fields='__all__'
+        fields=['status','paided','dateInrolled','startDate','endDate','courseProgress','courseProgress','currentLesson','stayedSeconds']
         depth=2
 
 
@@ -85,8 +86,23 @@ class UnAuthUserProfileSerializer(serializers.ModelSerializer):
         depth=2
 
 
+class QaCourseUserProfileSerializer(serializers.ModelSerializer):
+    # persenter=EventViewInstructorSerializer(read_only=True,many=True)
+    class Meta:
+        model=UserProfile
+        fields=['pk','fullName','username','number','aboutMe','summerInfo','userType','profileImage','userTitle','userType']
+        depth=2
+class QaCoursesSummerSerializer(serializers.ModelSerializer):
+    instructor=QaCourseUserProfileSerializer()
+    class Meta:
+        model=QaCourses
+        fields=['id','pk','title','slug','instructor','simDesc','category','regularPrice','saledPrice','showRegularPrice','itsFree','lessonCounts','dateRegistred','level','houres','status','prevVideo','coverImage','prevImage','searchKeys']
+        depth=3
+
+
+
 class EventReviewSerializer(serializers.ModelSerializer):
-    theUser=UnAuthUserProfileSerializer()
+    theUser=QaCourseUserProfileSerializer()
     class Meta:
         model=EventReview
         fields=['pk','id','theEvent','theUser','theText','theRate','dateTime']
@@ -94,7 +110,7 @@ class EventReviewSerializer(serializers.ModelSerializer):
 
 class EventViewSerializer(serializers.ModelSerializer):
     theReviews=EventReviewSerializer(read_only=True,many=True)
-    persenter=UnAuthUserProfileSerializer()
+    persenter=QaCourseUserProfileSerializer()
     class Meta:
         model=EventView
         fields=['pk','id','title','slug','persenter','coHosts','theReviews','simDesc','desc','prevVideo','image','language','meetingId','isLiveSdk','level','duration','heroEvent','isPublic','price','itsFree','discountPrice','discountPrice','isLiveIcon','isEnded','eventType','videoUrl','coverImage','dateTimeStarting']
@@ -164,10 +180,9 @@ class lessonCompoSerializer(serializers.ModelSerializer):
 
 
 
-
 class CourseReviewSerializer(serializers.ModelSerializer):
-    
-    theUser=UnAuthUserProfileSerializer()
+    theCourse=QaCoursesSummerSerializer()
+    theUser=QaCourseUserProfileSerializer()
     class Meta:
         model=CourseReview
         fields=['pk','id','theCourse','theUser','theText','theRate','dateTime']
@@ -178,11 +193,12 @@ class CourseReviewSerializer(serializers.ModelSerializer):
 class QaCoursesSerializer(serializers.ModelSerializer):
     theComponents=lessonCompoSerializer(read_only=True,many=True)
     theReviews=CourseReviewSerializer(read_only=True,many=True)
-    instructor=UnAuthUserProfileSerializer()
+    instructor=QaCourseUserProfileSerializer()
     class Meta:
         model=QaCourses
-        fields=['id','pk','title','discountPrice','showDiscountPrice','slug','instructor','theComponents','theReviews','simDesc','fullDesc','youLearn','category','regularPrice','saledPrice','showRegularPrice','itsFree','lessonCounts','dateRegistred','level','houres','status','prevVideo','coverImage','prevImage','instructor','searchKeys']
+        fields=['id','pk','title','discountPrice','showDiscountPrice','slug','instructor','theComponents','theReviews','simDesc','fullDesc','youLearn','category','regularPrice','saledPrice','showRegularPrice','itsFree','lessonCounts','dateRegistred','level','houres','status','prevVideo','coverImage','prevImage','searchKeys']
         depth=3
+
 
 
 class InrolledCreateCourseSerializer(serializers.ModelSerializer):
