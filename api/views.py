@@ -962,6 +962,70 @@ def couponCodeDelete(request,pk):
 
 
 
+
+
+
+
+
+# notification reivew
+@api_view(['GET'])
+def referralTransactionList(request):
+    objects=ReferralTransaction.objects.all()
+    serializer=ReferralTransactionSerializer(objects,many=True)
+    return Response(serializer.data)
+
+@api_view(['POST','GET'])
+def referralTransactionCreate(request):
+    serializer=ReferralTransactionSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response({"status": "success", "data": serializer.data})
+    else:
+        return Response({"status": "error", "data": serializer.errors})
+
+@api_view(['POST'])
+def referralTransactionUpdate(request,pk):
+    theObject=ReferralTransaction.objects.get(pk=pk)
+    serializer=ReferralTransactionSerializer(instance=theObject,data=request.data,partial=True)
+    if serializer.is_valid():
+        serializer.save()
+        return Response({"status": "success", "data": serializer.data})
+    else:
+        return Response({"status": "error", "data": serializer.errors})
+
+
+@api_view(['GET'])
+def referralTransactionDetail(request,pk):
+    theObject=ReferralTransaction.objects.get(pk=pk)
+    serializer=ReferralTransactionSerializer(theObject,many=False)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def thisUserReferralTransaction(request,theReffUser):
+    theObjects=ReferralTransaction.objects.filter(theReffUser=theReffUser)
+    serializer=ReferralTransactionSerializer(theObjects,many=True)
+    return Response(serializer.data)
+
+
+@api_view(['DELETE'])
+def referralTransactionDelete(request,pk):
+    theObject=ReferralTransaction.objects.get(pk=pk)
+    theObject.delete()
+    return Response()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # notification reivew
 @api_view(['GET'])
 def voiteModelList(request):

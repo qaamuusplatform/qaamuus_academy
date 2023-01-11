@@ -134,6 +134,14 @@ urlpatterns = [
     path('couponCode-check/<str:couponCode>/',views.couponCodeCheck),
     path('couponCode-delete/<str:pk>/',views.couponCodeDelete),
 
+    
+    path('referralTransaction-list/',views.referralTransactionList),
+    path('referralTransaction-create/',views.referralTransactionCreate),
+    path('referralTransaction-update/<str:pk>/',views.referralTransactionUpdate),
+    path('referralTransaction-detail/<str:pk>/',views.referralTransactionDetail),
+    path('thisUserReferralTransaction-list/<str:theReffUser>/',views.thisUserReferralTransaction),
+    path('referralTransaction-delete/<str:pk>/',views.referralTransactionDelete),
+
     path('voiteModel-list/',views.voiteModelList),
     path('voiteModel-create/',views.voiteModelCreate),
     path('voiteModel-update/<str:pk>/',views.voiteModelUpdate),

@@ -41,8 +41,10 @@ class InrolledCourseSerializer(serializers.ModelSerializer):
 class InrolledSimCourseSerializer(serializers.ModelSerializer):
     class Meta:
         model=InrolledCourse
-        fields=['status','paided','dateInrolled','startDate','endDate','courseProgress','courseProgress','currentLesson','stayedSeconds','itsLatestAccessedCourse']
+        fields=['status','paided','dateInrolled','startDate','endDate','courseProgress','currentLesson','stayedSeconds','itsLatestAccessedCourse']
         depth=2
+
+
 
 
 
@@ -61,6 +63,13 @@ class QaInstructorCourseCoursesSerializer(serializers.ModelSerializer):
         model=QaCourses
         fields=['id','pk','title','discountPrice','showDiscountPrice','slug','simDesc','fullDesc','youLearn','category','regularPrice','saledPrice','showRegularPrice','itsFree','lessonCounts','dateRegistred','level','houres','status','prevVideo','coverImage','prevImage','searchKeys']
         depth=3
+
+class InrolledSimCourseSerializer(serializers.ModelSerializer):
+    theCourse=QaInstructorCourseCoursesSerializer()
+    class Meta:
+        model=InrolledCourse
+        fields=['status','paided','theCourse','dateInrolled','startDate','endDate','courseProgress','stayedSeconds',]
+        depth=2
 
 class EventViewInstructorSerializer(serializers.ModelSerializer):
     class Meta:
@@ -293,6 +302,15 @@ class VoiteModelSerializer(serializers.ModelSerializer):
     class Meta:
         model=VoteModel
         fields='__all__'
+
+
+class ReferralTransactionSerializer(serializers.ModelSerializer):
+    theReffUser=QaCourseUserProfileSerializer()
+    theInrollement=InrolledSimCourseSerializer()
+    class Meta:
+        model=ReferralTransaction
+        fields=['theReffUser','isReceiving','refMoney','withdrawMoney','theInrollement','status','datetime']
+        depth=2
 # class QaCoursesSerializer(serializers.ModelSerializer):
 #     class Meta:
 #         model=QaCourses

@@ -34,6 +34,8 @@ class UserProfile(models.Model):
     fullName=models.CharField(max_length=255)
     aboutMe=RichTextField(null=True,blank=True)
     stayedSeconds=models.IntegerField(default=0)
+    refBalance=models.FloatField(default=0)
+    refWithdraw=models.FloatField(default=0)
     facebook_link=models.CharField(max_length=3000,null=True,blank=True)
     twitter_link=models.CharField(max_length=3000,null=True,blank=True)
     third_link=models.CharField(max_length=3000,null=True,blank=True)
@@ -68,6 +70,7 @@ class InstructorCertification(models.Model):
         return str(self.theUser.fullName )+' -- '+str(self.certificateName)
 
 
+    
 
 
 class CourseCategory(models.Model):
@@ -116,7 +119,7 @@ class QaCourses(models.Model):
         return super().save()
 
     def courPrevIg(self):
-        return mark_safe('<img src={} width="100px" >'.format(self.prevImage.url))
+        return mark_safe('<img src={} width="100px" >'.format(self.coverImage.url))
     courPrevIg.allow_tags=True
 
     def __str__(self) -> str:
@@ -257,10 +260,19 @@ class PaymentReport(models.Model):
 
 
 
+class ReferralTransaction(models.Model):
+    theReffUser=models.ForeignKey(UserProfile,on_delete=models.CASCADE)
+    isReceiving=models.BooleanField(default=True)
+    refMoney=models.FloatField(default=0.5,null=True,blank=True)
+    withdrawMoney=models.FloatField(default=5,null=True,blank=True)
+    theInrollement=models.ForeignKey(InrolledCourse,on_delete=models.CASCADE,null=True,blank=True) 
+    status=models.BooleanField(default=True)
+    datetime=models.DateTimeField(auto_now=True)
 
+    def __str__(self) -> str:
+        return str(self.theReffUser.fullName)+' -- '+str(self.withdrawMoney)+' -- '+str(self.refMoney)
 
-
-
+        
 class VoteModel(models.Model):
     magaca=models.CharField(max_length=255)
     email=models.CharField(max_length=255)
